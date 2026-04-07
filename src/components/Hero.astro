@@ -1,0 +1,172 @@
+---
+import { getWordPressPosts } from '../lib/wordpress';
+
+const allPosts = await getWordPressPosts(4);
+const mainNews = allPosts[0] || { id: 0, title: 'No news found', image: '', category: '', excerpt: '', author: '', date: '' };
+const sideNews = allPosts.slice(1);
+---
+
+
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="main-news">
+      <a href={`/news/${mainNews.id}`} class="hero-card main-card">
+        <div class="image-wrapper">
+          <img src={mainNews.image} alt={mainNews.title} />
+          <div class="category-tag">{mainNews.category}</div>
+        </div>
+        <div class="content">
+          <h2>{mainNews.title}</h2>
+          <p>{mainNews.excerpt}</p>
+          <div class="meta">
+            <span class="author"><i class="far fa-user"></i> {mainNews.author}</span>
+            <span class="date"><i class="far fa-calendar-alt"></i> {mainNews.date}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="sidebar-news">
+      {sideNews.map((news) => (
+        <a href={`/news/${news.id}`} class="hero-card side-card">
+          <div class="image-wrapper">
+            <img src={news.image} alt={news.title} />
+          </div>
+          <div class="content">
+            <div class="category-tag">{news.category}</div>
+            <h3>{news.title}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding: 1.5rem 0;
+    background: #fff;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .hero-card:hover h2, .hero-card:hover h3 {
+    color: var(--primary-color);
+  }
+
+  .main-card .image-wrapper {
+    height: 450px;
+  }
+
+  .side-card {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .side-card .image-wrapper {
+    width: 120px;
+    height: 100px;
+    flex-shrink: 0;
+  }
+
+  .image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .logo img { height: 100% !important; }
+
+  .hero-card:hover .image-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .category-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-family: var(--font-headline);
+    border-radius: 2px;
+    z-index: 5;
+  }
+
+  .side-card .category-tag {
+    position: static;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+  }
+
+  .main-card .content {
+    padding-top: 1rem;
+  }
+
+  .main-card h2 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-headline);
+  }
+
+  .main-card p {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .side-card .content {
+    flex-grow: 1;
+  }
+
+  .side-card h3 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    font-family: var(--font-headline);
+  }
+
+  .meta {
+    font-size: 0.85rem;
+    color: #888;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .meta i {
+    margin-right: 0.3rem;
+  }
+
+  @media (max-width: 992px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .main-card .image-wrapper {
+      height: 300px;
+    }
+    .main-card h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>

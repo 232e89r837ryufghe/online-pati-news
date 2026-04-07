@@ -1,17 +1,111 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import BreakingNews from '../components/BreakingNews.astro';
+import Hero from '../components/Hero.astro';
+import NewsSection from '../components/NewsSection.astro';
+import FacebookFeed from '../components/FacebookFeed.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import Footer from '../components/Footer.astro';
+import { getWordPressPostsByCategorySlug } from '../lib/wordpress';
 
+const politicsNews = await getWordPressPostsByCategorySlug("politics", 4);
+const healthNews = await getWordPressPostsByCategorySlug("health", 4);
+const sportsNews = await getWordPressPostsByCategorySlug("sports", 4);
+const entertainmentNews = await getWordPressPostsByCategorySlug("entertainment", 4);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+
+<Layout title="Online Pati News - Nepali Digital Newspaper">
+  <TopBar />
+  <Header />
+  <Navbar />
+  <main>
+    <BreakingNews />
+    <Hero />
+    
+    <div class="main-sidebar-layout container">
+      <div class="main-content">
+        <NewsSection title="राजनीति" link="/politics" news={politicsNews} layout="grid" />
+        
+        <div class="ad-section">
+          <a href="/advertise" class="ad-link">
+            <img src="https://images.unsplash.com/photo-1542744094-13e00b848529?auto=format&fit=crop&q=80&w=728&h=120" alt="In-feed Ad" class="long-ad" />
+          </a>
+        </div>
+
+        <NewsSection title="स्वास्थ्य" link="/health" news={healthNews} layout="grid" />
+      </div>
+      
+      <aside class="sidebar">
+        <FacebookFeed />
+        <div class="sidebar-ad">
+          <a href="/advertise" class="ad-link">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=300&h=250" alt="Sidebar Ad" class="square-ad" />
+          </a>
+        </div>
+        <NewsSection title="खेलकुद" link="/sports" news={sportsNews.slice(0, 2)} layout="list" />
+      </aside>
+    </div>
+
+    <PhotoGallery />
+
+    <div class="container">
+      <NewsSection title="मनोरञ्जन" link="/entertainment" news={entertainmentNews} layout="grid" />
+    </div>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    background-color: #fcfcfc;
+  }
+
+  .main-sidebar-layout {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .ad-section {
+    padding: 1.5rem 0;
+  }
+
+  .ad-placeholder-long {
+    height: 120px;
+    background: #f4f4f4;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+  }
+
+  .ad-placeholder-square {
+    height: 250px;
+    background: #f4f4f4;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar {
+    padding-top: 1rem;
+  }
+
+  @media (max-width: 992px) {
+    .main-sidebar-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+const galleryItems = [
+  {
+    image: "https://images.unsplash.com/photo-1544284420-aef239396e9d?auto=format&fit=crop&q=80&w=800",
+    title: "नेपालको सुन्दर सगरमाथा क्षेत्र",
+    category: "पर्यटन"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1540961811651-70586e379051?auto=format&fit=crop&q=80&w=800",
+    title: "लुम्बिनीको मायादेवी मन्दिरमा साँझ",
+    category: "धार्मिक"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506466010722-395ee2bef877?auto=format&fit=crop&q=80&w=800",
+    title: "काठमाडौँको ऐतिहासिक मन्दिरहरू",
+    category: "संस्कृति"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1518005020480-10f60c87be0d?auto=format&fit=crop&q=80&w=800",
+    title: "पोखराको फेवातालमा डुङ्गा सयर",
+    category: "दृश्य"
+  }
+];
+---
+
+<section class="photo-gallery">
+  <div class="container gallery-inner">
+    <div class="section-header">
+      <h2 class="section-title">फोटो फिचर (Multimedia)</h2>
+      <a href="/gallery" class="view-all">सबै फोटोहरू <i class="fas fa-camera"></i></a>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="featured-item">
+        <div class="image-wrapper">
+          <img src={galleryItems[0].image} alt={galleryItems[0].title} />
+          <div class="overlay">
+            <span class="category">{galleryItems[0].category}</span>
+            <h3>{galleryItems[0].title}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="secondary-items">
+        {galleryItems.slice(1).map((item) => (
+          <div class="gallery-item">
+            <div class="image-wrapper">
+              <img src={item.image} alt={item.title} />
+              <div class="overlay-small">
+                <span class="category">{item.category}</span>
+                <h3>{item.title}</h3>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .photo-gallery {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 3rem 0;
+    margin: 2rem 0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .section-title::after {
+    background-color: #fff;
+  }
+
+  .view-all {
+    color: #fff;
+    opacity: 0.8;
+  }
+
+  .view-all:hover {
+    opacity: 1;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1rem;
+    height: 500px;
+  }
+
+  .secondary-items {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .image-wrapper:hover img {
+    transform: scale(1.1);
+  }
+
+  .overlay, .overlay-small {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .overlay h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .overlay-small h3 { font-size: 1.1rem; }
+
+  .category {
+    background: var(--primary-color);
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 992px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+    .featured-item {
+      height: 350px;
+    }
+    .secondary-items {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-rows: auto;
+      height: auto;
+    }
+    .gallery-item {
+      height: 150px;
+    }
+  }
+</style>

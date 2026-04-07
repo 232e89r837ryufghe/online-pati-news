@@ -1,0 +1,85 @@
+---
+const today = new Date();
+const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const dateString = today.toLocaleDateString('ne-NP', options);
+const englishDateString = today.toLocaleDateString('en-US', options);
+---
+
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <div class="date-info">
+      <img src="/logo-main.png" alt="Logo" class="top-logo" />
+      <span class="nepali-date">{dateString}</span>
+      <span class="divider">|</span>
+      <span class="english-date">{englishDateString}</span>
+    </div>
+    <div class="social-links">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .top-bar {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .top-bar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .date-info {
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+  }
+
+  .top-logo {
+    height: 16px;
+    width: auto;
+    margin-right: 0.8rem;
+    border-radius: 2px;
+  }
+
+  .divider {
+    margin: 0 0.5rem;
+    color: #ccc;
+  }
+
+  .social-links a {
+    margin-left: 1rem;
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .social-links a:hover {
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .top-bar-inner {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+    .date-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .divider {
+      display: none;
+    }
+  }
+</style>
+
+<!-- Font Awesome for social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />

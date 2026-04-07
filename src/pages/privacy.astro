@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="गोपनीयता नीति - Online Pati News">
+  <TopBar />
+  <Header />
+  <Navbar />
+  
+  <main class="static-page">
+    <div class="container page-header">
+      <h1 class="page-title">गोपनीयता नीति (Privacy Policy)</h1>
+      <div class="breadcrumb">
+        <a href="/">गृहपृष्ठ</a> <i class="fas fa-chevron-right"></i> <span>गोपनीयता नीति</span>
+      </div>
+    </div>
+
+    <div class="container static-content">
+      <p>अनलाइन पाटी न्यूज आफ्ना पाठकहरूको गोपनीयताको कदर गर्दछ। यो गोपनीयता नीतिले हामी कसरी तपाईंको जानकारी संकलन, प्रयोग र सुरक्षा गर्छौँ भन्ने बारे जानकारी दिन्छ।</p>
+      
+      <h2>१. संकलन गरिने जानकारी</h2>
+      <p>हामीले तपाईंको नाम, इमेल ठेगाना र ब्राउजिङ व्यवहार जस्ता जानकारीहरू सेवा सुधारका लागि संकलन गर्न सक्छौँ।</p>
+
+      <h2>२. जानकारीको प्रयोग</h2>
+      <p>संकलन गरिएको जानकारी तपाईंलाई अझ राम्रो समाचार अनुभव प्रदान गर्न, विज्ञापनहरू देखाउन र हाम्रा सेवाहरूको विश्लेषण गर्न प्रयोग गरिन्छ।</p>
+
+      <h2>३. कुकीज (Cookies)</h2>
+      <p>हाम्रो वेबसाइटले प्रयोगकर्ताको अनुभव सुधार गर्न कुकीजको प्रयोग गर्दछ। तपाईंले आफ्नो ब्राउजर सेटिङबाट कुकीजलाई बन्द गर्न सक्नुहुन्छ।</p>
+
+      <h2>४. तेस्रो पक्ष लिङ्कहरू</h2>
+      <p>हाम्रो वेबसाइटमा अन्य तेस्रो पक्ष वेबसाइटका लिङ्कहरू हुन सक्छन्। ती वेबसाइटहरूको गोपनीयता नीतिको लागि हामी जिम्मेवार छैनौँ।</p>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .static-page { background-color: #fcfcfc; padding-bottom: 4rem; }
+  .page-header { padding: 2.5rem 0; border-bottom: 2px solid #eee; margin-bottom: 2rem; }
+  .page-title { font-size: 2.5rem; font-family: var(--font-headline); color: var(--primary-color); }
+  .static-content { background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); max-width: 900px; margin: 0 auto; }
+  h2 { font-family: var(--font-headline); font-size: 1.8rem; margin: 2rem 0 1rem; color: #333; }
+  p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 1.5rem; }
+  .breadcrumb { font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+</style>

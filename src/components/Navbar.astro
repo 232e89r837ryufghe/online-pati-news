@@ -1,0 +1,148 @@
+---
+const menuItems = [
+  { name: 'गृहपृष्ठ', link: '/' },
+  { name: 'समाचार', link: '/news' },
+  { name: 'राजनीति', link: '/politics' },
+  { name: 'अर्थतन्त्र', link: '/economy' },
+  { name: 'समाज', link: '/society' },
+  { name: 'खेलकुद', link: '/sports' },
+  { name: 'मनोरञ्जन', link: '/entertainment' },
+  { name: 'विश्व', link: '/world' },
+  { name: 'स्वास्थ्य', link: '/health' },
+  { name: 'विचार', link: '/opinion' }
+];
+---
+
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <ul class="nav-menu">
+      <li class="home-icon">
+        <a href="/">
+          <img 
+            src="/logo-main.png" 
+            alt="Online Pati News Logo" 
+          />
+        </a>
+      </li>
+      {menuItems.slice(1).map((item) => (
+        <li><a href={item.link}>{item.name}</a></li>
+      ))}
+    </ul>
+    <div class="nav-right">
+      <form action="/search" method="GET" class="nav-search-form">
+        <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
+        <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+      </form>
+      <button class="mobile-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    background-color: var(--primary-color);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-menu {
+    display: flex;
+    font-family: var(--font-headline);
+    font-weight: 500;
+    font-size: 1.1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .nav-menu::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
+  .nav-menu li a {
+    padding: 0.8rem 1rem;
+    display: block;
+    color: white;
+    transition: background 0.3s ease;
+  }
+
+  .nav-menu li a:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
+
+  .home-icon a {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    height: 100%;
+  }
+
+  .home-icon img {
+    height: 30px;
+    width: auto;
+    filter: brightness(0) invert(1); /* Makes the logo white for the blue navbar */
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-search-form {
+    display: flex;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    margin-right: 1.5rem;
+    overflow: hidden;
+  }
+
+  .nav-search-form input {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    width: 150px;
+    outline: none;
+  }
+
+  .nav-search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nav-search-form button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .nav-search-form button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-toggle {
+    display: none;
+  }
+
+  @media (max-width: 992px) {
+    .nav-menu {
+      display: none; /* In a real app we'd have a mobile drawer here */
+    }
+    .mobile-toggle {
+      display: block;
+    }
+  }
+</style>

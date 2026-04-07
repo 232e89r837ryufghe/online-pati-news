@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="विज्ञापन - Online Pati News">
+  <TopBar />
+  <Header />
+  <Navbar />
+  
+  <main class="static-page">
+    <div class="container page-header">
+      <h1 class="page-title">विज्ञापन (Advertise with Us)</h1>
+      <div class="breadcrumb">
+        <a href="/">गृहपृष्ठ</a> <i class="fas fa-chevron-right"></i> <span>विज्ञापन</span>
+      </div>
+    </div>
+
+    <div class="container main-sidebar-layout">
+      <div class="main-content static-content">
+        <h2>हामीसँग किन विज्ञापन दिने?</h2>
+        <p>अनलाइन पाटी न्यूज नेपालको एक लोकप्रिय समाचार पोर्टल हो जसले लाखौँ पाठकहरूलाई दैनिक समाचार र सूचनाहरू प्रदान गर्दछ। हाम्रो प्लेटफर्ममा विज्ञापन दिनु भनेको तपाईंको सेवा वा उत्पादनलाई सिधै लक्षित समुदायमा पुर्‍याउनु हो।</p>
+
+        <div class="ad-options-grid">
+           <div class="ad-option">
+              <i class="fas fa-image"></i>
+              <h3>ब्यानर विज्ञापन</h3>
+              <p>होमपेज र भित्री समाचार पृष्ठहरूमा आकर्षक ब्यानरहरू राख्न सकिन्छ।</p>
+           </div>
+           <div class="ad-option">
+              <i class="fas fa-pencil-alt"></i>
+              <h3>प्रायोजित सामाग्री</h3>
+              <p>आफ्नो ब्रान्ड वा उत्पादनको बारेमा समाचारमूलक जानकारी (Sponsored Post) लेख्न सकिन्छ।</p>
+           </div>
+           <div class="ad-option">
+              <i class="fas fa-play-circle"></i>
+              <h3>भिडियो विज्ञापन</h3>
+              <p>हाम्रा भिडियो सामग्री र सामाजिक मिडिया प्लेटफर्ममा भिडियो विज्ञापन राख्न सकिन्छ।</p>
+           </div>
+        </div>
+
+        <h2>सम्पर्क गर्नुहोस्</h2>
+        <p>यदि तपाईं आफ्नो व्यवसायको विज्ञापन हाम्रो पोर्टलमा दिन चाहनुहुन्छ भने, हामीलाई निम्न ठेगानामा सम्पर्क गर्नुहोस्:</p>
+        <div class="ad-contact-info">
+           <p><strong>इमेल:</strong> advertisement@onlinepantinews.com</p>
+           <p><strong>फोन:</strong> +९७७-१-४२०००००</p>
+           <p><strong>वाट्सएप:</strong> +९७७-९८५१०००००</p>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <FacebookFeed />
+        <div class="sidebar-ad">
+           <a href="/advertise" class="ad-link">
+             <img src="https://images.unsplash.com/photo-1572021335469-3171624c995c?auto=format&fit=crop&q=80&w=300&h=250" alt="Sidebar Ad" />
+           </a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .static-page { background-color: #fcfcfc; padding-bottom: 4rem; }
+  .page-header { padding: 2.5rem 0; border-bottom: 2px solid #eee; margin-bottom: 2rem; }
+  .page-title { font-size: 2.5rem; font-family: var(--font-headline); color: var(--primary-color); }
+  .breadcrumb { font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+
+  .main-sidebar-layout { display: grid; grid-template-columns: 2.5fr 1fr; gap: 3rem; }
+  .static-content { background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+  h2 { font-family: var(--font-headline); font-size: 2rem; margin: 2rem 0 1rem; color: #333; border-bottom: 2px solid var(--primary-color); display: inline-block; padding-bottom: 0.3rem; }
+  p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 1.5rem; }
+
+  .ad-options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 3rem 0; }
+  .ad-option { text-align: center; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; transition: transform 0.3s ease; }
+  .ad-option:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+  .ad-option i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+  .ad-option h3 { font-family: var(--font-headline); font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .ad-option p { font-size: 0.95rem; }
+
+  .ad-contact-info { background: #f4f4f4; padding: 1.5rem; border-radius: 8px; border-left: 5px solid var(--primary-color); }
+  .ad-contact-info p { margin-bottom: 0.5rem; }
+
+  .ad-placeholder-square { height: 250px; background: #eee; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; color: #999; }
+
+  @media (max-width: 992px) {
+    .main-sidebar-layout { grid-template-columns: 1fr; }
+    .ad-options-grid { grid-template-columns: 1fr; }
+  }
+</style>

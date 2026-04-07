@@ -1,0 +1,169 @@
+---
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <a href="/">
+            <img 
+              src="/logo-main.png" 
+              alt="Online Pati News Logo" 
+            />
+          </a>
+        </div>
+        <p>अनलाइन पाटी न्युज नेपालको अग्रणी समाचार पोर्टल हो। हामी सत्य, तथ्य र भरपर्दो समाचारका लागि प्रतिबद्ध छौं।</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>महत्वपूर्ण लिङ्कहरू</h3>
+        <ul>
+          <li><a href="/about">हाम्रो बारेमा</a></li>
+          <li><a href="/contact">सम्पर्क</a></li>
+          <li><a href="/privacy">गोपनीयता नीति</a></li>
+          <li><a href="/terms">शर्त तथा नियमहरू</a></li>
+          <li><a href="/advertise">विज्ञापन</a></li>
+        </ul>
+      </div>
+      <div class="footer-categories">
+        <h3>प्रमुख विधाहरू</h3>
+        <ul>
+          <li><a href="/politics">राजनीति</a></li>
+          <li><a href="/economy">अर्थतन्त्र</a></li>
+          <li><a href="/society">समाज</a></li>
+          <li><a href="/sports">खेलकुद</a></li>
+          <li><a href="/entertainment">मनोरञ्जन</a></li>
+          <li><a href="/world">विश्व</a></li>
+          <li><a href="/health">स्वास्थ्य</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h3>सम्पर्क गर्नुहोस्</h3>
+        <p><i class="fas fa-map-marker-alt"></i> पुतलीसडक, काठमाडौँ</p>
+        <p><i class="fas fa-phone"></i> +९७७-१-४२०००००</p>
+        <p><i class="fas fa-envelope"></i> info@onlinepantinews.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {new Date().getFullYear()} अनलाइन पाटी न्यूज डट कम। सर्वाधिकार सुरक्षित।</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 3rem 0;
+    margin-top: 3rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-about p {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-logo img {
+    height: 50px;
+    width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: var(--primary-color);
+  }
+
+  .footer ul {
+    list-style: none;
+  }
+
+  .footer ul li {
+    margin-bottom: 0.8rem;
+  }
+
+  .footer ul li a {
+    color: #ccc;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+
+  .footer ul li a:hover {
+    color: var(--primary-color);
+  }
+
+  .footer-contact p {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-contact i {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+  }
+
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+    transition: background 0.3s ease;
+  }
+
+  .social-links a:hover {
+    background: var(--primary-color);
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

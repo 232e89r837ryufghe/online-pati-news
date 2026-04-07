@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="सम्पर्क - Online Pati News">
+  <TopBar />
+  <Header />
+  <Navbar />
+  
+  <main class="static-page">
+    <div class="container page-header">
+      <h1 class="page-title">हामीलाई सम्पर्क गर्नुहोस्</h1>
+      <div class="breadcrumb">
+        <a href="/">गृहपृष्ठ</a> <i class="fas fa-chevron-right"></i> <span>सम्पर्क</span>
+      </div>
+    </div>
+
+    <div class="container main-sidebar-layout">
+      <div class="main-content contact-content">
+        <div class="contact-grid">
+           <div class="contact-info-cards">
+              <div class="info-card">
+                 <i class="fas fa-map-marker-alt"></i>
+                 <h3>ठेगाना</h3>
+                 <p>पुतलीसडक, काठमाडौँ, नेपाल</p>
+              </div>
+              <div class="info-card">
+                 <i class="fas fa-phone-alt"></i>
+                 <h3>फोन नम्बर</h3>
+                 <p>+९७७-१-४२०००००</p>
+                 <p>+९७७-९८५१०००००</p>
+              </div>
+              <div class="info-card">
+                 <i class="fas fa-envelope"></i>
+                 <h3>इमेल</h3>
+                 <p>info@onlinepantinews.com</p>
+                 <p>advertisement@onlinepantinews.com</p>
+              </div>
+           </div>
+
+           <div class="contact-form-container">
+              <h2>सन्देश पठाउनुहोस्</h2>
+              <form class="contact-form">
+                 <div class="form-group">
+                    <label for="name">पूरा नाम</label>
+                    <input type="text" id="name" name="name" placeholder="तपाईंको नाम यहाँ लेख्नुहोस्" required />
+                 </div>
+                 <div class="form-group">
+                    <label for="email">इमेल ठेगाना</label>
+                    <input type="email" id="email" name="email" placeholder="तपाईंको इमेल लेख्नुहोस्" required />
+                 </div>
+                 <div class="form-group">
+                    <label for="subject">विषय</label>
+                    <input type="text" id="subject" name="subject" placeholder="सम्पर्कको उद्देश्य" required />
+                 </div>
+                 <div class="form-group">
+                    <label for="message">सन्देश</label>
+                    <textarea id="message" name="message" rows="5" placeholder="तपाईंको सन्देश यहाँ लेख्नुहोस्" required></textarea>
+                 </div>
+                 <button type="submit" class="submit-btn">सन्देश पठाउनुहोस्</button>
+              </form>
+           </div>
+        </div>
+
+        <div class="google-map">
+           <div class="map-placeholder">
+              <i class="fas fa-map"></i>
+              <p>युजरलाई लोकेसन देखाउनको लागि यहाँ गुगल म्याप लोड हुनेछ।</p>
+           </div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-info">
+           <h3>कार्यालय समय</h3>
+           <p>आइतबार - शुक्रबार: १०:०० बजे - ५:०० बजे सम्म</p>
+           <p>शनिबार: बन्द</p>
+        </div>
+        <div class="sidebar-info ad">
+           <h3>विज्ञापनको लागि</h3>
+           <p>हाम्रो अनलाइन पोर्टलमा विज्ञापन दिनको लागि माथिको इमेल वा फोन नम्बरमा सम्पर्क गर्न सक्नुहुन्छ।</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .static-page { background-color: #fcfcfc; padding-bottom: 4rem; }
+  .page-header { padding: 2.5rem 0; margin-bottom: 2rem; border-bottom: 2px solid #eee; }
+  .page-title { font-size: 2.5rem; font-family: var(--font-headline); color: var(--primary-color); }
+  .breadcrumb { font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+
+  .main-sidebar-layout { display: grid; grid-template-columns: 2.5fr 1fr; gap: 3rem; }
+
+  .contact-content { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; }
+
+  .contact-info-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .info-card { padding: 2rem; background: #f9f9f9; border-radius: 8px; text-align: center; border-bottom: 3px solid var(--primary-color); }
+  .info-card i { font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
+  .info-card h3 { font-family: var(--font-headline); font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .info-card p { font-size: 1rem; color: #666; margin-bottom: 0.2rem; }
+
+  .contact-form-container h2 { font-family: var(--font-headline); font-size: 1.8rem; margin-bottom: 1.5rem; color: #333; }
+
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label { display: block; font-family: var(--font-headline); font-size: 1rem; margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-body); font-size: 1rem; outline: none; transition: border-color 0.3s ease; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--primary-color); }
+
+  .submit-btn { background: var(--primary-color); color: white; border: none; padding: 0.8rem 2rem; font-family: var(--font-headline); font-size: 1.2rem; border-radius: 4px; cursor: pointer; transition: background 0.3s ease; }
+  .submit-btn:hover { background: #335da1; }
+
+  .google-map { margin-top: 2rem; border-radius: 8px; overflow: hidden; height: 400px; }
+  .map-placeholder { background: #eee; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #999; border: 1px dashed #ccc; }
+  .map-placeholder i { font-size: 3rem; margin-bottom: 1rem; }
+
+  .sidebar-info { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .sidebar-info h3 { font-family: var(--font-headline); font-size: 1.3rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+  .sidebar-info p { font-size: 0.95rem; color: #555; line-height: 1.6; }
+
+  @media (max-width: 992px) {
+    .main-sidebar-layout { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
