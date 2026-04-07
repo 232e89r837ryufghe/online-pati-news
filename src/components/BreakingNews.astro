@@ -1,12 +1,18 @@
 ---
-import { getWordPressPosts } from '../lib/wordpress';
+import { getWordPressPosts, getWordPressPostsByCategorySlug } from '../lib/wordpress';
 
-const latestPosts = await getWordPressPosts(10);
+let latestPosts = await getWordPressPostsByCategorySlug("ब्रेकिङ", 10);
+if (latestPosts.length === 0) {
+  latestPosts = await getWordPressPosts(10);
+}
+
+
 const breakingNews = latestPosts.map(post => ({
   title: post.title,
   slug: post.slug || post.id.toString()
 }));
 ---
+
 
 
 <div class="breaking-news">

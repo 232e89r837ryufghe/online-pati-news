@@ -67,9 +67,14 @@ export async function searchWordPressPosts(query: string, perPage = 20): Promise
 }
 
 export async function getWordPressPostsByCategorySlug(slug: string, perPage = 10): Promise<NewsItem[]> {
-
   const categories = await getWordPressCategories();
-  const category = categories.find((c: any) => c.slug === slug);
+  
+  // Try to find category by matching either the raw slug or the decoded slug
+  const category = categories.find((c: any) => 
+    c.slug === slug || 
+    c.slug === encodeURIComponent(slug) ||
+    decodeURIComponent(c.slug) === slug
+  );
   
   if (!category) {
     console.warn(`Category with slug "${slug}" not found.`);
@@ -78,6 +83,7 @@ export async function getWordPressPostsByCategorySlug(slug: string, perPage = 10
 
   return getWordPressPosts(perPage, category.id);
 }
+
 
 function mapWordPressPostToNewsItem(post: any): NewsItem {
   // Extract featured image

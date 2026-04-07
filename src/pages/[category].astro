@@ -10,10 +10,11 @@ import { getWordPressCategories, getWordPressPostsByCategorySlug } from '../lib/
 export async function getStaticPaths() {
   const categories = await getWordPressCategories();
   return categories.map((cat: any) => ({
-    params: { category: cat.slug },
+    params: { category: decodeURIComponent(cat.slug) },
     props: { categoryName: cat.name, slug: cat.slug },
   }));
 }
+
 
 const { categoryName, slug } = Astro.props;
 const results = await getWordPressPostsByCategorySlug(slug, 20);
