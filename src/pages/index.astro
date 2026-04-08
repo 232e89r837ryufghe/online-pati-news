@@ -1,11 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import TopBar from '../components/TopBar.astro';
-import Navbar from '../components/Navbar.astro';
-import BreakingNews from '../components/BreakingNews.astro';
-import Sidebar from '../components/Sidebar.astro';
-import Footer from '../components/Footer.astro';
-import { getWordPressPosts, getWordPressPostsByCategorySlug } from '../lib/wordpress';
+import Layout from "../layouts/Layout.astro";
+import TopBar from "../components/TopBar.astro";
+import Navbar from "../components/Navbar.astro";
+import BreakingNews from "../components/BreakingNews.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Footer from "../components/Footer.astro";
+import {
+    getWordPressPosts,
+    getWordPressPostsByCategorySlug,
+} from "../lib/wordpress";
 
 // FETCH DATA
 const allPosts = await getWordPressPosts(12);
@@ -46,56 +49,89 @@ const coverStory = coverStories[0] || allPosts[5];
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
             <a href="/advertise" class="ad-slot ad-970x90">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=970&h=90" alt="Real Estate Ad">
+                <img
+                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=970&h=90"
+                    alt="Real Estate Ad"
+                />
             </a>
         </div>
     </div>
 
-    <main> 
+    <main>
         <BreakingNews />
 
         <div class="main-wrapper">
             <div class="container">
                 <!-- LEAD STORIES STACK (1 + 1 + 1) -->
                 <div class="lead-stories-wrapper">
-                    {mainLeads.map((post) => (
-                        <div class="main-lead">
-                            <a href={`/news/${post.slug || post.id}`}>
-                                <h1 class="opn-lead-title" set:html={post.title}></h1>
-                            </a>
-                            <div class="opn-meta">
-                                <span><i class="far fa-user"></i> {post.author}</span>
-                                <span><i class="far fa-clock"></i> {post.date}</span>
-                            </div>
-                            <a href={`/news/${post.slug || post.id}`}>
-                                <div class="opn-lead-image">
-                                    <img src={post.image} alt={post.title}>
+                    {
+                        mainLeads.map((post) => (
+                            <div class="main-lead">
+                                <a href={`/news/${post.slug || post.id}`}>
+                                    <h1
+                                        class="opn-lead-title"
+                                        set:html={post.title}
+                                    />
+                                </a>
+                                <div class="opn-meta">
+                                    <span>
+                                        <i class="far fa-user" /> {post.author}
+                                    </span>
+                                    <span>
+                                        <i class="far fa-clock" /> {post.date}
+                                    </span>
                                 </div>
-                            </a>
-                            <p class="opn-lead-excerpt" set:html={post.excerpt}></p>
-                        </div>
-                    ))}
+                                <a href={`/news/${post.slug || post.id}`}>
+                                    <div class="opn-lead-image">
+                                        <img
+                                            src={post.image}
+                                            alt={post.title}
+                                        />
+                                    </div>
+                                </a>
+                                <p
+                                    class="opn-lead-excerpt"
+                                    set:html={post.excerpt}
+                                />
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
             <!-- TRENDING GRID -->
             <div class="container">
-                <div class="sec-header" style="border-top: 3px solid var(--border-color); padding-top:30px;">
-                    <h2 class="sec-title" style="color: var(--highlight-color); border-bottom-color: var(--highlight-color);">
+                <div
+                    class="sec-header"
+                    style="border-top: 3px solid var(--border-color); padding-top:30px;"
+                >
+                    <h2
+                        class="sec-title"
+                        style="color: var(--highlight-color); border-bottom-color: var(--highlight-color);"
+                    >
                         <i class="fas fa-fire"></i> ट्रेन्डिङ
                     </h2>
-                    <a href="/trending" class="sec-link">सबै ट्रेन्डिङ <i class="fas fa-arrow-right"></i></a>
+                    <a href="/trending" class="sec-link"
+                        >सबै ट्रेन्डिङ <i class="fas fa-arrow-right"></i></a
+                    >
                 </div>
                 <div class="trending-grid">
-                    {trendingPosts.map((post, index) => (
-                        <a href={`/news/${post.slug || post.id}`} class="trending-card">
-                            <div class="img-wrap">
-                                <span class="trending-num">{index + 1}</span>
-                                <img src={post.image} alt={post.title}>
-                            </div>
-                            <h3 set:html={post.title}></h3>
-                        </a>
-                    ))}
+                    {
+                        trendingPosts.map((post, index) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="trending-card"
+                            >
+                                <div class="img-wrap">
+                                    <span class="trending-num">
+                                        {index + 1}
+                                    </span>
+                                    <img src={post.image} alt={post.title} />
+                                </div>
+                                <h3 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
@@ -104,27 +140,37 @@ const coverStory = coverStories[0] || allPosts[5];
                 <div class="opn-main-column">
                     <!-- Text Highlighting -->
                     <ul class="opn-text-list">
-                        {textListNews.map((post) => (
-                            <li>
-                                <i class="fas fa-square"></i>
-                                <a href={`/news/${post.slug || post.id}`} set:html={post.title}></a>
-                            </li>
-                        ))}
+                        {
+                            textListNews.map((post) => (
+                                <li>
+                                    <i class="fas fa-square" />
+                                    <a
+                                        href={`/news/${post.slug || post.id}`}
+                                        set:html={post.title}
+                                    />
+                                </li>
+                            ))
+                        }
                     </ul>
 
                     <!-- Sub Grid -->
                     <div class="opn-sub-grid">
-                        {subGridNews.map((post) => (
-                            <article class="news-card-standard">
-                                <a href={`/news/${post.slug || post.id}`}>
-                                    <div class="img-wrap">
-                                        <img src={post.image} alt={post.title}>
-                                    </div>
-                                    <h3 set:html={post.title}></h3>
-                                    <p set:html={post.excerpt}></p>
-                                </a>
-                            </article>
-                        ))}
+                        {
+                            subGridNews.map((post) => (
+                                <article class="news-card-standard">
+                                    <a href={`/news/${post.slug || post.id}`}>
+                                        <div class="img-wrap">
+                                            <img
+                                                src={post.image}
+                                                alt={post.title}
+                                            />
+                                        </div>
+                                        <h3 set:html={post.title} />
+                                        <p set:html={post.excerpt} />
+                                    </a>
+                                </article>
+                            ))
+                        }
                     </div>
                 </div>
 
@@ -136,52 +182,95 @@ const coverStory = coverStories[0] || allPosts[5];
             <div class="ad-container">
                 <span class="ad-label">Advertisement</span>
                 <a href="/advertise" class="ad-slot ad-970x250">
-                    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=970&h=250" alt="Auto Ad Banner">
+                    <img
+                        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=970&h=250"
+                        alt="Auto Ad Banner"
+                    />
                 </a>
             </div>
         </div>
 
         <!-- COVER STORY SECTION -->
-        {coverStory && (
-            <section class="cover-story-section">
-                <div class="container">
-                    <a href={`/news/${coverStory.slug || coverStory.id}`} class="cover-story-card">
-                        <img src={coverStory.image} alt={coverStory.title} class="cover-story-bg">
-                        <div class="cover-story-overlay">
-                            <span class="cover-badge"><i class="fas fa-star"></i> कभर स्टोरी</span>
-                            <h2 class="cover-title" set:html={coverStory.title}></h2>
-                            <p class="cover-excerpt" set:html={coverStory.excerpt}></p>
-                        </div>
-                    </a>
-                </div>
-            </section>
-        )}
+        {
+            coverStory && (
+                <section class="cover-story-section">
+                    <div class="container">
+                        <a
+                            href={`/news/${coverStory.slug || coverStory.id}`}
+                            class="cover-story-card"
+                        >
+                            <img
+                                src={coverStory.image}
+                                alt={coverStory.title}
+                                class="cover-story-bg"
+                            />
+                            <div class="cover-story-overlay">
+                                <span class="cover-badge">
+                                    <i class="fas fa-star" /> कभर स्टोरी
+                                </span>
+                                <h2
+                                    class="cover-title"
+                                    set:html={coverStory.title}
+                                />
+                                <p
+                                    class="cover-excerpt"
+                                    set:html={coverStory.excerpt}
+                                />
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            )
+        }
 
         <!-- PROVINCE SECTION -->
         <section class="province-section">
             <div class="container">
                 <div class="sec-header">
                     <h2 class="sec-title">प्रदेश समाचार</h2>
-                    <a href="/प्रदेश" class="sec-link">सबै प्रदेश <i class="fas fa-arrow-right"></i></a>
+                    <a href="/प्रदेश" class="sec-link"
+                        >सबै प्रदेश <i class="fas fa-arrow-right"></i></a
+                    >
                 </div>
-                
+
                 <div class="province-tabs">
-                    <button class="prov-btn active" onclick="activateProv(this)">कोशी</button>
-                    <button class="prov-btn" onclick="activateProv(this)">मधेश</button>
-                    <button class="prov-btn" onclick="activateProv(this)">बागमती</button>
-                    <button class="prov-btn" onclick="activateProv(this)">गण्डकी</button>
-                    <button class="prov-btn" onclick="activateProv(this)">लुम्बिनी</button>
-                    <button class="prov-btn" onclick="activateProv(this)">कर्णाली</button>
-                    <button class="prov-btn" onclick="activateProv(this)">सुदूरपश्चिम</button>
+                    <button class="prov-btn active" onclick="activateProv(this)"
+                        >कोशी</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >मधेश</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >बागमती</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >गण्डकी</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >लुम्बिनी</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >कर्णाली</button
+                    >
+                    <button class="prov-btn" onclick="activateProv(this)"
+                        >सुदूरपश्चिम</button
+                    >
                 </div>
 
                 <div class="grid-4-col">
-                    {provincePosts.map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="prov-card">
-                            <div class="img-wrap"><img src={post.image} alt={post.title}></div>
-                            <h4 set:html={post.title}></h4>
-                        </a>
-                    ))}
+                    {
+                        provincePosts.map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="prov-card"
+                            >
+                                <div class="img-wrap">
+                                    <img src={post.image} alt={post.title} />
+                                </div>
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
         </section>
@@ -190,58 +279,113 @@ const coverStory = coverStories[0] || allPosts[5];
         <div class="container category-section">
             <div class="sec-header">
                 <h2 class="sec-title">अर्थतन्त्र (Economy)</h2>
-                <a href="/अर्थतन्त्र" class="sec-link">सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a>
+                <a href="/अर्थतन्त्र" class="sec-link"
+                    >सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a
+                >
             </div>
             <div class="grid-4-col">
-                {economyPosts.map((post) => (
-                    <a href={`/news/${post.slug || post.id}`} class="news-card-standard">
-                        <div class="img-wrap"><img src={post.image} alt={post.title}></div>
-                        <h3 set:html={post.title}></h3>
-                    </a>
-                ))}
+                {
+                    economyPosts.map((post) => (
+                        <a
+                            href={`/news/${post.slug || post.id}`}
+                            class="news-card-standard"
+                        >
+                            <div class="img-wrap">
+                                <img src={post.image} alt={post.title} />
+                            </div>
+                            <h3 set:html={post.title} />
+                        </a>
+                    ))
+                }
             </div>
         </div>
 
         <div class="container mixed-category-grid">
             <div class="mixed-block">
                 <div class="sec-header">
-                    <h2 class="sec-title" style="color:#0f766e; border-bottom-color:#0f766e;">कर्पोरेट</h2>
+                    <h2
+                        class="sec-title"
+                        style="color:#0f766e; border-bottom-color:#0f766e;"
+                    >
+                        कर्पोरेट
+                    </h2>
                     <a href="/कर्पोरेट" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {corporatePosts[0] && (
-                    <a href={`/news/${corporatePosts[0].slug || corporatePosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={corporatePosts[0].image} alt={corporatePosts[0].title}></div>
-                        <h3 set:html={corporatePosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {corporatePosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-building" style="color:#0f766e;"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    corporatePosts[0] && (
+                        <a
+                            href={`/news/${corporatePosts[0].slug || corporatePosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={corporatePosts[0].image}
+                                    alt={corporatePosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={corporatePosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        corporatePosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i
+                                    class="fas fa-building"
+                                    style="color:#0f766e;"
+                                />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
             <div class="mixed-block">
                 <div class="sec-header">
-                    <h2 class="sec-title" style="color:#b45309; border-bottom-color:#b45309;">बिजनेस</h2>
+                    <h2
+                        class="sec-title"
+                        style="color:#b45309; border-bottom-color:#b45309;"
+                    >
+                        बिजनेस
+                    </h2>
                     <a href="/बिजनेस" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {businessPosts[0] && (
-                    <a href={`/news/${businessPosts[0].slug || businessPosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={businessPosts[0].image} alt={businessPosts[0].title}></div>
-                        <h3 set:html={businessPosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {businessPosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-briefcase" style="color:#b45309;"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    businessPosts[0] && (
+                        <a
+                            href={`/news/${businessPosts[0].slug || businessPosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={businessPosts[0].image}
+                                    alt={businessPosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={businessPosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        businessPosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i
+                                    class="fas fa-briefcase"
+                                    style="color:#b45309;"
+                                />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
         </div>
@@ -250,43 +394,89 @@ const coverStory = coverStories[0] || allPosts[5];
         <div class="container mixed-category-grid">
             <div class="mixed-block">
                 <div class="sec-header">
-                    <h2 class="sec-title" style="color:#16a34a; border-bottom-color:#16a34a;">स्वास्थ्य</h2>
+                    <h2
+                        class="sec-title"
+                        style="color:#16a34a; border-bottom-color:#16a34a;"
+                    >
+                        स्वास्थ्य
+                    </h2>
                     <a href="/स्वास्थ्य" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {healthPosts[0] && (
-                    <a href={`/news/${healthPosts[0].slug || healthPosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={healthPosts[0].image} alt={healthPosts[0].title}></div>
-                        <h3 set:html={healthPosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {healthPosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-heartbeat" style="color:#16a34a;"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    healthPosts[0] && (
+                        <a
+                            href={`/news/${healthPosts[0].slug || healthPosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={healthPosts[0].image}
+                                    alt={healthPosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={healthPosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        healthPosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i
+                                    class="fas fa-heartbeat"
+                                    style="color:#16a34a;"
+                                />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
             <div class="mixed-block">
                 <div class="sec-header">
-                    <h2 class="sec-title" style="color:#6366f1; border-bottom-color:#6366f1;">सूचना-प्रविधि</h2>
+                    <h2
+                        class="sec-title"
+                        style="color:#6366f1; border-bottom-color:#6366f1;"
+                    >
+                        सूचना-प्रविधि
+                    </h2>
                     <a href="/सूचना-प्रविधि" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {itPosts[0] && (
-                    <a href={`/news/${itPosts[0].slug || itPosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={itPosts[0].image} alt={itPosts[0].title}></div>
-                        <h3 set:html={itPosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {itPosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-laptop-code" style="color:#6366f1;"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    itPosts[0] && (
+                        <a
+                            href={`/news/${itPosts[0].slug || itPosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={itPosts[0].image}
+                                    alt={itPosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={itPosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        itPosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i
+                                    class="fas fa-laptop-code"
+                                    style="color:#6366f1;"
+                                />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
         </div>
@@ -295,18 +485,37 @@ const coverStory = coverStories[0] || allPosts[5];
         <section class="opinion-section">
             <div class="container">
                 <div class="sec-header" style="border-bottom:none;">
-                    <h2 class="sec-title" style="border-bottom-color: var(--highlight-color); color: var(--text-main);">विचार / ब्लग</h2>
-                    <a href="/विचार" class="sec-link">थप लेखहरू <i class="fas fa-arrow-right"></i></a>
+                    <h2
+                        class="sec-title"
+                        style="border-bottom-color: var(--highlight-color); color: var(--text-main);"
+                    >
+                        विचार / ब्लग
+                    </h2>
+                    <a href="/विचार" class="sec-link"
+                        >थप लेखहरू <i class="fas fa-arrow-right"></i></a
+                    >
                 </div>
                 <div class="opinion-grid">
-                    {opinionPosts.map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="opinion-card">
-                            <i class="fas fa-quote-left"></i>
-                            <div class="opinion-img"><img src={post.image} alt={post.author}></div>
-                            <span class="opinion-author">{post.author}</span>
-                            <h3 class="opinion-title" set:html={post.title}></h3>
-                        </a>
-                    ))}
+                    {
+                        opinionPosts.map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="opinion-card"
+                            >
+                                <i class="fas fa-quote-left" />
+                                <div class="opinion-img">
+                                    <img src={post.image} alt={post.author} />
+                                </div>
+                                <span class="opinion-author">
+                                    {post.author}
+                                </span>
+                                <h3
+                                    class="opinion-title"
+                                    set:html={post.title}
+                                />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
         </section>
@@ -318,40 +527,78 @@ const coverStory = coverStories[0] || allPosts[5];
                     <h2 class="sec-title">खेलकुद</h2>
                     <a href="/खेलकुद" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {sportsPosts[0] && (
-                    <a href={`/news/${sportsPosts[0].slug || sportsPosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={sportsPosts[0].image} alt={sportsPosts[0].title}></div>
-                        <h3 set:html={sportsPosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {sportsPosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-futbol" style="color:var(--highlight-color);"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    sportsPosts[0] && (
+                        <a
+                            href={`/news/${sportsPosts[0].slug || sportsPosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={sportsPosts[0].image}
+                                    alt={sportsPosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={sportsPosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        sportsPosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i
+                                    class="fas fa-futbol"
+                                    style="color:var(--highlight-color);"
+                                />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
             <div class="mixed-block">
                 <div class="sec-header">
-                    <h2 class="sec-title" style="color:#e91e63; border-bottom-color:#e91e63;">मनोरञ्जन</h2>
+                    <h2
+                        class="sec-title"
+                        style="color:#e91e63; border-bottom-color:#e91e63;"
+                    >
+                        मनोरञ्जन
+                    </h2>
                     <a href="/मनोरञ्जन" class="sec-link">सबै हेर्नुहोस्</a>
                 </div>
-                {entertainmentPosts[0] && (
-                    <a href={`/news/${entertainmentPosts[0].slug || entertainmentPosts[0].id}`} class="lead-card">
-                        <div class="img-wrap"><img src={entertainmentPosts[0].image} alt={entertainmentPosts[0].title}></div>
-                        <h3 set:html={entertainmentPosts[0].title}></h3>
-                    </a>
-                )}
-                <div class="list-group">
-                    {entertainmentPosts.slice(1, 3).map((post) => (
-                        <a href={`/news/${post.slug || post.id}`} class="list-item">
-                            <i class="fas fa-film" style="color:#e91e63;"></i> 
-                            <h4 set:html={post.title}></h4>
+                {
+                    entertainmentPosts[0] && (
+                        <a
+                            href={`/news/${entertainmentPosts[0].slug || entertainmentPosts[0].id}`}
+                            class="lead-card"
+                        >
+                            <div class="img-wrap">
+                                <img
+                                    src={entertainmentPosts[0].image}
+                                    alt={entertainmentPosts[0].title}
+                                />
+                            </div>
+                            <h3 set:html={entertainmentPosts[0].title} />
                         </a>
-                    ))}
+                    )
+                }
+                <div class="list-group">
+                    {
+                        entertainmentPosts.slice(1, 3).map((post) => (
+                            <a
+                                href={`/news/${post.slug || post.id}`}
+                                class="list-item"
+                            >
+                                <i class="fas fa-film" style="color:#e91e63;" />
+                                <h4 set:html={post.title} />
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
         </div>
@@ -361,43 +608,71 @@ const coverStory = coverStories[0] || allPosts[5];
             <div class="container">
                 <div class="sec-header">
                     <h2 class="sec-title">फोटो फिचर / भिडियो</h2>
-                    <a href="/multimedia" class="sec-link" style="color:#fff;">सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a>
+                    <a href="/multimedia" class="sec-link" style="color:#fff;"
+                        >सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a
+                    >
                 </div>
                 <div class="multimedia-grid">
-                    <a href={`/news/${mmMain.slug || mmMain.id}`} class="mm-main">
-                        <img src={mmMain.image} alt={mmMain.title}>
+                    <a
+                        href={`/news/${mmMain.slug || mmMain.id}`}
+                        class="mm-main"
+                    >
+                        <img src={mmMain.image} alt={mmMain.title} />
                         <i class="fas fa-play-circle mm-icon"></i>
                         <div class="mm-overlay">
-                            <h3 set:html={mmMain.title}></h3>
+                            <h3 set:html={mmMain.title} />
                         </div>
                     </a>
                     <div class="mm-side-list">
-                        {mmSide.map((news) => (
-                          <a href={`/news/${news.slug || news.id}`} class="mm-side-card">
-                              <div class="img-wrap">
-                                  <img src={news.image} alt={news.title}>
-                                  <i class="fas fa-camera small-icon"></i>
-                              </div>
-                              <h4 set:html={news.title}></h4>
-                          </a>
-                        ))}
-                        
-                        <div class="ad-container" style="margin-top: 15px; padding:0;">
-                            <span class="ad-label" style="color:#888;">Advertisement</span>
-                            <a href="/advertise" class="ad-slot ad-300x250" style="border:none;">
-                                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300&h=250" alt="Entertainment Ad">
+                        {
+                            mmSide.map((news) => (
+                                <a
+                                    href={`/news/${news.slug || news.id}`}
+                                    class="mm-side-card"
+                                >
+                                    <div class="img-wrap">
+                                        <img
+                                            src={news.image}
+                                            alt={news.title}
+                                        />
+                                        <i class="fas fa-camera small-icon" />
+                                    </div>
+                                    <h4 set:html={news.title} />
+                                </a>
+                            ))
+                        }
+
+                        <div
+                            class="ad-container"
+                            style="margin-top: 15px; padding:0;"
+                        >
+                            <span class="ad-label" style="color:#888;"
+                                >Advertisement</span
+                            >
+                            <a
+                                href="/advertise"
+                                class="ad-slot ad-300x250"
+                                style="border:none;"
+                            >
+                                <img
+                                    src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300&h=250"
+                                    alt="Entertainment Ad"
+                                />
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <div class="container">
             <div class="ad-container">
                 <span class="ad-label">Advertisement</span>
                 <a href="/advertise" class="ad-slot ad-728x90">
-                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=728&h=90" alt="Ecommerce Ad">
+                    <img
+                        src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=728&h=90"
+                        alt="Ecommerce Ad"
+                    />
                 </a>
             </div>
         </div>
@@ -407,185 +682,735 @@ const coverStory = coverStories[0] || allPosts[5];
 </Layout>
 
 <style is:global>
-    main { background-color: var(--bg-body); }
-    .main-wrapper { background: var(--bg-white); padding: 40px 0; box-shadow: var(--shadow-sm); margin-bottom: 40px; }
+    main {
+        background-color: var(--bg-body);
+    }
+    .main-wrapper {
+        background: var(--bg-white);
+        padding: 40px 0;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 40px;
+    }
 
     /* LEAD STORIES STACK */
-    .lead-stories-wrapper { margin-bottom: 40px; }
-    .main-lead { text-align: center; margin-bottom: 50px; padding-bottom: 50px; border-bottom: 2px dashed var(--border-color); }
-    .main-lead:last-child { margin-bottom: 0; padding-bottom: 40px; border-bottom: none; }
-    .main-lead .opn-lead-title { font-family: var(--font-headline); font-size: 3.8rem; font-weight: 700; line-height: 1.15; color: var(--text-main); margin-bottom: 15px; transition: color 0.3s; }
-    .main-lead .opn-lead-title:hover { color: var(--primary-color); }
-    .main-lead .opn-meta { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; }
-    .main-lead .opn-meta span i { color: var(--highlight-color); margin-right: 5px; }
-    .main-lead .opn-lead-image { width: 100%; height: 550px; border-radius: var(--radius); overflow: hidden; margin-bottom: 25px; box-shadow: var(--shadow-sm); }
-    .main-lead .opn-lead-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    .main-lead .opn-lead-image:hover img { transform: scale(1.03); }
-    .main-lead .opn-lead-excerpt { font-size: 1.3rem; color: var(--text-light); line-height: 1.6; max-width: 1000px; margin: 0 auto; }
+    .lead-stories-wrapper {
+        margin-bottom: 40px;
+    }
+    .main-lead {
+        text-align: center;
+        margin-bottom: 50px;
+        padding-bottom: 50px;
+        border-bottom: 2px dashed var(--border-color);
+    }
+    .main-lead:last-child {
+        margin-bottom: 0;
+        padding-bottom: 40px;
+        border-bottom: none;
+    }
+    .main-lead .opn-lead-title {
+        font-family: var(--font-headline);
+        font-size: 3.8rem;
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--text-main);
+        margin-bottom: 15px;
+        transition: color 0.3s;
+    }
+    .main-lead .opn-lead-title:hover {
+        color: var(--primary-color);
+    }
+    .main-lead .opn-meta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+    }
+    .main-lead .opn-meta span i {
+        color: var(--highlight-color);
+        margin-right: 5px;
+    }
+    .main-lead .opn-lead-image {
+        width: 100%;
+        height: 550px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 25px;
+        box-shadow: var(--shadow-sm);
+    }
+    .main-lead .opn-lead-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .main-lead .opn-lead-image:hover img {
+        transform: scale(1.03);
+    }
+    .main-lead .opn-lead-excerpt {
+        font-size: 1.3rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 
     /* TRENDING GRID */
-    .trending-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; padding: 30px 0; border-top: 3px solid var(--border-color); margin-bottom: 40px; }
-    .trending-card { display: flex; flex-direction: column; gap: 12px; }
-    .trending-card .img-wrap { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; position: relative; }
-    .trending-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-    .trending-card:hover .img-wrap img { transform: scale(1.05); }
-    .trending-num { position: absolute; top: 0; left: 0; background: var(--highlight-color); color: #fff; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-family: var(--font-headline); font-size: 1.2rem; font-weight: bold; border-bottom-right-radius: var(--radius); }
-    .trending-card h3 { font-family: var(--font-headline); font-size: 1.5rem; line-height: 1.25; color: var(--text-main); }
-    .trending-card:hover h3 { color: var(--primary-color); }
+    .trending-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        padding: 30px 0;
+        border-top: 3px solid var(--border-color);
+        margin-bottom: 40px;
+    }
+    .trending-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .trending-card .img-wrap {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: var(--radius);
+        overflow: hidden;
+        position: relative;
+    }
+    .trending-card .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.3s;
+    }
+    .trending-card:hover .img-wrap img {
+        transform: scale(1.05);
+    }
+    .trending-num {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: var(--highlight-color);
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-headline);
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-bottom-right-radius: var(--radius);
+    }
+    .trending-card h3 {
+        font-family: var(--font-headline);
+        font-size: 1.5rem;
+        line-height: 1.25;
+        color: var(--text-main);
+    }
+    .trending-card:hover h3 {
+        color: var(--primary-color);
+    }
 
     /* MAIN LAYOUT */
-    .opn-layout { display: grid; grid-template-columns: 2.5fr 1fr; gap: 40px; align-items: start; }
+    .opn-layout {
+        display: grid;
+        grid-template-columns: 2.5fr 1fr;
+        gap: 40px;
+        align-items: start;
+    }
 
     /* Text-Only Highlight List */
-    .opn-text-list { display: flex; flex-direction: column; gap: 15px; margin: 0 0 40px 0; padding: 25px 30px; background: var(--bg-gray); border-radius: var(--radius); border-left: 5px solid var(--highlight-color); }
-    .opn-text-list li { display: flex; align-items: flex-start; gap: 15px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px; }
-    .opn-text-list li:last-child { border-bottom: none; padding-bottom: 0; }
-    .opn-text-list li i { color: var(--primary-color); font-size: 0.8rem; margin-top: 10px; }
-    .opn-text-list li a { font-family: var(--font-headline); font-size: 1.8rem; font-weight: 600; color: var(--text-dark); line-height: 1.25; }
+    .opn-text-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0 0 40px 0;
+        padding: 25px 30px;
+        background: var(--bg-gray);
+        border-radius: var(--radius);
+        border-left: 5px solid var(--highlight-color);
+    }
+    .opn-text-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 15px;
+    }
+    .opn-text-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .opn-text-list li i {
+        color: var(--primary-color);
+        font-size: 0.8rem;
+        margin-top: 10px;
+    }
+    .opn-text-list li a {
+        font-family: var(--font-headline);
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        line-height: 1.25;
+    }
 
     /* Sub Grids */
-    .opn-sub-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-    .news-card-standard .img-wrap { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; margin-bottom: 15px; }
-    .news-card-standard .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
-    .news-card-standard:hover .img-wrap img { transform: scale(1.05); }
-    .news-card-standard h3 { font-family: var(--font-headline); font-size: 1.7rem; line-height: 1.2; margin-bottom: 10px; color: var(--text-main); }
-    .news-card-standard:hover h3 { color: var(--primary-color); }
-    .news-card-standard p { font-size: 1.05rem; color: var(--text-light); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .opn-sub-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    .news-card-standard .img-wrap {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+    .news-card-standard .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.4s;
+    }
+    .news-card-standard:hover .img-wrap img {
+        transform: scale(1.05);
+    }
+    .news-card-standard h3 {
+        font-family: var(--font-headline);
+        font-size: 1.7rem;
+        line-height: 1.2;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+    .news-card-standard:hover h3 {
+        color: var(--primary-color);
+    }
+    .news-card-standard p {
+        font-size: 1.05rem;
+        color: var(--text-light);
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     /* COVER STORY SECTION */
-    .cover-story-section { margin-bottom: 50px; }
-    .cover-story-card { position: relative; height: 550px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md); display: block; }
-    .cover-story-bg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-    .cover-story-card:hover .cover-story-bg { transform: scale(1.05); }
-    .cover-story-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 50px; color: #fff; }
-    .cover-badge { background: var(--highlight-color); color: #fff; padding: 5px 15px; border-radius: 3px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; align-self: flex-start; }
-    .cover-title { font-family: var(--font-headline); font-size: 3.5rem; line-height: 1.1; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-    .cover-excerpt { font-size: 1.2rem; color: #e2e8f0; max-width: 800px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .cover-story-section {
+        margin-bottom: 50px;
+    }
+    .cover-story-card {
+        position: relative;
+        height: 550px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        display: block;
+    }
+    .cover-story-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    .cover-story-card:hover .cover-story-bg {
+        transform: scale(1.05);
+    }
+    .cover-story-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(0, 0, 0, 0.4) 50%,
+            transparent 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 50px;
+        color: #fff;
+    }
+    .cover-badge {
+        background: var(--highlight-color);
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 3px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        align-self: flex-start;
+    }
+    .cover-title {
+        font-family: var(--font-headline);
+        font-size: 3.5rem;
+        line-height: 1.1;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .cover-excerpt {
+        font-size: 1.2rem;
+        color: #e2e8f0;
+        max-width: 800px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     /* PROVINCE SECTION */
-    .province-section { background: var(--bg-white); padding: 40px 0; margin-bottom: 40px; box-shadow: var(--shadow-sm); }
-    .province-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; justify-content: center; }
-    .prov-btn { padding: 8px 20px; background: var(--bg-gray); border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border-color); transition: 0.3s; color: var(--text-light); font-family: var(--font-headline); }
-    .prov-btn:hover { background: #e2e8f0; }
-    .prov-btn.active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); box-shadow: 0 4px 10px rgba(64, 119, 202, 0.3); }
-    .grid-4-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
-    .prov-card .img-wrap { width: 100%; aspect-ratio: 16/10; border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; }
-    .prov-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-    .prov-card:hover { opacity: 0.9; }
-    .prov-card:hover .img-wrap img { transform: scale(1.05); }
-    .prov-card h4 { font-family: var(--font-headline); font-size: 1.4rem; line-height: 1.25; color: var(--text-main); }
-    .prov-card:hover h4 { color: var(--primary-color); }
+    .province-section {
+        background: var(--bg-white);
+        padding: 40px 0;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+    }
+    .province-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+        justify-content: center;
+    }
+    .prov-btn {
+        padding: 8px 20px;
+        background: var(--bg-gray);
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        transition: 0.3s;
+        color: var(--text-light);
+        font-family: var(--font-headline);
+    }
+    .prov-btn:hover {
+        background: #e2e8f0;
+    }
+    .prov-btn.active {
+        background: var(--primary-color);
+        color: #fff;
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 10px rgba(64, 119, 202, 0.3);
+    }
+    .grid-4-col {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+    .prov-card .img-wrap {
+        width: 100%;
+        aspect-ratio: 16/10;
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 12px;
+    }
+    .prov-card .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.3s;
+    }
+    .prov-card:hover {
+        opacity: 0.9;
+    }
+    .prov-card:hover .img-wrap img {
+        transform: scale(1.05);
+    }
+    .prov-card h4 {
+        font-family: var(--font-headline);
+        font-size: 1.4rem;
+        line-height: 1.25;
+        color: var(--text-main);
+    }
+    .prov-card:hover h4 {
+        color: var(--primary-color);
+    }
 
     /* CATEGORY SECTIONS */
-    .category-section { padding: 40px 0; margin-bottom: 40px; }
+    .category-section {
+        padding: 40px 0;
+        margin-bottom: 40px;
+    }
 
     /* MIXED CATEGORY GRIDS */
-    .mixed-category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-    .mixed-block { background: var(--bg-white); padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
-    .mixed-block .lead-card { margin-bottom: 20px; display: block; }
-    .mixed-block .lead-card .img-wrap { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; margin-bottom: 15px; }
-    .mixed-block .lead-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-    .mixed-block .lead-card:hover .img-wrap img { transform: scale(1.05); }
-    .mixed-block .lead-card h3 { font-family: var(--font-headline); font-size: 1.8rem; line-height: 1.2; margin-bottom: 10px; color: var(--text-main); }
-    .mixed-block .lead-card:hover h3 { color: var(--primary-color); }
+    .mixed-category-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 50px;
+    }
+    .mixed-block {
+        background: var(--bg-white);
+        padding: 25px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+    }
+    .mixed-block .lead-card {
+        margin-bottom: 20px;
+        display: block;
+    }
+    .mixed-block .lead-card .img-wrap {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+    .mixed-block .lead-card .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.3s;
+    }
+    .mixed-block .lead-card:hover .img-wrap img {
+        transform: scale(1.05);
+    }
+    .mixed-block .lead-card h3 {
+        font-family: var(--font-headline);
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+    .mixed-block .lead-card:hover h3 {
+        color: var(--primary-color);
+    }
 
-    .mixed-block .list-group { border-top: 2px solid var(--border-color); padding-top: 15px; display: flex; flex-direction: column; gap: 12px; }
-    .mixed-block .list-item { display: flex; align-items: flex-start; gap: 10px; }
-    .mixed-block .list-item i { margin-top: 5px; font-size: 1.1rem; }
-    .mixed-block .list-item h4 { font-family: var(--font-headline); font-size: 1.4rem; line-height: 1.25; color: var(--text-main); }
-    .mixed-block .list-item:hover h4 { color: var(--primary-color); }
+    .mixed-block .list-group {
+        border-top: 2px solid var(--border-color);
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .mixed-block .list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .mixed-block .list-item i {
+        margin-top: 5px;
+        font-size: 1.1rem;
+    }
+    .mixed-block .list-item h4 {
+        font-family: var(--font-headline);
+        font-size: 1.4rem;
+        line-height: 1.25;
+        color: var(--text-main);
+    }
+    .mixed-block .list-item:hover h4 {
+        color: var(--primary-color);
+    }
 
     /* OPINION SECTION */
-    .opinion-section { padding: 40px 0; margin-bottom: 40px; }
-    .opinion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-    .opinion-card { display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--bg-white); padding: 30px 20px; border-radius: var(--radius); position: relative; box-shadow: var(--shadow-sm); border-top: 4px solid var(--primary-color); transition: 0.3s; }
-    .opinion-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-    .opinion-card i.fa-quote-left { position: absolute; top: 15px; left: 15px; color: rgba(64,119,202,0.1); font-size: 3rem; }
-    .opinion-img { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid var(--highlight-color); margin-bottom: 15px; z-index: 1; }
-    .opinion-img img { width: 100%; height: 100%; object-fit: cover; }
-    .opinion-author { color: var(--primary-dark); font-weight: 600; margin-bottom: 10px; font-size: 1.15rem; }
-    .opinion-title { font-family: var(--font-headline); font-size: 1.6rem; line-height: 1.3; color: var(--text-dark); }
-    .opinion-card:hover .opinion-title { color: var(--primary-color); }
+    .opinion-section {
+        padding: 40px 0;
+        margin-bottom: 40px;
+    }
+    .opinion-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+    .opinion-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background: var(--bg-white);
+        padding: 30px 20px;
+        border-radius: var(--radius);
+        position: relative;
+        box-shadow: var(--shadow-sm);
+        border-top: 4px solid var(--primary-color);
+        transition: 0.3s;
+    }
+    .opinion-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+    .opinion-card i.fa-quote-left {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        color: rgba(64, 119, 202, 0.1);
+        font-size: 3rem;
+    }
+    .opinion-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid var(--highlight-color);
+        margin-bottom: 15px;
+        z-index: 1;
+    }
+    .opinion-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .opinion-author {
+        color: var(--primary-dark);
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 1.15rem;
+    }
+    .opinion-title {
+        font-family: var(--font-headline);
+        font-size: 1.6rem;
+        line-height: 1.3;
+        color: var(--text-dark);
+    }
+    .opinion-card:hover .opinion-title {
+        color: var(--primary-color);
+    }
 
     /* MULTIMEDIA */
-    .multimedia-section { background: var(--bg-dark); color: #fff; padding: 60px 0; margin-bottom: 50px; }
-    .multimedia-section .sec-title { color: #fff; border-bottom-color: var(--highlight-color); }
-    .multimedia-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-    .mm-main { position: relative; border-radius: var(--radius); overflow: hidden; display: block; }
-    .mm-main img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; aspect-ratio: 16/9; }
-    .mm-main:hover img { transform: scale(1.02); }
-    .mm-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 30px; }
-    .mm-overlay h3 { font-family: var(--font-headline); font-size: 2.2rem; line-height: 1.2; color: #fff; }
-    .mm-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4rem; color: rgba(255,255,255,0.8); transition: 0.3s; }
-    .mm-main:hover .mm-icon { color: var(--highlight-color); transform: translate(-50%, -50%) scale(1.1); }
-    
-    .mm-side-list { display: flex; flex-direction: column; gap: 20px; }
-    .mm-side-card { display: flex; gap: 15px; align-items: center; }
-    .mm-side-card .img-wrap { width: 140px; height: 95px; border-radius: var(--radius); overflow: hidden; position: relative; flex-shrink: 0; }
-    .mm-side-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .mm-side-card .small-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.8); font-size: 1.8rem; }
-    .mm-side-card h4 { font-family: var(--font-headline); font-size: 1.4rem; line-height: 1.2; color: #ddd; transition: color 0.3s; }
-    .mm-side-card:hover h4 { color: var(--highlight-color); }
+    .multimedia-section {
+        background: var(--bg-dark);
+        color: #fff;
+        padding: 60px 0;
+        margin-bottom: 50px;
+    }
+    .multimedia-section .sec-title {
+        color: #fff;
+        border-bottom-color: var(--highlight-color);
+    }
+    .multimedia-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+    .mm-main {
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: block;
+    }
+    .mm-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+        aspect-ratio: 16/9;
+    }
+    .mm-main:hover img {
+        transform: scale(1.02);
+    }
+    .mm-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        padding: 30px;
+    }
+    .mm-overlay h3 {
+        font-family: var(--font-headline);
+        font-size: 2.2rem;
+        line-height: 1.2;
+        color: #fff;
+    }
+    .mm-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        color: rgba(255, 255, 255, 0.8);
+        transition: 0.3s;
+    }
+    .mm-main:hover .mm-icon {
+        color: var(--highlight-color);
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .mm-side-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .mm-side-card {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+    .mm-side-card .img-wrap {
+        width: 140px;
+        height: 95px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+    }
+    .mm-side-card .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .mm-side-card .small-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.8rem;
+    }
+    .mm-side-card h4 {
+        font-family: var(--font-headline);
+        font-size: 1.4rem;
+        line-height: 1.2;
+        color: #ddd;
+        transition: color 0.3s;
+    }
+    .mm-side-card:hover h4 {
+        color: var(--highlight-color);
+    }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-        .main-lead .opn-lead-title { font-size: 3.2rem; }
-        .main-lead .opn-lead-image { height: 400px; }
-        .opn-layout { grid-template-columns: 2fr 1fr; gap: 30px; }
-        .grid-4-col { grid-template-columns: repeat(2, 1fr); }
-        .multimedia-grid { grid-template-columns: 1fr; }
-        .cover-title { font-size: 2.8rem; }
-        .cover-story-card { height: 450px; }
-        .mixed-category-grid { grid-template-columns: 1fr; }
+        .main-lead .opn-lead-title {
+            font-size: 3.2rem;
+        }
+        .main-lead .opn-lead-image {
+            height: 400px;
+        }
+        .opn-layout {
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        .grid-4-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .multimedia-grid {
+            grid-template-columns: 1fr;
+        }
+        .cover-title {
+            font-size: 2.8rem;
+        }
+        .cover-story-card {
+            height: 450px;
+        }
+        .mixed-category-grid {
+            grid-template-columns: 1fr;
+        }
     }
     @media (max-width: 768px) {
-        .main-lead .opn-lead-title { font-size: 2rem; line-height: 1.25; }
-        .main-lead .opn-lead-image { height: 260px; margin-bottom: 20px; }
-        .main-lead .opn-lead-excerpt { font-size: 1.15rem; }
-        
-        .opn-layout { grid-template-columns: 1fr; gap: 40px; }
-        .opn-sub-grid { grid-template-columns: 1fr; gap: 30px; }
-        .grid-4-col { grid-template-columns: 1fr; gap: 30px; }
-        .opinion-grid { grid-template-columns: 1fr; }
-        .trending-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+        .main-lead .opn-lead-title {
+            font-size: 2rem;
+            line-height: 1.25;
+        }
+        .main-lead .opn-lead-image {
+            height: 260px;
+            margin-bottom: 20px;
+        }
+        .main-lead .opn-lead-excerpt {
+            font-size: 1.15rem;
+        }
 
-        .cover-title { font-size: 1.8rem; }
-        .cover-story-card { height: 350px; }
-        .cover-story-overlay { padding: 25px; }
+        .opn-layout {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .opn-sub-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        .grid-4-col {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        .opinion-grid {
+            grid-template-columns: 1fr;
+        }
+        .trending-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 20px !important;
+        }
+
+        .cover-title {
+            font-size: 1.8rem;
+        }
+        .cover-story-card {
+            height: 350px;
+        }
+        .cover-story-overlay {
+            padding: 25px;
+        }
 
         /* Card Padding Optimization */
-        .news-card-standard, .prov-card, .trending-card, .mixed-block { 
+        .news-card-standard,
+        .prov-card,
+        .trending-card,
+        .mixed-block {
             padding: 5px 10px; /* Slight horizontal padding for better breathing room */
         }
-        .mixed-block { padding: 20px 15px; }
-        
-        /* Province Tabs Slider */
-        .province-tabs { 
-            display: flex; 
-            flex-wrap: nowrap; 
-            overflow-x: auto; 
-            justify-content: flex-start; 
-            gap: 12px; 
-            padding: 5px 15px 15px; 
-            margin: 0 -15px 25px; 
-            -webkit-overflow-scrolling: touch; 
-            scrollbar-width: none; 
+        .mixed-block {
+            padding: 20px 15px;
         }
-        .province-tabs::-webkit-scrollbar { display: none; }
-        .prov-btn { flex: 0 0 auto; white-space: nowrap; padding: 10px 22px; }
+
+        /* Province Tabs Slider */
+        .province-tabs {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 5px 15px 15px;
+            margin: 0 -15px 25px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .province-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .prov-btn {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            padding: 10px 22px;
+        }
 
         /* Multimedia mobile */
-        .mm-side-list { margin-top: 25px; }
-        .mm-side-card .img-wrap { width: 120px; height: 80px; }
-        .mm-overlay h3 { font-size: 1.6rem; }
+        .mm-side-list {
+            margin-top: 25px;
+        }
+        .mm-side-card .img-wrap {
+            width: 120px;
+            height: 80px;
+        }
+        .mm-overlay h3 {
+            font-size: 1.6rem;
+        }
     }
-    
+
     @media (max-width: 480px) {
-        .main-lead .opn-lead-title { font-size: 1.85rem; }
-        .trending-grid { grid-template-columns: 1fr !important; }
-        .trending-card { flex-direction: row; align-items: center; gap: 15px; }
-        .trending-card .img-wrap { width: 100px; height: 70px; flex-shrink: 0; }
-        .trending-card h3 { font-size: 1.2rem; }
+        .main-lead .opn-lead-title {
+            font-size: 1.85rem;
+        }
+        .trending-grid {
+            grid-template-columns: 1fr !important;
+        }
+        .trending-card {
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+        .trending-card .img-wrap {
+            width: 100px;
+            height: 70px;
+            flex-shrink: 0;
+        }
+        .trending-card h3 {
+            font-size: 1.2rem;
+        }
     }
 </style>
 
@@ -593,7 +1418,7 @@ const coverStory = coverStories[0] || allPosts[5];
     // Visual tabs mockup
     function activateProv(btn) {
         let btns = document.getElementsByClassName("prov-btn");
-        for (let i=0; i < btns.length; i++) {
+        for (let i = 0; i < btns.length; i++) {
             btns[i].classList.remove("active");
         }
         btn.classList.add("active");
