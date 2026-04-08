@@ -1,28 +1,50 @@
 ---
+import adToBs from 'ad-to-bs';
+
 const today = new Date();
-const nepaliDate = today.toLocaleDateString('ne-NP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+const year = today.getFullYear();
+const month = today.getMonth() + 1;
+const day = today.getDate();
+
+// Convert to Nepali Date (B.S.)
+const bsDate = adToBs(`${year}/${month}/${day}`);
+const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कात्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+
+const bsFormatted = `${nepaliDays[today.getDay()]}, ${bsDate.en.day} ${nepaliMonths[parseInt(bsDate.en.month) - 1]} ${bsDate.en.year}`;
 const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <div class="top-bar"> 
     <div class="container top-bar-inner"> 
         <div class="date-info"> 
-            <span class="nepali-date"><i class="far fa-calendar-alt"></i> {nepaliDate}</span> 
+            <span class="nepali-date"><i class="far fa-calendar-alt"></i> {bsFormatted}</span> 
             <span class="divider">|</span> 
             <span class="live-clock"><i class="far fa-clock"></i> <span id="clockDisplay"></span></span> 
             <span class="divider english-hide">|</span> 
             <span class="english-date english-hide">{englishDate}</span> 
         </div> 
-        <div class="social-links"> 
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> 
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a> 
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a> 
-            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a> 
-        </div> 
+        
+        <div class="top-bar-right">
+            <div class="theme-toggle-wrapper">
+                <button id="themeToggle" aria-label="Toggle Dark Mode" class="theme-toggle-btn">
+                    <i class="fas fa-moon moon-icon"></i>
+                    <i class="fas fa-sun sun-icon"></i>
+                </button>
+            </div>
+            
+            <div class="social-links"> 
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> 
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a> 
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a> 
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a> 
+            </div> 
+        </div>
     </div> 
 </div>  
 
 <script is:inline>
+    // Clock Feature
     function updateClock() {
         const now = new Date();
         const display = now.toLocaleTimeString('ne-NP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -31,6 +53,28 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    // Theme Toggle Feature
+    const themeBtn = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Set initial theme
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
 </script>
 
 <style is:global>
@@ -39,15 +83,41 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
     .date-info { display: flex; align-items: center; gap: 12px; }
     .date-info i { color: var(--highlight-color); }
     .divider { color: #334155; }
+    
+    .top-bar-right { display: flex; align-items: center; gap: 20px; }
+    
     .social-links a { color: #cbd5e1; margin-left: 15px; font-size: 0.95rem; transition: 0.3s; }
     .social-links a:hover { color: var(--highlight-color); }
+    
     .live-clock { font-weight: 600; min-width: 85px; }
+
+    /* Theme Toggle Styles */
+    .theme-toggle-btn {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        color: #fff;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+    .theme-toggle-btn:hover { background: var(--highlight-color); }
+    
+    .sun-icon { display: none; }
+    
+    [data-theme="dark"] .moon-icon { display: none; }
+    [data-theme="dark"] .sun-icon { display: block; color: #fbbf24; }
 
     @media (max-width: 992px) {
         .english-hide { display: none; }
     }
     @media (max-width: 768px) {
         .top-bar-inner { flex-direction: column; gap: 8px; text-align: center; }
+        .top-bar-right { flex-direction: column; gap: 10px; }
         .social-links a { margin: 0 10px; }
     }
 </style>

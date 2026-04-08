@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TopBar from '../components/TopBar.astro';
-import Header from '../components/Header.astro';
 import Navbar from '../components/Navbar.astro';
 import BreakingNews from '../components/BreakingNews.astro';
 import Sidebar from '../components/Sidebar.astro';
@@ -41,7 +40,6 @@ const coverStory = coverStories[0] || allPosts[5];
 
 <Layout title="Online Pati News - Complete Digital Newspaper">
     <TopBar />
-    <Header />
     <Navbar />
 
     <div class="container">
@@ -541,15 +539,53 @@ const coverStory = coverStories[0] || allPosts[5];
         .mixed-category-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
-        .main-lead .opn-lead-title { font-size: 2.4rem; }
-        .main-lead .opn-lead-image { height: 280px; }
-        .opn-layout { grid-template-columns: 1fr; }
-        .opn-sub-grid { grid-template-columns: 1fr; }
-        .grid-4-col { grid-template-columns: 1fr; }
+        .main-lead .opn-lead-title { font-size: 2rem; line-height: 1.25; }
+        .main-lead .opn-lead-image { height: 260px; margin-bottom: 20px; }
+        .main-lead .opn-lead-excerpt { font-size: 1.15rem; }
+        
+        .opn-layout { grid-template-columns: 1fr; gap: 40px; }
+        .opn-sub-grid { grid-template-columns: 1fr; gap: 30px; }
+        .grid-4-col { grid-template-columns: 1fr; gap: 30px; }
         .opinion-grid { grid-template-columns: 1fr; }
-        .cover-title { font-size: 2rem; }
+        .trending-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+
+        .cover-title { font-size: 1.8rem; }
         .cover-story-card { height: 350px; }
         .cover-story-overlay { padding: 25px; }
+
+        /* Card Padding Optimization */
+        .news-card-standard, .prov-card, .trending-card, .mixed-block { 
+            padding: 5px 10px; /* Slight horizontal padding for better breathing room */
+        }
+        .mixed-block { padding: 20px 15px; }
+        
+        /* Province Tabs Slider */
+        .province-tabs { 
+            display: flex; 
+            flex-wrap: nowrap; 
+            overflow-x: auto; 
+            justify-content: flex-start; 
+            gap: 12px; 
+            padding: 5px 15px 15px; 
+            margin: 0 -15px 25px; 
+            -webkit-overflow-scrolling: touch; 
+            scrollbar-width: none; 
+        }
+        .province-tabs::-webkit-scrollbar { display: none; }
+        .prov-btn { flex: 0 0 auto; white-space: nowrap; padding: 10px 22px; }
+
+        /* Multimedia mobile */
+        .mm-side-list { margin-top: 25px; }
+        .mm-side-card .img-wrap { width: 120px; height: 80px; }
+        .mm-overlay h3 { font-size: 1.6rem; }
+    }
+    
+    @media (max-width: 480px) {
+        .main-lead .opn-lead-title { font-size: 1.85rem; }
+        .trending-grid { grid-template-columns: 1fr !important; }
+        .trending-card { flex-direction: row; align-items: center; gap: 15px; }
+        .trending-card .img-wrap { width: 100px; height: 70px; flex-shrink: 0; }
+        .trending-card h3 { font-size: 1.2rem; }
     }
 </style>
 

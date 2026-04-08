@@ -1,12 +1,25 @@
 ---
 import '../styles/global.css';
+import Ticker from '../components/Ticker.astro';
 
 interface Props {
 	title: string;
 	description?: string;
+	ogImage?: string;
+	ogType?: string;
+    canonical?: string;
 }
 
-const { title, description = "Online Pati News - Leading Digital News Portal" } = Astro.props;
+const { 
+  title, 
+  description = "Online Pati News - Leading Digital News Portal", 
+  ogImage = "/logo-large.jpg", 
+  ogType = "website",
+  canonical
+} = Astro.props;
+
+const siteUrl = "https://onlinepatinews.com"; // Replace with actual production URL
+const currentUrl = canonical || `${siteUrl}${Astro.url.pathname}`;
 ---
 
 <!DOCTYPE html>
@@ -14,20 +27,26 @@ const { title, description = "Online Pati News - Leading Digital News Portal" } 
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-		<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+		<link rel="icon" type="image/png" href="/logo.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+        <link rel="canonical" href={currentUrl} />
+
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:image" content="/logo-large.jpg" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={currentUrl} />
+
 		<meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 	</head>
 	<body>
+		<Ticker />
 		<div id="fb-root"></div>
 		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ne_NP/sdk.js#xfbml=1&version=v19.0"></script>
 		<div id="backToTop" title="माथि जानुहोस्"><i class="fas fa-arrow-up"></i></div>

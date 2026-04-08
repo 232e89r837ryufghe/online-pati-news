@@ -11,13 +11,14 @@ const navCategories = categories
 
 <nav class="navbar"> 
     <div class="container navbar-inner"> 
+        <div class="nav-left-brand">
+            <a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="/logo.png" alt="Logo" style="height: 38px; width: auto; object-fit: contain;" />
+                <span class="nav-brand-text" style="color: #fff; font-weight: 700; font-size: 1.35rem; font-family: var(--font-headline);">Online Pati News</span>
+            </a>
+        </div>
+
         <ul class="nav-menu" id="navMenu"> 
-            <li class="nav-brand-item">
-                <a href="/">
-                    <img src="/logo-main.png" alt="Logo" class="nav-logo-img" />
-                    <span class="nav-brand-text">Online Pati News</span>
-                </a>
-            </li> 
             <li><a href="/समाचार"><i class="fas fa-newspaper" style="margin-right: 5px;"></i> समाचार</a></li>
             <li><a href="/राजनीति">राजनीति</a></li>
             <li>
@@ -39,57 +40,110 @@ const navCategories = categories
             <li><a href="/खेलकुद">खेलकुद</a></li>
             <li><a href="/मनोरञ्जन">मनोरञ्जन</a></li>
         </ul> 
+
         <div class="nav-right"> 
-            <form action="/search" method="GET" class="nav-search-form"> 
+            <form action="/search" method="GET" class="nav-search-form" id="navSearchForm"> 
                 <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
                 <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button> 
             </form> 
+            <button class="mobile-search-toggle" id="mobileSearchToggle" aria-label="Toggle Search"><i class="fas fa-search"></i></button>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button> 
         </div> 
     </div> 
 </nav> 
 
 <style is:global>
-    .navbar { background-color: var(--primary-color); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); }
-    .navbar-inner { display: flex; justify-content: space-between; align-items: center; }
-    .nav-menu { display: flex; align-items: center; }
-    .nav-brand-item a { display: flex; align-items: center; padding: 10px 20px 10px 0 !important; }
-    .nav-logo-img { height: 30px; width: auto; background: #fff; padding: 3px 6px; border-radius: 4px; margin-right: 10px; }
-    .nav-brand-text { font-family: var(--font-brand); font-weight: 700; font-size: 1.3rem; color: #fff; letter-spacing: 0.5px; }
+    .navbar { background-color: var(--primary-color); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); transition: transform 0.3s; }
+    .navbar-inner { display: flex; justify-content: space-between; align-items: center; min-height: 60px; }
     
+    .nav-left-brand a { transition: opacity 0.2s; }
+    .nav-left-brand a:hover { opacity: 0.9; }
+
+    .nav-menu { display: flex; align-items: center; margin: 0; padding: 0; list-style: none; }
     .nav-menu li { position: relative; }
-    .nav-menu li a { color: #fff; padding: 16px 14px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); }
+    .nav-menu li a { color: #fff; padding: 18px 14px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); transition: 0.2s; }
     .nav-menu li:hover > a { background-color: var(--primary-dark); color: var(--highlight-color); }
     
     /* Dropdown */
-    .dropdown { position: absolute; top: 100%; left: 0; background: #fff; min-width: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: none; border-top: 3px solid var(--highlight-color); border-radius: 0 0 4px 4px; overflow: hidden; }
+    .dropdown { position: absolute; top: 100%; left: 0; background: #fff; min-width: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: none; border-top: 3px solid var(--highlight-color); border-radius: 0 0 4px 4px; overflow: hidden; z-index: 1001; }
     .nav-menu li:hover .dropdown { display: block; }
-    .dropdown li a { color: var(--text-dark) !important; padding: 12px 20px !important; font-size: 1.05rem !important; border-bottom: 1px solid var(--border-color); font-family: var(--font-body) !important; }
+    .dropdown li a { color: var(--text-dark) !important; padding: 12px 20px !important; font-size: 1.05rem !important; border-bottom: 1px solid var(--border-color); font-family: var(--font-body) !important; font-weight: 500 !important; }
     .dropdown li a:hover { background: var(--bg-gray) !important; color: var(--primary-color) !important; padding-left: 25px !important; }
     
-    .nav-search-form { display: flex; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 15px; }
-    .nav-search-form input { background: transparent; border: none; color: #fff; outline: none; font-family: var(--font-body); width: 120px; }
-    .nav-search-form input::placeholder { color: rgba(255,255,255,0.8); }
-    .nav-search-form button { background: transparent; border: none; color: #fff; cursor: pointer; }
-    .nav-search-form button:hover { color: var(--highlight-color); }
-    .mobile-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+    .nav-search-form { display: flex; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 15px; margin-left: 10px; }
+    .nav-search-form input { background: transparent; border: none; color: #fff; outline: none; font-family: var(--font-body); width: 120px; font-size: 0.95rem; }
+    .nav-search-form input::placeholder { color: rgba(255,255,255,0.7); }
+    .nav-search-form button { background: transparent; border: none; color: #fff; cursor: pointer; padding-left: 5px; }
+    
+    .mobile-toggle, .mobile-search-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; padding: 10px; border-radius: 50%; transition: background 0.2s; }
+    .mobile-toggle:hover, .mobile-search-toggle:hover { background: rgba(255,255,255,0.1); }
 
-    @media (max-width: 768px) {
-        .nav-menu, .nav-brand-item { display: none; }
-        .mobile-toggle { display: block; }
-        .navbar-inner { flex-wrap: wrap; padding: 10px 15px; }
-        .nav-search-form { width: 100%; margin-top: 10px; }
+    @media (max-width: 1024px) {
+        .nav-menu li a { padding: 18px 10px; font-size: 1.05rem; }
+    }
+
+    @media (max-width: 991px) {
+        .nav-menu { 
+            position: fixed; top: 60px; right: -100%; width: 280px; height: calc(100vh - 60px); 
+            background: var(--primary-color); flex-direction: column; align-items: stretch;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            overflow-y: auto; padding-top: 10px;
+        }
+        .nav-menu.active { right: 0; }
+        .nav-menu li a { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown { position: static; box-shadow: none; border: none; background: rgba(0,0,0,0.1); width: 100%; }
+        .nav-menu li:hover .dropdown { display: none; }
+        .nav-menu li.open .dropdown { display: block; }
+
+        .nav-search-form { 
+            position: absolute; top: 100%; left: 0; width: 100%; display: none;
+            background: var(--primary-dark); padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-search-form.active { display: flex; }
+        .nav-search-form input { width: 100%; }
+
+        .mobile-toggle, .mobile-search-toggle { display: block; }
     }
 </style>
 
 <script>
-    document.getElementById('mobileToggle')?.addEventListener('click', function() {
-        const menu = document.getElementById('navMenu');
-        if (menu) {
-            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-            menu.style.flexDirection = 'column';
-            menu.style.width = '100%';
-            menu.style.background = 'var(--primary-color)';
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileSearchToggle = document.getElementById('mobileSearchToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navSearchForm = document.getElementById('navSearchForm');
+
+    mobileToggle?.addEventListener('click', () => {
+        navMenu?.classList.toggle('active');
+        navSearchForm?.classList.remove('active');
+        const icon = mobileToggle.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+    });
+
+    mobileSearchToggle?.addEventListener('click', () => {
+        navSearchForm?.classList.toggle('active');
+        navMenu?.classList.remove('active');
+        if (navMenu?.classList.contains('active')) {
+            const menuIcon = mobileToggle?.querySelector('i');
+            if (menuIcon) {
+                menuIcon.classList.replace('fa-times', 'fa-bars');
+            }
+        }
+    });
+
+    // Handle mobile submenus
+    const menuItems = document.querySelectorAll('.nav-menu > li');
+    menuItems.forEach(item => {
+        const link = item.querySelector('a');
+        if (item.querySelector('.dropdown')) {
+            link?.addEventListener('click', (e) => {
+                if (window.innerWidth < 992) {
+                    e.preventDefault();
+                    item.classList.toggle('open');
+                }
+            });
         }
     });
 </script>

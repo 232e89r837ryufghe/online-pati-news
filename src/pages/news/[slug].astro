@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import TopBar from '../../components/TopBar.astro';
-import Header from '../../components/Header.astro';
 import Navbar from '../../components/Navbar.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import Footer from '../../components/Footer.astro';
@@ -24,11 +23,33 @@ const item = post || await getWordPressPostBySlug(slug as string);
 if (!item) {
   return Astro.redirect('/404');
 }
+
+// Generate JSON-LD for Google News
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": item.title,
+  "image": [item.image],
+  "datePublished": item.dateIso || item.date, // Assumes item has local date string or ISO
+  "dateModified": item.dateIso || item.date,
+  "author": [{
+    "@type": "Person",
+    "name": item.author,
+    "url": "https://onlinepatinews.com"
+  }]
+};
 ---
 
-<Layout title={`${item.title} - Online Pati News`}>
+<Layout 
+  title={`${item.title} - Online Pati News`}
+  description={item.excerpt}
+  ogImage={item.image}
+  ogType="article"
+>
+  <!-- Schema.org Script -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
   <TopBar />
-  <Header />
   <Navbar />
   
   <main class="article-page-wrapper">
@@ -59,9 +80,21 @@ if (!item) {
               </div>
               
               <div class="article-actions">
+                <button class="action-btn audio-trigger" id="audioNewsBtn" title="समाचार सुन्नुहोस्"><i class="fas fa-volume-up"></i></button>
                 <button class="action-btn" onclick="window.print()" title="प्रिन्ट गर्नुहोस्"><i class="fas fa-print"></i></button>
                 <button class="action-btn share-trigger" title="सेयर गर्नुहोस्"><i class="fas fa-share-alt"></i></button>
               </div>
+            </div>
+
+            <div id="audioPlayerContainer" class="audio-player-mini">
+               <div class="audio-status">
+                  <i class="fas fa-waveform"></i>
+                  <span id="audioStatusText">समाचार पढिँदैछ...</span>
+               </div>
+               <div class="audio-controls">
+                  <button id="pauseAudio"><i class="fas fa-pause"></i></button>
+                  <button id="stopAudio"><i class="fas fa-stop"></i></button>
+               </div>
             </div>
 
             <div class="premium-social-share">
@@ -167,11 +200,129 @@ if (!item) {
   .social-share-bottom h4 { font-family: var(--font-headline); font-size: 1.5rem; margin-bottom: 20px; }
   .social-share-bottom .premium-social-share { justify-content: center; }
 
+  /* Audio Player Mini */
+  .audio-player-mini { 
+     display: none; 
+     background: var(--bg-gray); 
+     border: 1px solid var(--border-color); 
+     padding: 12px 20px; 
+     border-radius: 30px; 
+     margin-bottom: 25px; 
+     justify-content: space-between; 
+     align-items: center; 
+     box-shadow: var(--shadow-sm); 
+     animation: slideDown 0.3s ease;
+  }
+  .audio-player-mini.active { display: flex; }
+  .audio-status { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--primary-color); }
+  .audio-status i { animation: pulse 1.5s infinite; }
+  .audio-controls { display: flex; gap: 10px; }
+  .audio-controls button { background: none; border: none; cursor: pointer; color: var(--text-main); font-size: 1.1rem; padding: 5px; }
+  .audio-controls button:hover { color: var(--highlight-color); }
+
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
   @media (max-width: 768px) {
-    .article-title-p { font-size: 2.2rem; }
+    .article-page-wrapper { padding: 10px 0 40px; }
+    .breadcrumbs { padding: 5px 15px 15px; margin-bottom: 20px; font-size: 0.85rem; }
     .breadcrumbs .curr { display: none; }
-    .article-meta-p { flex-direction: column; align-items: flex-start; gap: 15px; }
-    .article-actions { width: 100%; justify-content: flex-end; display: flex; }
-    .article-content-premium { font-size: 1.15rem; }
+    
+    .article-header-premium { padding: 0 15px; margin-bottom: 25px; }
+    .article-title-p { font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.25; margin-bottom: 20px; }
+    
+    .category-badge-p { padding: 3px 12px; font-size: 1rem; }
+
+    .article-meta-p { flex-direction: column; align-items: flex-start; gap: 15px; padding: 15px 0; margin-bottom: 20px; }
+    .article-actions { width: 100%; justify-content: flex-start; display: flex; margin-top: 10px; border-top: 1px dashed var(--border-color); padding-top: 15px; }
+    .action-btn { margin-left: 0; margin-right: 15px; }
+
+    .premium-social-share { gap: 8px; margin-top: 15px; }
+    .p-share-btn { padding: 6px 14px; font-size: 0.85rem; }
+
+    .article-featured-image { margin-bottom: 25px; border-radius: 0; margin: 0 -15px 25px; } /* Flush image on mobile */
+    .image-caption { font-size: 0.85rem; }
+
+    .article-content-premium { font-size: 1.15rem; line-height: 1.75; padding: 0 15px; }
+    .article-content-premium p { margin-bottom: 1.5rem; }
+    .article-content-premium blockquote { padding: 20px; margin: 25px 0; font-size: 1.2rem; }
+
+    .article-footer-tags { padding: 20px 15px; margin-top: 30px; }
+    .social-share-bottom { margin: 30px 15px; padding: 25px 20px; }
+    .audio-player-mini { border-radius: 12px; margin: 0 15px 25px; }
   }
 </style>
+
+<script is:inline>
+   // Audio News Reader Logic
+   let synth = window.speechSynthesis;
+   let utterance = null;
+   let isPlaying = false;
+
+   const playBtn = document.getElementById('audioNewsBtn');
+   const playerContainer = document.getElementById('audioPlayerContainer');
+   const pauseBtn = document.getElementById('pauseAudio');
+   const stopBtn = document.getElementById('stopAudio');
+   const statusText = document.getElementById('audioStatusText');
+
+   if (playBtn) {
+      playBtn.addEventListener('click', () => {
+         if (!isPlaying) {
+            startAudio();
+         } else {
+            stopAudio();
+         }
+      });
+   }
+
+   function startAudio() {
+      const content = document.querySelector('.article-content-premium').innerText;
+      const title = document.querySelector('.article-title-p').innerText;
+      
+      utterance = new SpeechSynthesisUtterance(title + ". " + content);
+      
+      // Try to find a Nepali or Hindi voice as fallback
+      const voices = synth.getVoices();
+      const nepaliVoice = voices.find(v => v.lang.includes('ne') || v.lang.includes('hi'));
+      if (nepaliVoice) utterance.voice = nepaliVoice;
+      
+      utterance.rate = 0.9; // Slightly slower for clarity
+      utterance.pitch = 1;
+
+      utterance.onstart = () => {
+         isPlaying = true;
+         playerContainer.classList.add('active');
+         statusText.innerText = "समाचार सुन्दै हुनुहुन्छ...";
+      };
+
+      utterance.onend = () => {
+         stopAudio();
+      };
+
+      synth.speak(utterance);
+   }
+
+   function stopAudio() {
+      synth.cancel();
+      isPlaying = false;
+      playerContainer.classList.remove('active');
+   }
+
+   if (pauseBtn) {
+      pauseBtn.addEventListener('click', () => {
+         if (synth.speaking) {
+            if (synth.paused) {
+               synth.resume();
+               statusText.innerText = "समाचार सुन्दै हुनुहुन्छ...";
+            } else {
+               synth.pause();
+               statusText.innerText = "रुकिएको छ...";
+            }
+         }
+      });
+   }
+
+   if (stopBtn) {
+      stopBtn.addEventListener('click', stopAudio);
+   }
+</script>
