@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import TopBar from '../components/TopBar.astro';
 import Header from '../components/Header.astro';
 import Navbar from '../components/Navbar.astro';
+import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
-import FacebookFeed from '../components/FacebookFeed.astro';
 ---
 
 <Layout title="हाम्रो बारेमा - Online Pati News">
@@ -12,169 +12,133 @@ import FacebookFeed from '../components/FacebookFeed.astro';
   <Header />
   <Navbar />
   
-  <main class="static-page">
-    <div class="container page-header">
-      <h1 class="page-title">हाम्रो बारेमा</h1>
-      <div class="breadcrumb">
-        <a href="/">गृहपृष्ठ</a> <i class="fas fa-chevron-right"></i> <span>हाम्रो बारेमा</span>
+  <main class="page-wrapper-premium">
+    <div class="container main-container-p">
+      <div class="breadcrumbs-p">
+        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
+        <i class="fas fa-chevron-right sep"></i> 
+        <span class="curr">हाम्रो बारेमा</span>
       </div>
-    </div>
 
-    <div class="container main-sidebar-layout">
-      <div class="main-content static-content">
-        <div class="about-hero">
-          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200" alt="News Room" />
-        </div>
-        
-        <h2>हाम्रो यात्रा</h2>
-        <p>अनलाइन पाटी न्यूज नेपालको एक भरपर्दो र गतिशील डिजिटल समाचार पोर्टल हो। हामी पाठकहरूलाई सत्य, तथ्य र विश्वसनीय समाचार प्रदान गर्न प्रतिबद्ध छौँ। हाम्रो मुख्य उद्देश्य समाजमा सकारात्मक परिवर्तन ल्याउनु र लोकतान्त्रिक मूल्य-मान्यताहरूको संरक्षण गर्नु हो।</p>
+      <header class="page-hero-premium">
+        <h1 class="page-title-p">हाम्रो बारेमा</h1>
+        <p class="page-subtitle-p">सत्य, तथ्य र निष्पक्ष समाचारको संवाहक - अनलाइन पाटी न्युज</p>
+      </header>
 
-        <div class="values-grid">
-          <div class="value-item">
-             <i class="fas fa-check-circle"></i>
-             <h3>सत्यता र निष्पक्षता</h3>
-             <p>हामी समाचार संकलन र सम्प्रेषणमा सधैँ सत्यता र निष्पक्षतालाई पहिलो प्राथमिकता दिन्छौँ।</p>
-          </div>
-          <div class="value-item">
-             <i class="fas fa-bolt"></i>
-             <h3>छिटो र छरितो</h3>
-             <p>डिजिटल युगमा सूचनाको महत्त्व बुझ्दै हामी पलपलको समाचार तपाईंको फोनसम्म पुर्‍याउँछौँ।</p>
-          </div>
-          <div class="value-item">
-             <i class="fas fa-users"></i>
-             <h3>जनमुखी सञ्चार</h3>
-             <p>हामी जनताको आवाज बन्न र उनीहरूको सरोकारका विषयलाई उठान गर्नमा विश्वास गर्छौँ।</p>
-          </div>
-        </div>
-
-        <h2>हाम्रो टोली</h2>
-        <p>हाम्रो सम्पादकीय टोलीमा अनुभवी पत्रकार, लेखक र विषयविज्ञहरू संलग्न हुनुहुन्छ। हामी व्यावसायिक पत्रकारिताको उच्चतम मापदण्ड पालना गर्छौँ।</p>
-        
-        <div class="team-grid">
-          <div class="team-card">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200" alt="Rajendra Bimali" />
-            <div class="team-info">
-              <h3>राजेन्द्र विमली</h3>
-              <p>अध्यक्ष / प्रबन्ध निर्देशक / पत्रकार</p>
+      <div class="opn-layout">
+        <div class="main-content-p">
+          <div class="premium-static-card">
+            <div class="about-hero-image">
+              <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200" alt="News Room" />
+              <div class="image-overlay-p">हाम्रो न्युजरुम</div>
             </div>
+            
+            <section class="about-section-p">
+              <h2 class="section-heading-p">हाम्रो यात्रा</h2>
+              <p>अनलाइन पाटी न्यूज नेपालको एक भरपर्दो र गतिशील डिजिटल समाचार पोर्टल हो। हामी पाठकहरूलाई सत्य, तथ्य र विश्वसनीय समाचार प्रदान गर्न प्रतिबद्ध छौँ। हाम्रो मुख्य उद्देश्य समाजमा सकारात्मक परिवर्तन ल्याउनु र लोकतान्त्रिक मूल्य-मान्यताहरूको संरक्षण गर्नु हो।</p>
+            </section>
+
+            <section class="about-values-p">
+              <h2 class="section-heading-p">हाम्रा विशेषताहरू</h2>
+              <div class="premium-values-grid">
+                <div class="p-value-item">
+                  <div class="v-icon"><i class="fas fa-check-double"></i></div>
+                  <h3>सत्यता र निष्पक्षता</h3>
+                  <p>हामी समाचार संकलन र सम्प्रेषणमा सधैँ सत्यता र निष्पक्षतालाई पहिलो प्राथमिकता दिन्छौँ।</p>
+                </div>
+                <div class="p-value-item">
+                  <div class="v-icon"><i class="fas fa-bolt"></i></div>
+                  <h3>छिटो र छरितो</h3>
+                  <p>डिजिटल युगमा सूचनाको महत्त्व बुझ्दै हामी पलपलको समाचार तपाईंको फोनसम्म पुर्‍याउँछौँ।</p>
+                </div>
+                <div class="p-value-item">
+                  <div class="v-icon"><i class="fas fa-users-cog"></i></div>
+                  <h3>जनमुखी सञ्चार</h3>
+                  <p>हामी जनताको आवाज बन्न र उनीहरूको सरोकारका विषयलाई उठान गर्नमा विश्वास गर्छौँ।</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="about-team-p">
+              <h2 class="section-heading-p">हाम्रो नेतृत्व</h2>
+              <p>हाम्रो सम्पादकीय टोलीमा अनुभवी पत्रकार, लेखक र विषयविज्ञहरू संलग्न हुनुहुन्छ। हामी व्यावसायिक पत्रकारिताको उच्चतम मापदण्ड पालना गर्छौँ।</p>
+              
+              <div class="premium-team-list">
+                <div class="p-team-card">
+                  <div class="t-photo">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200" alt="Rajendra Bimali" />
+                  </div>
+                  <div class="t-meta">
+                    <h3>राजेन्द्र विमली</h3>
+                    <span class="t-role">अध्यक्ष / प्रबन्ध निर्देशक / पत्रकार</span>
+                    <div class="t-social">
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-      </div>
 
-      <aside class="sidebar">
-        <FacebookFeed />
-        <div class="sidebar-ad" style="margin-top: 2rem;">
-           <a href="/advertise" class="ad-link">
-             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=300&h=250" alt="Sidebar Ad" style="width: 100%; border-radius: 4px;" />
-           </a>
-        </div>
-      </aside>
+        <Sidebar />
+      </div>
     </div>
   </main>
 
   <Footer />
 </Layout>
 
-<style>
-  .static-page {
-    background-color: #fcfcfc;
-    padding-bottom: 4rem;
-  }
+<style is:global>
+  .page-wrapper-premium { background-color: var(--bg-white); padding: 20px 0 60px; }
+  
+  .breadcrumbs-p { display: flex; align-items: center; gap: 10px; padding: 10px 0 25px; font-size: 0.95rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+  .breadcrumbs-p a { color: var(--text-light); transition: 0.2s; text-decoration: none; }
+  .breadcrumbs-p a:hover { color: var(--primary-color); }
+  .breadcrumbs-p .sep { font-size: 0.7rem; opacity: 0.5; }
 
-  .page-header {
-    padding: 2.5rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #eee;
-  }
+  /* Premium Page Hero */
+  .page-hero-premium { background: var(--bg-gray); padding: 50px 40px; border-radius: var(--radius); border-top: 5px solid var(--primary-color); text-align: center; margin-bottom: 40px; }
+  .page-title-p { font-family: var(--font-headline); font-size: 3.5rem; color: var(--text-dark); margin-bottom: 10px; }
+  .page-subtitle-p { font-size: 1.25rem; color: var(--text-light); font-weight: 500; }
 
-  .page-title {
-    font-size: 2.5rem;
-    font-family: var(--font-headline);
-    color: var(--primary-color);
-  }
+  /* Premium Static Card */
+  .premium-static-card { background: #fff; padding: 40px; border-radius: var(--radius); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+  
+  .about-hero-image { position: relative; border-radius: 8px; overflow: hidden; height: 450px; margin-bottom: 40px; }
+  .about-hero-image img { width: 100%; height: 100%; object-fit: cover; }
+  .image-overlay-p { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); color: #fff; padding: 8px 20px; border-radius: 30px; font-weight: 600; font-size: 0.9rem; }
 
-  .breadcrumb { font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+  .section-heading-p { font-family: var(--font-headline); font-size: 2.2rem; color: var(--text-dark); margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+  .section-heading-p::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 4px; background: var(--primary-color); }
 
-  .main-sidebar-layout {
-    display: grid;
-    grid-template-columns: 2.5fr 1fr;
-    gap: 3rem;
-  }
+  .about-section-p p { font-size: 1.2rem; line-height: 1.8; color: var(--text-light); margin-bottom: 30px; }
 
-  .static-content {
-    background: white;
-    padding: 3rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
+  /* Values Grid */
+  .premium-values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 40px 0; }
+  .p-value-item { background: var(--bg-gray); padding: 30px; border-radius: 12px; text-align: center; transition: 0.3s; border: 1px solid transparent; }
+  .p-value-item:hover { transform: translateY(-5px); border-color: var(--primary-color); box-shadow: var(--shadow-md); }
+  .v-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+  .p-value-item h3 { font-family: var(--font-headline); font-size: 1.5rem; margin-bottom: 12px; color: var(--text-dark); }
+  .p-value-item p { font-size: 1rem; line-height: 1.6; color: var(--text-muted); }
 
-  .about-hero {
-    margin-bottom: 2.5rem;
-    border-radius: 8px;
-    overflow: hidden;
-    height: 400px;
-  }
-
-  .about-hero img { width: 100%; height: 100%; object-fit: cover; }
-
-  h2 {
-    font-family: var(--font-headline);
-    font-size: 2rem;
-    color: #333;
-    margin: 2.5rem 0 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary-color);
-    display: inline-block;
-  }
-
-  p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 1.5rem;
-  }
-
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin: 3rem 0;
-  }
-
-  .value-item { text-align: center; }
-  .value-item i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-  .value-item h3 { font-family: var(--font-headline); font-size: 1.4rem; margin-bottom: 0.8rem; }
-  .value-item p { font-size: 1rem; }
-
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .team-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-
-  .team-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .team-info h3 { font-size: 1.15rem; font-family: var(--font-headline); margin-bottom: 0.2rem; }
-  .team-info p { font-size: 0.9rem; margin-bottom: 0; color: #888; }
+  /* Team Profile */
+  .premium-team-list { margin-top: 30px; }
+  .p-team-card { display: flex; align-items: center; gap: 25px; background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 500px; }
+  .t-photo { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 4px solid #fff; box-shadow: var(--shadow-sm); }
+  .t-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .t-meta h3 { font-family: var(--font-headline); font-size: 1.6rem; color: var(--text-dark); margin-bottom: 5px; }
+  .t-role { display: block; font-size: 0.95rem; color: var(--highlight-color); font-weight: 700; margin-bottom: 12px; }
+  .t-social { display: flex; gap: 15px; }
+  .t-social a { color: var(--text-muted); transition: 0.2s; font-size: 1.1rem; }
+  .t-social a:hover { color: var(--primary-color); }
 
   @media (max-width: 992px) {
-    .main-sidebar-layout { grid-template-columns: 1fr; }
-    .values-grid { grid-template-columns: 1fr; }
-    .static-content { padding: 1.5rem; }
+    .premium-values-grid { grid-template-columns: 1fr; }
+    .premium-static-card { padding: 25px; }
+    .page-title-p { font-size: 2.8rem; }
+    .about-hero-image { height: 300px; }
   }
 </style>

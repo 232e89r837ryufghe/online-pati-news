@@ -9,7 +9,9 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
         <div class="date-info"> 
             <span class="nepali-date"><i class="far fa-calendar-alt"></i> {nepaliDate}</span> 
             <span class="divider">|</span> 
-            <span class="english-date">{englishDate}</span> 
+            <span class="live-clock"><i class="far fa-clock"></i> <span id="clockDisplay"></span></span> 
+            <span class="divider english-hide">|</span> 
+            <span class="english-date english-hide">{englishDate}</span> 
         </div> 
         <div class="social-links"> 
             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> 
@@ -20,17 +22,32 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
     </div> 
 </div>  
 
-<style is:global>
-    .top-bar { background-color: #111; color: #fff; font-size: 0.9rem; padding: 6px 0; }
-    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
-    .date-info { display: flex; align-items: center; gap: 15px; }
-    .date-info i { margin-right: 5px; }
-    .divider { color: #555; }
-    .social-links a { color: #ccc; margin-left: 15px; font-size: 1rem; }
-    .social-links a:hover { color: var(--highlight-color); }
+<script is:inline>
+    function updateClock() {
+        const now = new Date();
+        const display = now.toLocaleTimeString('ne-NP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const clockEl = document.getElementById('clockDisplay');
+        if (clockEl) clockEl.textContent = display;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
 
+<style is:global>
+    .top-bar { background-color: #0f172a; color: #fff; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
+    .date-info { display: flex; align-items: center; gap: 12px; }
+    .date-info i { color: var(--highlight-color); }
+    .divider { color: #334155; }
+    .social-links a { color: #cbd5e1; margin-left: 15px; font-size: 0.95rem; transition: 0.3s; }
+    .social-links a:hover { color: var(--highlight-color); }
+    .live-clock { font-weight: 600; min-width: 85px; }
+
+    @media (max-width: 992px) {
+        .english-hide { display: none; }
+    }
     @media (max-width: 768px) {
-        .top-bar-inner { flex-direction: column; gap: 5px; text-align: center; }
-        .english-date, .divider { display: none; }
+        .top-bar-inner { flex-direction: column; gap: 8px; text-align: center; }
+        .social-links a { margin: 0 10px; }
     }
 </style>

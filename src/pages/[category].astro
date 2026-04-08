@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import TopBar from '../components/TopBar.astro';
 import Header from '../components/Header.astro';
 import Navbar from '../components/Navbar.astro';
+import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
-import FacebookFeed from '../components/FacebookFeed.astro';
 import { getWordPressCategories, getWordPressPostsByCategorySlug } from '../lib/wordpress';
 
 export async function getStaticPaths() {
@@ -15,165 +15,122 @@ export async function getStaticPaths() {
   }));
 }
 
-
 const { categoryName, slug } = Astro.props;
 const results = await getWordPressPostsByCategorySlug(slug, 20);
 ---
-
 
 <Layout title={`${categoryName} - Online Pati News`}>
   <TopBar />
   <Header />
   <Navbar />
   
-  <main class="category-page">
-    <div class="container category-header">
-      <div class="breadcrumb">
-        <a href="/">गृहपृष्ठ</a> <i class="fas fa-chevron-right"></i> <span>{categoryName}</span>
-      </div>
-      <h1 class="page-title">{categoryName}</h1>
-    </div>
-
-    <div class="container main-sidebar-layout">
-      <div class="main-content">
-        {results.length > 0 ? (
-          <div class="category-results-list">
-            {results.map((item) => (
-              <a href={`/news/${item.slug || item.id}`} class="category-result-card">
-                <div class="image-wrapper">
-                  <img src={item.image} alt={item.title} />
-                </div>
-                <div class="content">
-                  <h2 set:html={item.title}></h2>
-                  <p>{item.excerpt}</p>
-                  <div class="meta">
-                    <span class="author"><i class="far fa-user"></i> {item.author}</span>
-                    <span class="date"><i class="far fa-calendar-alt"></i> {item.date}</span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-
-          <div class="no-results">
-            <i class="fas fa-newspaper"></i>
-            <h3>अहिलेका लागि समाचार छैन</h3>
-            <p>यस विधामा अहिले कुनै समाचार उपलब्ध छैन। कृपया केही समय पछि पुनः प्रयास गर्नुहोस्।</p>
-            <a href="/" class="back-home">गृहपृष्ठ जानुहोस्</a>
-          </div>
-        )}
+  <main class="category-page-wrapper">
+    <div class="container cat-container">
+      <div class="breadcrumbs">
+        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
+        <i class="fas fa-chevron-right sep"></i> 
+        <span class="curr">{categoryName}</span>
       </div>
 
-      <aside class="sidebar">
-        <FacebookFeed />
-        <div class="sidebar-ad">
-           <a href="/advertise" class="ad-link">
-             <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=300&h=250" alt="Sidebar Ad" />
-           </a>
+      <header class="category-hero-p">
+        <div class="cat-label">विधा:</div>
+        <h1 class="category-title-p">{categoryName}</h1>
+        <div class="category-stats-p">कुल {results.length} समाचार फेला परेका छन्</div>
+      </header>
+
+      <div class="opn-layout">
+        <div class="opn-main-column">
+          {results.length > 0 ? (
+            <div class="premium-cat-list">
+              {results.map((item) => (
+                <article class="cat-result-card-p">
+                  <a href={`/news/${item.slug || item.id}`} class="cat-card-inner-p">
+                    <div class="cat-card-image-p">
+                      <img src={item.image} alt={item.title} />
+                      <div class="cat-overlay-p">
+                        <span class="time-p"><i class="far fa-clock"></i> {item.date}</span>
+                      </div>
+                    </div>
+                    <div class="cat-card-content-p">
+                      <h2 class="cat-card-title-p" set:html={item.title}></h2>
+                      <p class="cat-card-excerpt-p" set:html={item.excerpt}></p>
+                      <div class="cat-card-footer-p">
+                        <span class="cat-author-p"><i class="far fa-user"></i> {item.author}</span>
+                        <span class="read-more-p">थप पढ्नुहोस् <i class="fas fa-arrow-right"></i></span>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div class="p-no-results">
+              <div class="no-res-icon"><i class="fas fa-newspaper"></i></div>
+              <h3>समाचार फेला परेन</h3>
+              <p>माफ गर्नुहोस्, यस विधामा अहिले कुनै समाचार उपलब्ध छैन। हाम्रा अन्य विधाहरू हेर्नुहोस्।</p>
+              <a href="/" class="p-btn-back">मुख्य पृष्ठमा फर्कनुहोस्</a>
+            </div>
+          )}
         </div>
-      </aside>
+
+        <Sidebar />
+      </div>
     </div>
   </main>
 
   <Footer />
 </Layout>
 
-<style>
-  .category-page { background-color: #fcfcfc; padding-bottom: 4rem; }
+<style is:global>
+  .category-page-wrapper { background-color: var(--bg-white); padding: 20px 0 60px; }
   
-  .category-header { 
-    padding: 2rem 0; 
-    border-bottom: 2px solid #eee; 
-    margin-bottom: 2.5rem; 
-  }
+  .category-hero-p { background: var(--bg-gray); padding: 50px 40px; border-radius: var(--radius); border-left: 6px solid var(--primary-color); margin-bottom: 40px; position: relative; overflow: hidden; }
+  .category-hero-p::after { content: '\f1ea'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -20px; font-size: 10rem; color: rgba(0,0,0,0.03); transform: rotate(-15deg); }
+  
+  .cat-label { font-size: 1rem; color: var(--highlight-color); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+  .category-title-p { font-family: var(--font-headline); font-size: 3.5rem; line-height: 1; color: var(--text-dark); margin-bottom: 10px; }
+  .category-stats-p { font-size: 1.1rem; color: var(--text-muted); }
 
-  .breadcrumb { font-size: 0.9rem; color: #888; margin-bottom: 0.5rem; }
-  .breadcrumb a:hover { color: var(--primary-color); }
-  .breadcrumb i { font-size: 0.7rem; margin: 0 0.5rem; color: #ccc; }
+  /* Premium Category List */
+  .premium-cat-list { display: flex; flex-direction: column; gap: 30px; }
+  
+  .cat-result-card-p { background: #fff; border-radius: var(--radius); border: 1px solid var(--border-color); overflow: hidden; transition: 0.3s; box-shadow: var(--shadow-sm); }
+  .cat-result-card-p:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+  
+  .cat-card-inner-p { display: grid; grid-template-columns: 280px 1fr; text-decoration: none; color: inherit; }
+  
+  .cat-card-image-p { position: relative; height: 100%; overflow: hidden; }
+  .cat-card-image-p img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+  .cat-result-card-p:hover .cat-card-image-p img { transform: scale(1.05); }
+  
+  .cat-overlay-p { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.7)); padding: 15px; color: #fff; font-size: 0.85rem; }
 
-  .page-title { 
-    font-size: 2.5rem; 
-    font-family: var(--font-headline); 
-    color: #333;
-    position: relative;
-    display: inline-block;
-  }
+  .cat-card-content-p { padding: 25px; display: flex; flex-direction: column; }
+  .cat-card-title-p { font-family: var(--font-headline); font-size: 1.8rem; line-height: 1.25; color: var(--text-main); margin-bottom: 15px; transition: 0.2s; }
+  .cat-result-card-p:hover .cat-card-title-p { color: var(--primary-color); }
+  
+  .cat-card-excerpt-p { font-size: 1.1rem; line-height: 1.6; color: var(--text-light); margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  
+  .cat-card-footer-p { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-muted); }
+  .cat-author-p i, .read-more-p i { color: var(--highlight-color); margin: 0 5px; }
+  .read-more-p { font-weight: 700; color: var(--primary-color); }
 
-  .page-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background-color: var(--primary-color);
-  }
-
-  .main-sidebar-layout { display: grid; grid-template-columns: 2.5fr 1fr; gap: 3rem; }
-
-  .category-results-list { display: flex; flex-direction: column; gap: 2rem; }
-
-  .category-result-card {
-    display: flex;
-    gap: 2rem;
-    text-decoration: none;
-    color: inherit;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-  }
-
-  .category-result-card:hover { transform: translateY(-5px); }
-  .category-result-card:hover h2 { color: var(--primary-color); }
-
-  .category-result-card .image-wrapper {
-    width: 250px;
-    height: 160px;
-    flex-shrink: 0;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .category-result-card .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-  .category-result-card h2 { font-family: var(--font-headline); font-size: 1.6rem; margin-bottom: 0.8rem; line-height: 1.3; }
-  .category-result-card p { color: #666; font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-  .meta { display: flex; gap: 1.5rem; color: #999; font-size: 0.85rem; }
-  .meta i { color: var(--primary-color); margin-right: 0.3rem; }
-
-  .no-results {
-    padding: 4rem 2rem;
-    text-align: center;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #eee;
-  }
-
-  .no-results i { font-size: 4rem; color: #ddd; margin-bottom: 1.5rem; }
-  .no-results h3 { font-family: var(--font-headline); font-size: 2rem; margin-bottom: 1rem; }
-  .no-results p { color: #666; font-size: 1.1rem; margin-bottom: 2rem; }
-
-  .back-home {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.8rem 2.5rem;
-    border-radius: 30px;
-    text-decoration: none;
-    font-family: var(--font-headline);
-    font-size: 1.2rem;
-    display: inline-block;
-  }
-
-  .sidebar-ad { margin-top: 2rem; border-radius: 4px; overflow: hidden; }
-  .sidebar-ad img { width: 100%; height: auto; display: block; }
+  /* Premium No Results */
+  .p-no-results { padding: 80px 40px; text-align: center; background: var(--bg-gray); border-radius: var(--radius); border: 2px dashed var(--border-color); }
+  .no-res-icon { font-size: 4rem; color: var(--border-color); margin-bottom: 20px; }
+  .p-no-results h3 { font-family: var(--font-headline); font-size: 2.2rem; color: var(--text-dark); margin-bottom: 15px; }
+  .p-no-results p { font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; }
+  .p-btn-back { display: inline-block; background: var(--primary-color); color: #fff; padding: 12px 30px; border-radius: 30px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+  .p-btn-back:hover { background: var(--primary-dark); transform: scale(1.05); }
 
   @media (max-width: 992px) {
-    .main-sidebar-layout { grid-template-columns: 1fr; }
-    .category-result-card { flex-direction: column; gap: 1rem; }
-    .category-result-card .image-wrapper { width: 100%; height: 200px; }
+    .cat-card-inner-p { grid-template-columns: 220px 1fr; }
+    .category-title-p { font-size: 2.5rem; }
+  }
+  @media (max-width: 768px) {
+    .cat-card-inner-p { grid-template-columns: 1fr; }
+    .cat-card-image-p { height: 200px; }
+    .category-hero-p { padding: 30px 20px; }
+    .category-title-p { font-size: 2.2rem; }
   }
 </style>

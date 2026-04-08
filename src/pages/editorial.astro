@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="सम्पादकीय नीति - Online Pati News">
+  <TopBar />
+  <Header />
+  <Navbar />
+  
+  <main class="page-wrapper-premium">
+    <div class="container main-container-p">
+      <div class="breadcrumbs-p">
+        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
+        <i class="fas fa-chevron-right sep"></i> 
+        <span class="curr">सम्पादकीय नीति</span>
+      </div>
+
+      <header class="page-hero-premium secondary">
+        <h1 class="page-title-p">सम्पादकीय नीति</h1>
+        <p class="page-subtitle-p">व्यावसायिक पत्रकारिताका मापदण्ड र हाम्रा मूल्य-मान्यताहरू</p>
+      </header>
+
+      <div class="premium-static-card-centered">
+        <div class="p-article-content">
+          <p class="lead-text-p">अनलाइन पाटी न्यूज व्यावसायिक पत्रकारिताको मर्म र धर्मप्रति सधैँ सजग र सचेत छ। हामी सत्य, तथ्य र निष्पक्ष समाचार सम्प्रेषणका लागि निम्न सम्पादकीय नीतिहरूको पालना गर्दछौँ।</p>
+          
+          <h2 class="p-section-h">१. सत्यता र तथ्याङ्क</h2>
+          <p>हामी प्रत्येक समाचारको स्रोत र तथ्याङ्कलाई सावधानीपूर्वक प्रशोधन गर्छौँ। कुनै पनि सूचनालाई समाचार बनाउनु अघि त्यसको आधिकारिकता जाँच गर्नु हाम्रो पहिलो कतव्र्य हो।</p>
+
+          <h2 class="p-section-h">२. निष्पक्षता र सन्तुलन</h2>
+          <p>हामी कुनै पनि राजनीतिक दल, समूह वा व्यक्तिप्रति आग्रह-पूर्वाग्रह राख्दैनौँ। विवादित विषयहरूमा सबै पक्षको धारणा समेट्ने प्रयास गर्दछौँ ताकि पाठकले सन्तुलित जानकारी पाउन सकून्।</p>
+
+          <h2 class="p-section-h">३. सामाजिक उत्तरदायित्व</h2>
+          <p>हामी समाजमा नकारात्मक असर पार्ने, घृणा फैलाउने वा सामाजिक सद्भाव बिथोल्ने सामग्रीलाई प्रश्रय दिँदैनौँ। महिला, बालबालिका र अल्पसंख्यकको अधिकारप्रति हामी सधैँ संवेदनशील छौँ।</p>
+
+          <h2 class="p-section-h">४. गल्तीको स्वीकारोक्ति</h2>
+          <p>अन्जानवश कुनै गल्ती वा त्रुटि भएमा हामी त्यसलाई तत्काल सच्याउन र पाठकसमक्ष माफी माग्न हिचकिचाउँदैनौँ। हाम्रो मुख्य उद्देश्य भ्रम रहित सूचना प्रवाह हो।</p>
+
+          <div class="p-last-updated">अन्तिम पटक अद्यावधिक गरिएको: २०२४/०४/०८</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* Inherits styles from privacy/terms */
+</style>

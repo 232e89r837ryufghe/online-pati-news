@@ -40,8 +40,8 @@ const navCategories = categories
             <li><a href="/मनोरञ्जन">मनोरञ्जन</a></li>
         </ul> 
         <div class="nav-right"> 
-            <form action="/search" class="nav-search-form"> 
-                <input type="text" placeholder="खोज्नुहोस्..." required />
+            <form action="/search" method="GET" class="nav-search-form"> 
+                <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
                 <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button> 
             </form> 
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button> 
