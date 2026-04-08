@@ -1,26 +1,13 @@
----
-const galleryItems = [
-  {
-    image: "https://images.unsplash.com/photo-1544284420-aef239396e9d?auto=format&fit=crop&q=80&w=800",
-    title: "नेपालको सुन्दर सगरमाथा क्षेत्र",
-    category: "पर्यटन"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1540961811651-70586e379051?auto=format&fit=crop&q=80&w=800",
-    title: "लुम्बिनीको मायादेवी मन्दिरमा साँझ",
-    category: "धार्मिक"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1506466010722-395ee2bef877?auto=format&fit=crop&q=80&w=800",
-    title: "काठमाडौँको ऐतिहासिक मन्दिरहरू",
-    category: "संस्कृति"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1518005020480-10f60c87be0d?auto=format&fit=crop&q=80&w=800",
-    title: "पोखराको फेवातालमा डुङ्गा सयर",
-    category: "दृश्य"
-  }
-];
+import { getWordPressPosts } from '../lib/wordpress';
+
+const posts = await getWordPressPosts(4);
+const galleryItems = posts.map(post => ({
+  id: post.id,
+  slug: post.slug,
+  image: post.image,
+  title: post.title,
+  category: post.category
+}));
 ---
 
 <section class="photo-gallery">

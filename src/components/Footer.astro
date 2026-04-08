@@ -1,4 +1,14 @@
 ---
+import { getWordPressCategories } from '../lib/wordpress';
+
+const categories = await getWordPressCategories();
+const footerCategories = categories
+  .filter((c: any) => c.count > 0 && c.slug !== 'uncategorized')
+  .slice(0, 7)
+  .map((c: any) => ({
+    name: c.name,
+    link: `/${decodeURIComponent(c.slug)}`
+  }));
 ---
 
 <footer class="footer">
@@ -34,13 +44,9 @@
       <div class="footer-categories">
         <h3>प्रमुख विधाहरू</h3>
         <ul>
-          <li><a href="/politics">राजनीति</a></li>
-          <li><a href="/economy">अर्थतन्त्र</a></li>
-          <li><a href="/society">समाज</a></li>
-          <li><a href="/sports">खेलकुद</a></li>
-          <li><a href="/entertainment">मनोरञ्जन</a></li>
-          <li><a href="/world">विश्व</a></li>
-          <li><a href="/health">स्वास्थ्य</a></li>
+          {footerCategories.map((cat) => (
+            <li><a href={cat.link}>{cat.name}</a></li>
+          ))}
         </ul>
       </div>
       <div class="footer-contact">

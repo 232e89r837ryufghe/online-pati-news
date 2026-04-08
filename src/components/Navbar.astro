@@ -1,15 +1,18 @@
----
+import { getWordPressCategories } from '../lib/wordpress';
+
+const categories = await getWordPressCategories();
+// Filter out uncategorized or empty categories if needed
+const navCategories = categories
+  .filter((c: any) => c.count > 0 && c.slug !== 'uncategorized')
+  .slice(0, 8) // Limit to top 8 for space
+  .map((c: any) => ({
+    name: c.name,
+    link: `/${decodeURIComponent(c.slug)}`
+  }));
+
 const menuItems = [
   { name: 'गृहपृष्ठ', link: '/' },
-  { name: 'समाचार', link: '/समाचार' },
-  { name: 'राजनीति', link: '/राजनीति' },
-  { name: 'अर्थतन्त्र', link: '/अर्थतन्त्र' },
-  { name: 'समाज', link: '/समाज' },
-  { name: 'खेलकुद', link: '/खेलकुद' },
-  { name: 'मनोरञ्जन', link: '/मनोरञ्जन' },
-  { name: 'विश्व', link: '/विश्व' },
-  { name: 'स्वास्थ्य', link: '/स्वास्थ्य' },
-  { name: 'विचार', link: '/विचार' }
+  ...navCategories
 ];
 ---
 

@@ -47,7 +47,8 @@ export async function getWordPressCategories() {
     return [];
   }
 
-  return await response.json();
+  const categories = await response.json();
+  return categories;
 }
 
 export async function searchWordPressPosts(query: string, perPage = 20): Promise<NewsItem[]> {
@@ -98,11 +99,12 @@ function mapWordPressPostToNewsItem(post: any): NewsItem {
     image = post._embedded['wp:featuredmedia'][0].source_url;
   }
 
-  // Extract author
+  // Extract author from embed or fallback
   const author = post._embedded?.author?.[0]?.name || 'अनलाइन पाटी';
 
-  // Extract category info
-  const categoryInfo = post._embedded?.['wp:term']?.[0]?.[0] || { name: 'समाचार', slug: 'news' };
+  // Extract category info (use first category found)
+  const categoryTerms = post._embedded?.['wp:term']?.[0] || [];
+  const categoryInfo = categoryTerms[0] || { name: 'समाचार', slug: 'news' };
 
   return {
     id: post.id,
@@ -110,7 +112,7 @@ function mapWordPressPostToNewsItem(post: any): NewsItem {
     title: post.title.rendered,
     image: image,
     category: categoryInfo.name,
-    categorySlug: categoryInfo.slug,
+    categorySlug: decodeURIComponent(categoryInfo.slug),
     author: author,
     date: formatDate(post.date),
     excerpt: stripHtml(post.excerpt.rendered),
