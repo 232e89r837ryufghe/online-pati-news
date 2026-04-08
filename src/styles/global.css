@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&family=Mukta:wght@200;300;400;500;600;700;800&family=Merriweather:wght@400;700&family=Noto+Sans+Devanagari:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --primary-color: #2a5ca8; /* Deep Blue Profile */
-  --secondary-color: #e31e24; /* Alert/Breaking Red */
+  --primary-color: #4077ca;
+  --secondary-color: #000000;
   --text-color: #1a1a1a;
   --bg-color: #ffffff;
-  --font-headline: 'Mukta', sans-serif;
-  --font-body: 'Mukta', sans-serif;
-  --container-width: 1240px;
+  --gray-light: #f4f4f4;
+  --gray-medium: #e0e0e0;
+  --gray-dark: #666666;
+  --container-width: 1200px;
+  --font-headline: 'Khand', 'Noto Sans Devanagari', sans-serif;
+  --font-body: 'Mukta', 'Noto Sans Devanagari', sans-serif;
+  --font-brand: 'Merriweather', serif;
 }
 
 * {
@@ -21,7 +25,6 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   line-height: 1.6;
-  font-size: 110%; /* Slightly larger for easier Nepali reading */
   overflow-x: hidden;
 }
 

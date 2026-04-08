@@ -11,10 +11,9 @@ import PhotoGallery from '../components/PhotoGallery.astro';
 import Footer from '../components/Footer.astro';
 import { getWordPressPostsByCategorySlug } from '../lib/wordpress';
 
-const politicsNews = await getWordPressPostsByCategorySlug("राजनीति", 6);
+const politicsNews = await getWordPressPostsByCategorySlug("राजनीति", 4);
 const healthNews = await getWordPressPostsByCategorySlug("स्वास्थ्य", 4);
 const sportsNews = await getWordPressPostsByCategorySlug("खेलकुद", 4);
-const economyNews = await getWordPressPostsByCategorySlug("अर्थतन्त्र", 4);
 const entertainmentNews = await getWordPressPostsByCategorySlug("मनोरञ्जन", 4);
 ---
 
@@ -29,8 +28,7 @@ const entertainmentNews = await getWordPressPostsByCategorySlug("मनोरञ
     
     <div class="main-sidebar-layout container">
       <div class="main-content">
-        <!-- Politics Section - Large Grid -->
-        <NewsSection title="राजनीति" link="/category/politics" news={politicsNews} layout="grid" />
+        <NewsSection title="राजनीति" link="/राजनीति" news={politicsNews} layout="grid" />
         
         <div class="ad-section">
           <a href="/advertise" class="ad-link">
@@ -38,8 +36,7 @@ const entertainmentNews = await getWordPressPostsByCategorySlug("मनोरञ
           </a>
         </div>
 
-        <!-- Economy Section -->
-        <NewsSection title="अर्थतन्त्र" link="/category/economy" news={economyNews} layout="grid" />
+        <NewsSection title="स्वास्थ्य" link="/स्वास्थ्य" news={healthNews} layout="grid" />
       </div>
       
       <aside class="sidebar">
@@ -49,21 +46,14 @@ const entertainmentNews = await getWordPressPostsByCategorySlug("मनोरञ
             <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=300&h=250" alt="Sidebar Ad" class="square-ad" />
           </a>
         </div>
-        <!-- Sports Section in Sidebar - List Style -->
-        <NewsSection title="खेलकुद" link="/category/sports" news={sportsNews} layout="list" />
+        <NewsSection title="खेलकुद" link="/खेलकुद" news={sportsNews.slice(0, 2)} layout="list" />
       </aside>
-    </div>
-
-    <!-- Health Section -->
-    <div class="container">
-      <NewsSection title="स्वास्थ्य" link="/category/health" news={healthNews} layout="grid" />
     </div>
 
     <PhotoGallery />
 
-    <!-- Entertainment Section -->
-    <div class="container section-bottom-padding">
-      <NewsSection title="मनोरञ्जन" link="/category/entertainment" news={entertainmentNews} layout="grid" />
+    <div class="container">
+      <NewsSection title="मनोरञ्जन" link="/मनोरञ्जन" news={entertainmentNews} layout="grid" />
     </div>
 
 

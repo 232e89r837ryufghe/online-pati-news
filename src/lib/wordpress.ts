@@ -108,7 +108,7 @@ function mapWordPressPostToNewsItem(post: any): NewsItem {
 
   return {
     id: post.id,
-    slug: post.slug,
+    slug: decodeURIComponent(post.slug),
     title: post.title.rendered,
     image: image,
     category: categoryInfo.name,
