@@ -1,175 +1,72 @@
 ---
-import { getWordPressCategories } from '../lib/wordpress';
-
-const categories = await getWordPressCategories();
-const footerCategories = categories
-  .filter((c: any) => c.count > 0 && c.slug !== 'uncategorized')
-  .slice(0, 7)
-  .map((c: any) => ({
-    name: c.name,
-    link: `/${decodeURIComponent(c.slug)}`
-  }));
 ---
+<footer class="footer"> 
+    <div class="container"> 
+        <div class="footer-grid"> 
+            <div> 
+                <a href="/"><img src="/logo-main.png" alt="Logo" class="footer-logo-img" /></a> 
+                <p>अनलाइन पाटी न्युज नेपालको अग्रणी डिजिटल समाचार पोर्टल हो। हामी सत्य, तथ्य र भरपर्दो समाचारका लागि प्रतिबद्ध छौं।</p> 
+                <div class="social-links" style="margin-top: 20px;">
+                    <a href="#" style="margin-left:0;" aria-label="Facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div> 
+            <div> 
+                <h3>महत्वपूर्ण लिङ्कहरू</h3> 
+                <ul> 
+                    <li><a href="/about">हाम्रो बारेमा (About Us)</a></li> 
+                    <li><a href="/contact">सम्पर्क (Contact)</a></li> 
+                    <li><a href="/team">हाम्रो टोली (Our Team)</a></li> 
+                    <li><a href="/advertise">विज्ञापन (Advertise)</a></li> 
+                </ul> 
+            </div> 
+            <div> 
+                <h3>नीति तथा नियम</h3> 
+                <ul> 
+                    <li><a href="/privacy">गोपनीयता नीति (Privacy Policy)</a></li> 
+                    <li><a href="/terms">शर्त तथा नियमहरू (Terms of Use)</a></li> 
+                    <li><a href="/editorial">सम्पादकीय नीति (Editorial Policy)</a></li> 
+                </ul> 
+            </div> 
+            <div class="footer-contact"> 
+                <h3>सम्पर्क गर्नुहोस्</h3> 
+                <p><i class="fas fa-map-marker-alt"></i> पुतलीसडक, काठमाडौँ, नेपाल</p> 
+                <p><i class="fas fa-phone"></i> +९७७-१-४२०००००</p> 
+                <p><i class="fas fa-envelope"></i> info@onlinepatinews.com</p> 
+                <p><i class="fas fa-newspaper"></i> news@onlinepatinews.com</p> 
+            </div> 
+        </div> 
+        <div class="footer-bottom"> 
+            <p>&copy; {new Date().getFullYear()} Online Pati News Pvt. Ltd. | सर्वाधिकार सुरक्षित।</p> 
+        </div> 
+    </div> 
+</footer>  
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-about">
-        <div class="footer-logo">
-          <a href="/">
-            <img 
-              src="/logo-main.png" 
-              alt="Online Pati News Logo" 
-            />
-          </a>
-        </div>
-        <p>अनलाइन पाटी न्युज नेपालको अग्रणी समाचार पोर्टल हो। हामी सत्य, तथ्य र भरपर्दो समाचारका लागि प्रतिबद्ध छौं।</p>
-        <div class="social-links">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-      <div class="footer-links">
-        <h3>महत्वपूर्ण लिङ्कहरू</h3>
-        <ul>
-          <li><a href="/about">हाम्रो बारेमा</a></li>
-          <li><a href="/contact">सम्पर्क</a></li>
-          <li><a href="/privacy">गोपनीयता नीति</a></li>
-          <li><a href="/terms">शर्त तथा नियमहरू</a></li>
-          <li><a href="/advertise">विज्ञापन</a></li>
-        </ul>
-      </div>
-      <div class="footer-categories">
-        <h3>प्रमुख विधाहरू</h3>
-        <ul>
-          {footerCategories.map((cat) => (
-            <li><a href={cat.link}>{cat.name}</a></li>
-          ))}
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h3>सम्पर्क गर्नुहोस्</h3>
-        <p><i class="fas fa-map-marker-alt"></i> पुतलीसडक, काठमाडौँ</p>
-        <p><i class="fas fa-phone"></i> +९७७-१-४२०००००</p>
-        <p><i class="fas fa-envelope"></i> info@onlinepantinews.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; {new Date().getFullYear()} अनलाइन पाटी न्यूज डट कम। सर्वाधिकार सुरक्षित।</p>
-    </div>
-  </div>
-</footer>
+<style is:global>
+    .footer { background-color: #111; color: #aaa; padding: 60px 0 20px; border-top: 5px solid var(--primary-color); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-logo-img { height: 60px; margin-bottom: 20px; background: #fff; padding: 8px 12px; border-radius: var(--radius); }
+    .footer p { font-size: 1.05rem; line-height: 1.6; color: #aaa; }
+    .footer h3 { font-family: var(--font-headline); color: #fff; font-size: 1.6rem; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; font-weight: 700; }
+    .footer ul li { margin-bottom: 12px; font-size: 1.05rem; }
+    .footer ul li a { color: #aaa; transition: 0.3s; }
+    .footer ul li a:hover { color: var(--highlight-color); padding-left: 5px; }
+    
+    .footer-contact p { margin-bottom: 15px; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+    .footer-contact i { width: 20px; color: var(--highlight-color); font-size: 1.1rem; }
+    
+    .footer .social-links a { color: #ccc; margin-left: 15px; transition: 0.3s; }
+    .footer .social-links a:hover { color: var(--highlight-color); }
 
-<style>
-  .footer {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 3rem 0;
-    margin-top: 3rem;
-  }
+    .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #222; font-size: 0.95rem; color: #777; }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .footer-about p {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .footer-logo img {
-    height: 50px;
-    width: auto;
-    filter: brightness(0) invert(1);
-  }
-
-  .footer h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-  }
-
-  .footer h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 30px;
-    height: 2px;
-    background-color: var(--primary-color);
-  }
-
-  .footer ul {
-    list-style: none;
-  }
-
-  .footer ul li {
-    margin-bottom: 0.8rem;
-  }
-
-  .footer ul li a {
-    color: #ccc;
-    font-size: 0.95rem;
-    transition: color 0.3s ease;
-  }
-
-  .footer ul li a:hover {
-    color: var(--primary-color);
-  }
-
-  .footer-contact p {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin-bottom: 0.8rem;
-  }
-
-  .footer-contact i {
-    margin-right: 0.5rem;
-    color: var(--primary-color);
-  }
-
-  .social-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border-radius: 50%;
-    margin-right: 0.8rem;
-    transition: background 0.3s ease;
-  }
-
-  .social-links a:hover {
-    background: var(--primary-color);
-  }
-
-  .footer-bottom {
-    padding-top: 2rem;
-    text-align: center;
-    color: #888;
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 768px) {
-    .footer-top {
-      grid-template-columns: 1fr 1fr;
+    @media (max-width: 1024px) {
+        .footer-grid { grid-template-columns: repeat(2, 1fr); }
     }
-  }
-
-  @media (max-width: 480px) {
-    .footer-top {
-      grid-template-columns: 1fr;
+    @media (max-width: 768px) {
+        .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+        .footer h3 { margin-bottom: 15px; font-size: 1.4rem; }
     }
-  }
 </style>

@@ -1,152 +1,95 @@
 ---
 import { getWordPressCategories } from '../lib/wordpress';
-
 const categories = await getWordPressCategories();
-// Filter out uncategorized or empty categories if needed
 const navCategories = categories
   .filter((c: any) => c.count > 0 && c.slug !== 'uncategorized')
-  .slice(0, 8) // Limit to top 8 for space
   .map((c: any) => ({
     name: c.name,
-    link: `/${decodeURIComponent(c.slug)}`
+    slug: decodeURIComponent(c.slug)
   }));
-
-const menuItems = [
-  { name: 'गृहपृष्ठ', link: '/' },
-  ...navCategories
-];
 ---
 
-<nav class="navbar">
-  <div class="container navbar-inner">
-    <ul class="nav-menu">
-      <li class="home-icon">
-        <a href="/">
-          <img 
-            src="/logo-main.png" 
-            alt="Online Pati News Logo" 
-          />
-        </a>
-      </li>
-      {menuItems.slice(1).map((item) => (
-        <li><a href={item.link}>{item.name}</a></li>
-      ))}
-    </ul>
-    <div class="nav-right">
-      <form action="/search" method="GET" class="nav-search-form">
-        <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
-        <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
-      </form>
-      <button class="mobile-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
-    </div>
-  </div>
-</nav>
+<nav class="navbar"> 
+    <div class="container navbar-inner"> 
+        <ul class="nav-menu" id="navMenu"> 
+            <li class="nav-brand-item">
+                <a href="/">
+                    <img src="/logo-main.png" alt="Logo" class="nav-logo-img" />
+                    <span class="nav-brand-text">Online Pati News</span>
+                </a>
+            </li> 
+            <li><a href="/समाचार"><i class="fas fa-newspaper" style="margin-right: 5px;"></i> समाचार</a></li>
+            <li><a href="/राजनीति">राजनीति</a></li>
+            <li>
+                <a href="/प्रदेश">प्रदेश <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left:3px;"></i></a>
+                <ul class="dropdown">
+                    <li><a href="#">कोशी प्रदेश</a></li>
+                    <li><a href="#">मधेश प्रदेश</a></li>
+                    <li><a href="#">बागमती प्रदेश</a></li>
+                    <li><a href="#">गण्डकी प्रदेश</a></li>
+                    <li><a href="#">लुम्बिनी प्रदेश</a></li>
+                    <li><a href="#">कर्णाली प्रदेश</a></li>
+                    <li><a href="#">सुदूरपश्चिम प्रदेश</a></li>
+                </ul>
+            </li>
+            <li><a href="/अर्थतन्त्र">अर्थतन्त्र</a></li>
+            <li><a href="/कर्पोरेट">कर्पोरेट</a></li>
+            <li><a href="/सूचना-प्रविधि">सूचना-प्रविधि</a></li>
+            <li><a href="/स्वास्थ्य">स्वास्थ्य</a></li>
+            <li><a href="/खेलकुद">खेलकुद</a></li>
+            <li><a href="/मनोरञ्जन">मनोरञ्जन</a></li>
+        </ul> 
+        <div class="nav-right"> 
+            <form action="/search" class="nav-search-form"> 
+                <input type="text" placeholder="खोज्नुहोस्..." required />
+                <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button> 
+            </form> 
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button> 
+        </div> 
+    </div> 
+</nav> 
 
-<style>
-  .navbar {
-    background-color: var(--primary-color);
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+<style is:global>
+    .navbar { background-color: var(--primary-color); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); }
+    .navbar-inner { display: flex; justify-content: space-between; align-items: center; }
+    .nav-menu { display: flex; align-items: center; }
+    .nav-brand-item a { display: flex; align-items: center; padding: 10px 20px 10px 0 !important; }
+    .nav-logo-img { height: 30px; width: auto; background: #fff; padding: 3px 6px; border-radius: 4px; margin-right: 10px; }
+    .nav-brand-text { font-family: var(--font-brand); font-weight: 700; font-size: 1.3rem; color: #fff; letter-spacing: 0.5px; }
+    
+    .nav-menu li { position: relative; }
+    .nav-menu li a { color: #fff; padding: 16px 14px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); }
+    .nav-menu li:hover > a { background-color: var(--primary-dark); color: var(--highlight-color); }
+    
+    /* Dropdown */
+    .dropdown { position: absolute; top: 100%; left: 0; background: #fff; min-width: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: none; border-top: 3px solid var(--highlight-color); border-radius: 0 0 4px 4px; overflow: hidden; }
+    .nav-menu li:hover .dropdown { display: block; }
+    .dropdown li a { color: var(--text-dark) !important; padding: 12px 20px !important; font-size: 1.05rem !important; border-bottom: 1px solid var(--border-color); font-family: var(--font-body) !important; }
+    .dropdown li a:hover { background: var(--bg-gray) !important; color: var(--primary-color) !important; padding-left: 25px !important; }
+    
+    .nav-search-form { display: flex; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 15px; }
+    .nav-search-form input { background: transparent; border: none; color: #fff; outline: none; font-family: var(--font-body); width: 120px; }
+    .nav-search-form input::placeholder { color: rgba(255,255,255,0.8); }
+    .nav-search-form button { background: transparent; border: none; color: #fff; cursor: pointer; }
+    .nav-search-form button:hover { color: var(--highlight-color); }
+    .mobile-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
 
-  .navbar-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .nav-menu {
-    display: flex;
-    font-family: var(--font-headline);
-    font-weight: 500;
-    font-size: 1.1rem;
-    overflow-x: auto;
-    white-space: nowrap;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-
-  .nav-menu::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
-
-  .nav-menu li a {
-    padding: 0.8rem 1rem;
-    display: block;
-    color: white;
-    transition: background 0.3s ease;
-  }
-
-  .nav-menu li a:hover {
-    background-color: rgba(0,0,0,0.1);
-  }
-
-  .home-icon a {
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
-    height: 100%;
-  }
-
-  .home-icon img {
-    height: 30px;
-    width: auto;
-    filter: brightness(0) invert(1); /* Makes the logo white for the blue navbar */
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-  }
-
-  .nav-search-form {
-    display: flex;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    margin-right: 1.5rem;
-    overflow: hidden;
-  }
-
-  .nav-search-form input {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-    width: 150px;
-    outline: none;
-  }
-
-  .nav-search-form input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .nav-search-form button {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0.4rem 0.6rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .nav-search-form button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .mobile-toggle {
-    display: none;
-  }
-
-  @media (max-width: 992px) {
-    .nav-menu {
-      display: none; /* In a real app we'd have a mobile drawer here */
+    @media (max-width: 768px) {
+        .nav-menu, .nav-brand-item { display: none; }
+        .mobile-toggle { display: block; }
+        .navbar-inner { flex-wrap: wrap; padding: 10px 15px; }
+        .nav-search-form { width: 100%; margin-top: 10px; }
     }
-    .mobile-toggle {
-      display: block;
-    }
-  }
 </style>
+
+<script>
+    document.getElementById('mobileToggle')?.addEventListener('click', function() {
+        const menu = document.getElementById('navMenu');
+        if (menu) {
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+            menu.style.flexDirection = 'column';
+            menu.style.width = '100%';
+            menu.style.background = 'var(--primary-color)';
+        }
+    });
+</script>

@@ -1,287 +1,164 @@
 ---
 import { getWordPressPosts } from '../lib/wordpress';
 
-const allPosts = await getWordPressPosts(5);
-const mainNews = allPosts[0] || { id: 0, slug: '', title: 'समाचार फेला परेन', image: '', category: 'समाचार', excerpt: '', author: 'अनलाइन पाटी', date: '' };
-const secondaryMain = allPosts[1];
-const sideNews = allPosts.slice(2, 5);
+const allPosts = await getWordPressPosts(7);
+const leadNews = allPosts[0];
+const textListNews = allPosts.slice(1, 4);
+const subGridNews = allPosts.slice(4, 6);
 ---
 
-<section class="hero-section">
-  <div class="container">
-    <!-- 1. Main Headline Block (Onlinekhabar Style for newest post) -->
-    <div class="main-headline-block">
-      <div class="category-tag-wrapper">
-        <span class="category-tag main-tag">{mainNews.category}</span>
-      </div>
-      <a href={`/news/${mainNews.slug || mainNews.id}`} class="main-title-link">
-        <h1 class="main-hero-title">{mainNews.title}</h1>
-      </a>
-      <div class="main-hero-meta">
-        <span class="author"><i class="far fa-user"></i> {mainNews.author}</span>
-        <span class="date"><i class="far fa-calendar-alt"></i> {mainNews.date}</span>
-      </div>
-      <a href={`/news/${mainNews.slug || mainNews.id}`} class="main-hero-image-link">
-        <div class="main-featured-image">
-          <img src={mainNews.image} alt={mainNews.title} />
-        </div>
-      </a>
-      <p class="main-hero-excerpt">{mainNews.excerpt}</p>
+{leadNews && (
+<div class="ok-main-column">
+  <!-- Lead Story -->
+  <div class="ok-lead-story">
+    <a href={`/news/${leadNews.slug || leadNews.id}`}>
+      <h1 class="ok-lead-title">{leadNews.title}</h1>
+    </a>
+    <div class="ok-meta">
+      <span><i class="far fa-user"></i> {leadNews.author}</span>
+      <span><i class="far fa-clock"></i> {leadNews.date}</span>
     </div>
-
-    <!-- 2. Old Layout for remaining posts -->
-    {secondaryMain && (
-      <div class="hero-grid">
-        <div class="main-news">
-          <a href={`/news/${secondaryMain.slug || secondaryMain.id}`} class="hero-card main-card">
-            <div class="image-wrapper">
-              <img src={secondaryMain.image} alt={secondaryMain.title} />
-              <div class="category-tag">{secondaryMain.category}</div>
-            </div>
-            <div class="content">
-              <h2>{secondaryMain.title}</h2>
-              <p>{secondaryMain.excerpt}</p>
-              <div class="meta">
-                <span class="author"><i class="far fa-user"></i> {secondaryMain.author}</span>
-                <span class="date"><i class="far fa-calendar-alt"></i> {secondaryMain.date}</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="sidebar-news">
-          {sideNews.map((news) => (
-            <a href={`/news/${news.slug || news.id}`} class="hero-card side-card">
-              <div class="image-wrapper">
-                <img src={news.image} alt={news.title} />
-              </div>
-              <div class="content">
-                <div class="category-tag">{news.category}</div>
-                <h3>{news.title}</h3>
-              </div>
-            </a>
-          ))}
-        </div>
+    <a href={`/news/${leadNews.slug || leadNews.id}`}>
+      <div class="ok-lead-image">
+        <img src={leadNews.image} alt={leadNews.title} />
       </div>
-    )}
+    </a>
+    <p class="ok-lead-excerpt">{leadNews.excerpt}</p>
   </div>
-</section>
 
-<style>
-  .hero-section {
-    padding: 2.5rem 0;
-    background: #fff;
+  <!-- Text-Only Highlight List -->
+  {textListNews.length > 0 && (
+    <ul class="ok-text-list">
+      {textListNews.map((news) => (
+        <li>
+          <i class="fas fa-square"></i>
+          <a href={`/news/${news.slug || news.id}`} set:html={news.title}></a>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <!-- Sub Grid -->
+  {subGridNews.length > 0 && (
+    <div class="ok-sub-grid">
+      {subGridNews.map((news) => (
+        <article class="news-card-standard">
+          <a href={`/news/${news.slug || news.id}`}>
+            <div class="img-wrap">
+              <img src={news.image} alt={news.title} />
+            </div>
+            <h3>{news.title}</h3>
+            <p>{news.excerpt}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  )}
+</div>
+)}
+
+<style is:global>
+  /* Lead Story */
+  .ok-lead-story { text-align: center; margin-bottom: var(--space-lg); padding: 0 var(--space-sm); }
+  .ok-lead-title { 
+    font-family: var(--font-headline); 
+    font-size: 3.5rem; 
+    font-weight: 700; 
+    line-height: 1.1; 
+    color: var(--text-main); 
+    margin-bottom: var(--space-sm); 
+    letter-spacing: -0.01em;
   }
-
-  /* 1. Main Headline Block */
-  .main-headline-block {
-    text-align: center;
-    max-width: 1000px;
-    margin: 0 auto 3rem;
+  .ok-lead-title:hover { color: var(--primary); }
+  .ok-meta { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 1.5rem; 
+    font-size: 0.95rem; 
+    color: var(--text-light); 
+    margin-bottom: var(--space-md); 
+    font-weight: 600;
   }
-
-  .category-tag-wrapper {
-    margin-bottom: 1rem;
-  }
-
-  .main-tag {
-    font-size: 1rem;
-    background-color: #e31e24; /* Red accent for main category like Onlinekhabar */
-  }
-
-  .main-title-link {
-    text-decoration: none;
-    color: #1a1a1a;
-  }
-
-  .main-hero-title {
-    font-size: 4rem; /* Massive headline */
-    font-family: var(--font-headline);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-  }
-
-  .main-hero-title:hover {
-    color: var(--primary-color);
-  }
-
-  .main-hero-meta {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .main-hero-meta i {
-    color: var(--primary-color);
-    margin-right: 0.5rem;
-  }
-
-  .main-featured-image {
-    width: 100%;
-    aspect-ratio: 21 / 9; /* Cinematic wide ratio */
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-  }
-
-  .main-featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .main-headline-block:hover .main-featured-image img {
-    transform: scale(1.02);
-  }
-
-  .main-hero-excerpt {
-    font-size: 1.3rem;
-    color: #444;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  /* 2. Secondary Old Grid */
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
-    padding-top: 3rem;
-    border-top: 2px solid #f0f0f0;
-  }
-
-  .hero-card {
-    display: block;
+  .ok-meta span i { color: var(--primary); margin-right: 6px; }
+  .ok-lead-image { 
+    width: 100%; 
+    height: 600px; 
+    border-radius: var(--border-radius); 
+    overflow: hidden; 
+    margin-bottom: var(--space-md); 
+    box-shadow: var(--shadow-lg); 
     position: relative;
-    overflow: hidden;
-    color: inherit;
-    text-decoration: none;
-    transition: transform 0.3s ease;
+  }
+  .ok-lead-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .ok-lead-image:hover img { transform: scale(1.04); }
+  .ok-lead-excerpt { 
+    font-size: 1.35rem; 
+    color: var(--text-dark); 
+    line-height: 1.6; 
+    max-width: 850px; 
+    margin: 0 auto; 
+    font-weight: 400;
   }
 
-  .hero-card:hover h2, .hero-card:hover h3 {
-    color: var(--primary-color);
+  /* Text-Only Highlight List */
+  .ok-text-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.25rem; 
+    margin: 0 0 var(--space-lg) 0; 
+    padding: var(--space-md) var(--space-lg); 
+    background: var(--bg-white); 
+    border-radius: var(--border-radius); 
+    border-left: 6px solid var(--secondary); 
+    list-style: none; 
+    box-shadow: var(--shadow-soft);
   }
-
-  .main-card .image-wrapper {
-    height: 450px;
+  .ok-text-list li { display: flex; align-items: flex-start; gap: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+  .ok-text-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .ok-text-list li i { color: var(--secondary); font-size: 0.7rem; margin-top: 0.8rem; }
+  .ok-text-list li a { 
+    font-family: var(--font-headline); 
+    font-size: 1.85rem; 
+    font-weight: 700; 
+    color: var(--text-main); 
+    line-height: 1.2; 
+    transition: color 0.3s ease;
   }
+  .ok-text-list li a:hover { color: var(--primary); }
 
-  .side-card {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+  /* Sub Grid */
+  .ok-sub-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+  .news-card-standard .img-wrap { 
+    width: 100%; 
+    aspect-ratio: 16/9; 
+    border-radius: var(--border-radius); 
+    overflow: hidden; 
+    margin-bottom: 1rem; 
+    box-shadow: var(--shadow-sm);
   }
-
-  .side-card .image-wrapper {
-    width: 120px;
-    height: 100px;
-    flex-shrink: 0;
+  .news-card-standard .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .news-card-standard:hover .img-wrap img { transform: scale(1.06); }
+  .news-card-standard h3 { 
+    font-family: var(--font-headline); 
+    font-size: 1.75rem; 
+    line-height: 1.2; 
+    margin-bottom: 0.75rem; 
+    color: var(--text-main); 
+    font-weight: 700;
   }
+  .news-card-standard:hover h3 { color: var(--primary); }
+  .news-card-standard p { font-size: 1.05rem; color: var(--text-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .news-card-standard a { text-decoration: none; color: inherit; display: block; }
 
-  .image-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
+  @media (max-width: 1024px) {
+    .ok-lead-title { font-size: 3.2rem; }
+    .ok-lead-image { height: 400px; }
   }
-
-  .hero-card .image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .hero-card:hover .image-wrapper img {
-    transform: scale(1.05);
-  }
-
-  .category-tag {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    font-family: var(--font-headline);
-    border-radius: 2px;
-    z-index: 5;
-  }
-
-  .main-headline-block .category-tag {
-    position: static;
-    display: inline-block;
-  }
-
-  .side-card .category-tag {
-    position: static;
-    display: inline-block;
-    margin-bottom: 0.3rem;
-  }
-
-  .main-card .content {
-    padding-top: 1rem;
-  }
-
-  .main-card h2 {
-    font-size: 2.2rem;
-    line-height: 1.2;
-    margin-bottom: 0.8rem;
-    font-family: var(--font-headline);
-  }
-
-  .main-card p {
-    color: #666;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-  }
-
-  .side-card .content {
-    flex-grow: 1;
-  }
-
-  .side-card h3 {
-    font-size: 1.2rem;
-    line-height: 1.3;
-    font-family: var(--font-headline);
-  }
-
-  .meta {
-    font-size: 0.85rem;
-    color: #888;
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .meta i {
-    margin-right: 0.3rem;
-  }
-
-  @media (max-width: 1200px) {
-    .main-hero-title { font-size: 3rem; }
-  }
-
-  @media (max-width: 992px) {
-    .main-hero-title { font-size: 2.5rem; }
-    .hero-grid {
-      grid-template-columns: 1fr;
-    }
-    .main-card .image-wrapper {
-      height: 300px;
-    }
-    .main-card h2 {
-      font-size: 1.8rem;
-    }
-  }
-
   @media (max-width: 768px) {
-    .main-hero-title { font-size: 2rem; }
-    .main-featured-image { aspect-ratio: 16 / 9; }
+    .ok-lead-title { font-size: 2.5rem; }
+    .ok-lead-image { height: 250px; }
+    .ok-text-list li a { font-size: 1.4rem; }
+    .ok-sub-grid { grid-template-columns: 1fr; }
   }
 </style>

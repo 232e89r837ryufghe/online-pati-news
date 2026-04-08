@@ -2,177 +2,66 @@
 import { getWordPressPosts } from '../lib/wordpress';
 
 const posts = await getWordPressPosts(4);
-const galleryItems = posts.map(post => ({
-  id: post.id,
-  slug: post.slug,
-  image: post.image,
-  title: post.title,
-  category: post.category
-}));
+const mainPost = posts[0];
+const sidePosts = posts.slice(1, 3);
 ---
 
-<section class="photo-gallery">
-  <div class="container gallery-inner">
-    <div class="section-header">
-      <h2 class="section-title">फोटो फिचर (Multimedia)</h2>
-      <a href="/gallery" class="view-all">सबै फोटोहरू <i class="fas fa-camera"></i></a>
+<section class="multimedia-section">
+  <div class="container">
+    <div class="sec-header">
+      <h2 class="sec-title" style="color:#fff; border-bottom-color:var(--highlight-color);">फोटो फिचर / भिडियो</h2>
+      <a href="/multimedia" class="sec-link" style="color:#fff;">सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a>
     </div>
-
-    <div class="gallery-grid">
-      <div class="featured-item">
-        <div class="image-wrapper">
-          <img src={galleryItems[0].image} alt={galleryItems[0].title} />
-          <div class="overlay">
-            <span class="category">{galleryItems[0].category}</span>
-            <h3>{galleryItems[0].title}</h3>
+    <div class="multimedia-grid">
+      {mainPost && (
+        <a href={`/news/${mainPost.slug || mainPost.id}`} class="mm-main">
+          <img src={mainPost.image} alt={mainPost.title} />
+          <i class="fas fa-play-circle mm-icon"></i>
+          <div class="mm-overlay">
+            <h3>{mainPost.title}</h3>
           </div>
-        </div>
-      </div>
-      <div class="secondary-items">
-        {galleryItems.slice(1).map((item) => (
-          <div class="gallery-item">
-            <div class="image-wrapper">
-              <img src={item.image} alt={item.title} />
-              <div class="overlay-small">
-                <span class="category">{item.category}</span>
-                <h3>{item.title}</h3>
-              </div>
+        </a>
+      )}
+      <div class="mm-side-list">
+        {sidePosts.map((news) => (
+          <a href={`/news/${news.slug || news.id}`} class="mm-side-card">
+            <div class="img-wrap">
+              <img src={news.image} alt={news.title} />
+              <i class="fas fa-camera small-icon"></i>
             </div>
-          </div>
+            <h4>{news.title}</h4>
+          </a>
         ))}
+        <div class="ad-container" style="margin-top:15px; padding:0;">
+          <span class="ad-label" style="color:#888;">Advertisement</span>
+          <a href="/advertise" class="ad-slot ad-300x250" style="border:none;">
+            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300&h=250" alt="Ad" />
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<style>
-  .photo-gallery {
-    background-color: #111827; /* Deep professional slate instead of harsh black */
-    color: white;
-    padding: 4rem 0;
-    margin: 3rem 0;
-  }
+<style is:global>
+  .multimedia-section { background: var(--bg-dark); color: #fff; padding: 60px 0; margin-bottom: 50px; }
+  .multimedia-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
 
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
+  .mm-main { position: relative; border-radius: var(--radius); overflow: hidden; display: block; }
+  .mm-main img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+  .mm-main:hover img { transform: scale(1.02); }
+  .mm-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 30px; }
+  .mm-overlay h3 { font-family: var(--font-headline); font-size: 2.2rem; line-height: 1.2; color: #fff; }
+  .mm-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4rem; color: rgba(255,255,255,0.8); transition: 0.3s; }
+  .mm-main:hover .mm-icon { color: var(--highlight-color); transform: translate(-50%, -50%) scale(1.1); }
 
-  .section-title {
-    font-family: var(--font-headline);
-    font-size: 2rem;
-  }
+  .mm-side-list { display: flex; flex-direction: column; gap: 20px; }
+  .mm-side-card { display: flex; gap: 15px; align-items: center; text-decoration: none; color: inherit; }
+  .mm-side-card .img-wrap { width: 140px; height: 95px; border-radius: var(--radius); overflow: hidden; position: relative; flex-shrink: 0; }
+  .mm-side-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .mm-side-card .small-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.8); font-size: 1.8rem; }
+  .mm-side-card h4 { font-family: var(--font-headline); font-size: 1.4rem; line-height: 1.2; color: #ddd; transition: color 0.2s; }
+  .mm-side-card:hover h4 { color: var(--highlight-color); }
 
-  .section-title::after {
-    background-color: #fff;
-  }
-
-  .view-all {
-    color: #fff;
-    opacity: 0.8;
-    text-decoration: none;
-    font-size: 0.95rem;
-  }
-
-  .view-all:hover {
-    opacity: 1;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 1.5rem;
-    height: 550px;
-  }
-
-  .secondary-items {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: #1f2937; /* Placeholder color before image loads */
-  }
-
-  .image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .image-wrapper:hover img {
-    transform: scale(1.05);
-  }
-
-  .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .overlay-small {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 70%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .overlay h3 { font-size: 2rem; margin-bottom: 0.5rem; font-family: var(--font-headline); line-height: 1.2; }
-  .overlay-small h3 { font-size: 1.1rem; font-family: var(--font-headline); line-height: 1.3; }
-
-  .category {
-    background: var(--primary-color);
-    padding: 2px 10px;
-    font-size: 0.8rem;
-    align-self: flex-start;
-    margin-bottom: 0.8rem;
-    border-radius: 2px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .overlay-small .category {
-    padding: 2px 8px;
-    font-size: 0.7rem;
-    margin-bottom: 0.4rem;
-  }
-
-  @media (max-width: 992px) {
-    .gallery-grid {
-      grid-template-columns: 1fr;
-      height: auto;
-    }
-    .featured-item {
-      height: 400px;
-    }
-    .secondary-items {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      grid-template-rows: auto;
-      height: auto;
-    }
-    .gallery-item {
-      height: 200px;
-    }
-  }
+  @media (max-width: 1024px) { .multimedia-grid { grid-template-columns: 1fr; } }
 </style>

@@ -1,105 +1,29 @@
 ---
 ---
-<header class="header">
-  <div class="container header-inner">
-    <div class="logo">
-      <a href="/" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
-        <img 
-          src="/logo-main.png" 
-          alt="Online Pati News Logo" 
-        />
-        <span class="brand-text">Online Pati News</span>
-      </a>
-    </div>
-    <div class="header-ad">
-      <a href="/advertise" class="ad-link">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=728&h=90" alt="Advertisement" />
-      </a>
-    </div>
-  </div>
-</header>
+<header class="header"> 
+    <div class="container header-inner"> 
+        <div class="logo"> 
+            <a href="/"> 
+                <img src="/logo-main.png" alt="Online Pati News" class="header-logo-img" />
+            </a> 
+        </div> 
+        
+        <div class="ad-container" style="margin: 0; max-width: 728px;"> 
+            <span class="ad-label">Advertisement</span>
+            <a href="/advertise" class="ad-slot ad-728x90"> 
+                <img src="https://images.unsplash.com/photo-1542744094-13e00b848529?auto=format&fit=crop&q=80&w=728&h=90" alt="Corporate Ad"> 
+            </a> 
+        </div> 
+    </div> 
+</header> 
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+<style is:global>
+    .header { background-color: var(--bg-white); padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .header-logo-img { height: 75px; width: auto; object-fit: contain; }
 
-  .header {
-    padding: 1.5rem 0;
-    background: white;
-  }
-
-  .header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo a {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-decoration: none;
-  }
-
-  .logo img {
-    width: auto;
-    height: 70px;
-    display: block;
-  }
-
-  .brand-text {
-    font-family: 'Merriweather', serif;
-    font-weight: 700;
-    font-size: 2rem;
-    color: var(--primary-color);
-    letter-spacing: -0.5px;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .header-ad {
-    flex-grow: 0;
-    max-width: 728px;
-    width: 50%;
-  }
-
-  .ad-link {
-    display: block;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .ad-link img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    transition: opacity 0.3s ease;
-  }
-
-  .ad-link:hover img {
-    opacity: 0.9;
-  }
-
-  @media (max-width: 992px) {
-    .header-inner {
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
+    @media (max-width: 768px) {
+        .header-inner { flex-direction: column; text-align: center; }
+        .header-logo-img { height: 50px; }
     }
-    .logo a {
-      justify-content: center;
-    }
-    .brand-text {
-      font-size: 1.5rem;
-    }
-    .header-ad {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .brand-text {
-      display: none; /* Hide text on very small screens to save space */
-    }
-  }
 </style>

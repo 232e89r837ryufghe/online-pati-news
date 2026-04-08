@@ -1,0 +1,119 @@
+---
+import { getWordPressPosts } from '../lib/wordpress';
+
+const latestPosts = await getWordPressPosts(5);
+const popularPosts = await getWordPressPosts(5); // In a real app, this might be filtered by 'popular' tag
+---
+
+<aside class="opn-sidebar">
+    <div class="ad-container" style="margin-top: 0;"> 
+        <span class="ad-label">Advertisement</span>
+        <a href="/advertise" class="ad-slot ad-300x250"> 
+            <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&q=80&w=300&h=250" alt="Gadget Ad"> 
+        </a> 
+    </div>
+
+    <div class="market-widget sidebar-widget">
+        <h3><i class="fas fa-chart-bar"></i> बजार अपडेट</h3>
+        <div class="market-item"><span>नेप्से (NEPSE)</span> <span class="val up">२०९५.२३ ▲</span></div>
+        <div class="market-item"><span>सुन (छापावाल)</span> <span class="val up">१,५०,००० ▲</span></div>
+        <div class="market-item"><span>अमेरिकी डलर</span> <span class="val down">१३३.४५ ▼</span></div>
+    </div>
+
+    <div class="tab-widget sidebar-widget">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'latest')">ताजा अपडेट</button>
+            <button class="tab-btn" onclick="switchTab(event, 'popular')">लोकप्रिय</button>
+        </div>
+        <div class="tab-content">
+            <div id="latest" class="tab-pane active">
+                {latestPosts.map((post) => (
+                    <a href={`/news/${post.slug || post.id}`} class="tab-item">
+                        <span class="num"><i class="far fa-clock" style="font-size:1rem;"></i></span>
+                        <h4 set:html={post.title}></h4>
+                    </a>
+                ))}
+            </div>
+            <div id="popular" class="tab-pane">
+                {popularPosts.map((post, index) => (
+                    <a href={`/news/${post.slug || post.id}`} class="tab-item">
+                        <span class="num">{index + 1}</span>
+                        <h4 set:html={post.title}></h4>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-sidebar">
+        <div class="sidebar-widget">
+            <h2 class="widget-title" style="background: #1877f2; border-radius:4px; padding: 10px; color: #fff; font-family: var(--font-headline); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><i class="fab fa-facebook-f"></i> फेसबुक पेज</h2>
+            <div class="fb-widget-container">
+                <div class="fb-page" 
+                     data-href="https://www.facebook.com/Onlinepatinews" 
+                     data-tabs="timeline" 
+                     data-width="100%" 
+                     data-height="400" 
+                     data-small-header="false" 
+                     data-adapt-container-width="true" 
+                     data-hide-cover="false" 
+                     data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/Onlinepatinews" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/Onlinepatinews">Online Pati News</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<style is:global>
+    .opn-sidebar { display: flex; flex-direction: column; }
+    .sidebar-widget { margin-bottom: 40px; }
+    
+    /* Market Widget */
+    .market-widget { background: #fff; border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+    .market-widget h3 { font-family: var(--font-headline); font-size: 1.5rem; border-bottom: 2px solid var(--primary-color); margin-bottom: 15px; padding-bottom: 5px; color: var(--primary-color); display: flex; align-items: center; gap: 8px; }
+    .market-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--bg-gray); font-size: 1.05rem; }
+    .market-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .market-item .val { font-weight: 700; }
+    .up { color: #10b981; } .down { color: #ef4444; }
+
+    /* Tabbed Widget */
+    .tab-widget { background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .tab-nav { display: flex; border-bottom: 2px solid var(--primary-color); }
+    .tab-btn { flex: 1; padding: 12px; border: none; background: var(--bg-gray); cursor: pointer; font-family: var(--font-headline); font-size: 1.3rem; font-weight: 600; color: var(--text-light); transition: 0.3s; }
+    .tab-btn.active { background: var(--primary-color); color: #fff; }
+    .tab-content { padding: 20px; }
+    .tab-pane { display: none; flex-direction: column; gap: 15px; }
+    .tab-pane.active { display: flex; }
+    .tab-item { display: flex; gap: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); align-items: flex-start; text-decoration: none; color: inherit; }
+    .tab-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .tab-item .num { color: var(--highlight-color); font-weight: 700; font-size: 1.5rem; font-family: var(--font-headline); line-height: 1; min-width: 20px; text-align: center; }
+    .tab-item h4 { font-family: var(--font-headline); font-size: 1.35rem; line-height: 1.25; color: var(--text-dark); transition: color 0.2s; }
+    .tab-item:hover h4 { color: var(--primary-color); }
+
+    /* Sticky Sidebar Content */
+    .sticky-sidebar { position: sticky; top: 80px; }
+    .fb-widget-container { border: 1px solid var(--border-color); border-radius: var(--radius); padding: 10px; background: #fff; box-shadow: var(--shadow-sm); }
+
+    @media (max-width: 768px) {
+        .sticky-sidebar { position: static; }
+    }
+</style>
+
+<script is:inline>
+    function switchTab(evt, tabId) {
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-pane");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
