@@ -1,11 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import vercel from '@astrojs/vercel';
-
+// Reverting to Static Output for maximum production compatibility and reliability
 // https://astro.build/config
 export default defineConfig({
   site: 'https://onlinepatinews.com',
-  output: 'server',
-  adapter: vercel()
+  output: 'static'
 });
