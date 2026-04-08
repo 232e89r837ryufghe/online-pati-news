@@ -1,17 +1,17 @@
 ---
-import adToBs from 'ad-to-bs';
+import * as NepaliDateLib from 'nepali-date-converter';
 
 const today = new Date();
-const year = today.getFullYear();
-const month = today.getMonth() + 1;
-const day = today.getDate();
+
+// High-compatibility import pattern for SSR environments
+const NepaliDate = (NepaliDateLib as any).default?.default || (NepaliDateLib as any).default || NepaliDateLib;
 
 // Convert to Nepali Date (B.S.)
-const bsDate = adToBs(`${year}/${month}/${day}`);
-const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कात्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+const npDate = new NepaliDate(today);
 const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
 
-const bsFormatted = `${nepaliDays[today.getDay()]}, ${bsDate.en.day} ${nepaliMonths[parseInt(bsDate.en.month) - 1]} ${bsDate.en.year}`;
+// Formatting: Weekday, Day Month Year (B.S.)
+const bsFormatted = `${nepaliDays[today.getDay()]}, ${npDate.format('DD MMMM YYYY', 'np')}`;
 const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
