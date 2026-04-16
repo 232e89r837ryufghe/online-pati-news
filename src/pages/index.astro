@@ -6,38 +6,48 @@ import BreakingNews from "../components/BreakingNews.astro";
 import Sidebar from "../components/Sidebar.astro";
 import Footer from "../components/Footer.astro";
 import {
-    getWordPressPosts,
-    getWordPressPostsByCategorySlug,
-} from "../lib/wordpress";
+    getPosts,
+    getPostsByCategorySlug,
+} from "../lib/cms";
+import { getAdsByPosition } from "../lib/ads";
+
+// FETCH ADS
+const homeTopAds = await getAdsByPosition("home_top");
+const homeMidAds = await getAdsByPosition("home_mid");
+const homeBottomAds = await getAdsByPosition("home_bottom");
+
+const topAd = homeTopAds[0];
+const midAd = homeMidAds[0];
+const bottomAd = homeBottomAds[0];
 
 // FETCH DATA
-const allPosts = await getWordPressPosts(12);
+const allPosts = await getPosts(12);
 const mainLeads = allPosts.slice(0, 3);
 const trendingPosts = allPosts.slice(3, 7);
 const textListNews = allPosts.slice(7, 10);
 const subGridNews = allPosts.slice(10, 12);
 
 // Categories for specific blocks
-const politicsPosts = await getWordPressPostsByCategorySlug("राजनीति", 3);
-const economyPosts = await getWordPressPostsByCategorySlug("अर्थतन्त्र", 4);
-const corporatePosts = await getWordPressPostsByCategorySlug("कर्पोरेट", 3);
-const businessPosts = await getWordPressPostsByCategorySlug("बिजनेस", 3);
-const healthPosts = await getWordPressPostsByCategorySlug("स्वास्थ्य", 3);
-const itPosts = await getWordPressPostsByCategorySlug("सूचना-प्रविधि", 3);
-const sportsPosts = await getWordPressPostsByCategorySlug("खेलकुद", 3);
-const entertainmentPosts = await getWordPressPostsByCategorySlug("मनोरञ्जन", 3);
-const opinionPosts = await getWordPressPostsByCategorySlug("विचार", 3);
+const politicsPosts = await getPostsByCategorySlug("राजनीति", 3);
+const economyPosts = await getPostsByCategorySlug("अर्थतन्त्र", 4);
+const corporatePosts = await getPostsByCategorySlug("कर्पोरेट", 3);
+const businessPosts = await getPostsByCategorySlug("बिजनेस", 3);
+const healthPosts = await getPostsByCategorySlug("स्वास्थ्य", 3);
+const itPosts = await getPostsByCategorySlug("सूचना-प्रविधि", 3);
+const sportsPosts = await getPostsByCategorySlug("खेलकुद", 3);
+const entertainmentPosts = await getPostsByCategorySlug("मनोरञ्जन", 3);
+const opinionPosts = await getPostsByCategorySlug("विचार", 3);
 
 // Province (Default: Koshi)
-const provincePosts = await getWordPressPostsByCategorySlug("प्रदेश", 4);
+const provincePosts = await getPostsByCategorySlug("प्रदेश", 4);
 
 // Multimedia (Dark Section)
-const multimediaPosts = await getWordPressPostsByCategorySlug("मल्टिमिडिया", 3);
+const multimediaPosts = await getPostsByCategorySlug("मल्टिमिडिया", 3);
 const mmMain = multimediaPosts[0] || allPosts[0];
 const mmSide = multimediaPosts.slice(1, 4);
 
 // Cover Story (cinematic block)
-const coverStories = await getWordPressPostsByCategorySlug("कभर", 1);
+const coverStories = await getPostsByCategorySlug("कभर", 1);
 const coverStory = coverStories[0] || allPosts[5];
 ---
 
@@ -48,11 +58,11 @@ const coverStory = coverStories[0] || allPosts[5];
     <div class="container">
         <div class="ad-container">
             <span class="ad-label">Advertisement</span>
-            <a href="/advertise" class="ad-slot ad-970x90">
-                <img
-                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=970&h=90"
-                    alt="Real Estate Ad"
-                />
+            <a href={topAd?.link_url || "/advertise"} class="ad-slot ad-970x90">
+                    <img
+                        src={topAd?.image_url || "/logo.png"}
+                        alt={topAd?.title || "Real Estate Ad"}
+                    />
             </a>
         </div>
     </div>
@@ -81,14 +91,16 @@ const coverStory = coverStories[0] || allPosts[5];
                                         <i class="far fa-clock" /> {post.date}
                                     </span>
                                 </div>
-                                <a href={`/news/${post.slug || post.id}`}>
-                                    <div class="opn-lead-image">
-                                        <img
-                                            src={post.image}
-                                            alt={post.title}
-                                        />
-                                    </div>
-                                </a>
+                                {post.image && (
+                                    <a href={`/news/${post.slug || post.id}`}>
+                                        <div class="opn-lead-image">
+                                            <img
+                                                src={post.image}
+                                                alt={post.title}
+                                            />
+                                        </div>
+                                    </a>
+                                )}
                                 <p
                                     class="opn-lead-excerpt"
                                     set:html={post.excerpt}
@@ -126,7 +138,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     <span class="trending-num">
                                         {index + 1}
                                     </span>
-                                    <img src={post.image} alt={post.title} />
+                                    {post.image && <img src={post.image} alt={post.title} />}
                                 </div>
                                 <h3 set:html={post.title} />
                             </a>
@@ -159,12 +171,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             subGridNews.map((post) => (
                                 <article class="news-card-standard">
                                     <a href={`/news/${post.slug || post.id}`}>
+                                    {post.image && (
                                         <div class="img-wrap">
                                             <img
                                                 src={post.image}
                                                 alt={post.title}
                                             />
                                         </div>
+                                    )}
                                         <h3 set:html={post.title} />
                                         <p set:html={post.excerpt} />
                                     </a>
@@ -181,10 +195,10 @@ const coverStory = coverStories[0] || allPosts[5];
         <div class="container">
             <div class="ad-container">
                 <span class="ad-label">Advertisement</span>
-                <a href="/advertise" class="ad-slot ad-970x250">
+                <a href={midAd?.link_url || "/advertise"} class="ad-slot ad-970x250">
                     <img
-                        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=970&h=250"
-                        alt="Auto Ad Banner"
+                        src={midAd?.image_url || "/logo.png"}
+                        alt={midAd?.title || "Auto Ad Banner"}
                     />
                 </a>
             </div>
@@ -264,9 +278,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 href={`/news/${post.slug || post.id}`}
                                 class="prov-card"
                             >
-                                <div class="img-wrap">
-                                    <img src={post.image} alt={post.title} />
-                                </div>
+                                {post.image && (
+                                    <div class="img-wrap">
+                                        <img src={post.image} alt={post.title} />
+                                    </div>
+                                )}
                                 <h4 set:html={post.title} />
                             </a>
                         ))
@@ -290,9 +306,11 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${post.slug || post.id}`}
                             class="news-card-standard"
                         >
-                            <div class="img-wrap">
-                                <img src={post.image} alt={post.title} />
-                            </div>
+                            {post.image && (
+                                <div class="img-wrap">
+                                    <img src={post.image} alt={post.title} />
+                                </div>
+                            )}
                             <h3 set:html={post.title} />
                         </a>
                     ))
@@ -317,12 +335,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${corporatePosts[0].slug || corporatePosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={corporatePosts[0].image}
-                                    alt={corporatePosts[0].title}
-                                />
-                            </div>
+                            {corporatePosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={corporatePosts[0].image}
+                                        alt={corporatePosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={corporatePosts[0].title} />
                         </a>
                     )
@@ -361,12 +381,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${businessPosts[0].slug || businessPosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={businessPosts[0].image}
-                                    alt={businessPosts[0].title}
-                                />
-                            </div>
+                            {businessPosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={businessPosts[0].image}
+                                        alt={businessPosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={businessPosts[0].title} />
                         </a>
                     )
@@ -408,12 +430,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${healthPosts[0].slug || healthPosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={healthPosts[0].image}
-                                    alt={healthPosts[0].title}
-                                />
-                            </div>
+                            {healthPosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={healthPosts[0].image}
+                                        alt={healthPosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={healthPosts[0].title} />
                         </a>
                     )
@@ -452,12 +476,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${itPosts[0].slug || itPosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={itPosts[0].image}
-                                    alt={itPosts[0].title}
-                                />
-                            </div>
+                            {itPosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={itPosts[0].image}
+                                        alt={itPosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={itPosts[0].title} />
                         </a>
                     )
@@ -503,9 +529,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="opinion-card"
                             >
                                 <i class="fas fa-quote-left" />
-                                <div class="opinion-img">
-                                    <img src={post.image} alt={post.author} />
-                                </div>
+                                {post.image && (
+                                    <div class="opinion-img">
+                                        <img src={post.image} alt={post.author} />
+                                    </div>
+                                )}
                                 <span class="opinion-author">
                                     {post.author}
                                 </span>
@@ -533,12 +561,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${sportsPosts[0].slug || sportsPosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={sportsPosts[0].image}
-                                    alt={sportsPosts[0].title}
-                                />
-                            </div>
+                            {sportsPosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={sportsPosts[0].image}
+                                        alt={sportsPosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={sportsPosts[0].title} />
                         </a>
                     )
@@ -577,12 +607,14 @@ const coverStory = coverStories[0] || allPosts[5];
                             href={`/news/${entertainmentPosts[0].slug || entertainmentPosts[0].id}`}
                             class="lead-card"
                         >
-                            <div class="img-wrap">
-                                <img
-                                    src={entertainmentPosts[0].image}
-                                    alt={entertainmentPosts[0].title}
-                                />
-                            </div>
+                            {entertainmentPosts[0].image && (
+                                <div class="img-wrap">
+                                    <img
+                                        src={entertainmentPosts[0].image}
+                                        alt={entertainmentPosts[0].title}
+                                    />
+                                </div>
+                            )}
                             <h3 set:html={entertainmentPosts[0].title} />
                         </a>
                     )
@@ -617,7 +649,7 @@ const coverStory = coverStories[0] || allPosts[5];
                         href={`/news/${mmMain.slug || mmMain.id}`}
                         class="mm-main"
                     >
-                        <img src={mmMain.image} alt={mmMain.title} />
+                        {mmMain.image && <img src={mmMain.image} alt={mmMain.title} />}
                         <i class="fas fa-play-circle mm-icon"></i>
                         <div class="mm-overlay">
                             <h3 set:html={mmMain.title} />
@@ -630,13 +662,15 @@ const coverStory = coverStories[0] || allPosts[5];
                                     href={`/news/${news.slug || news.id}`}
                                     class="mm-side-card"
                                 >
-                                    <div class="img-wrap">
-                                        <img
-                                            src={news.image}
-                                            alt={news.title}
-                                        />
-                                        <i class="fas fa-camera small-icon" />
-                                    </div>
+                                    {news.image && (
+                                        <div class="img-wrap">
+                                            <img
+                                                src={news.image}
+                                                alt={news.title}
+                                            />
+                                            <i class="fas fa-camera small-icon" />
+                                        </div>
+                                    )}
                                     <h4 set:html={news.title} />
                                 </a>
                             ))
@@ -655,7 +689,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 style="border:none;"
                             >
                                 <img
-                                    src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300&h=250"
+                                    src="/logo.png"
                                     alt="Entertainment Ad"
                                 />
                             </a>
@@ -668,10 +702,10 @@ const coverStory = coverStories[0] || allPosts[5];
         <div class="container">
             <div class="ad-container">
                 <span class="ad-label">Advertisement</span>
-                <a href="/advertise" class="ad-slot ad-728x90">
+                <a href={bottomAd?.link_url || "/advertise"} class="ad-slot ad-728x90">
                     <img
-                        src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=728&h=90"
-                        alt="Ecommerce Ad"
+                        src={bottomAd?.image_url || "/logo.png"}
+                        alt={bottomAd?.title || "Ecommerce Ad"}
                     />
                 </a>
             </div>

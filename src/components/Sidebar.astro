@@ -1,15 +1,20 @@
 ---
-import { getWordPressPosts } from '../lib/wordpress';
+import { getPosts } from '../lib/cms';
 
-const latestPosts = await getWordPressPosts(5);
-const popularPosts = await getWordPressPosts(5); // In a real app, this might be filtered by 'popular' tag
+const latestPosts = await getPosts(5);
+const popularPosts = await getPosts(5); // In a real app, this might be filtered by 'popular' tag
+import { getAdsByPosition } from "../lib/ads";
+
+// FETCH ADS
+const sidebarAds = await getAdsByPosition("sidebar_top");
+const sidebarAd = sidebarAds[0];
 ---
 
 <aside class="opn-sidebar">
     <div class="ad-container" style="margin-top: 0;"> 
         <span class="ad-label">Advertisement</span>
-        <a href="/advertise" class="ad-slot ad-300x250"> 
-            <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&q=80&w=300&h=250" alt="Gadget Ad"> 
+        <a href={sidebarAd?.link_url || "/advertise"} class="ad-slot ad-300x250"> 
+            <img src={sidebarAd?.image_url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='250' viewBox='0 0 300 250'%3E%3Crect width='300' height='250' fill='%23f8fafc'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%2394a3b8' text-anchor='middle' alignment-baseline='middle'%3EAdvertisement Slot%3C/text%3E%3C/svg%3E"} alt={sidebarAd?.title || "Advertise with us"}> 
         </a> 
     </div>
 

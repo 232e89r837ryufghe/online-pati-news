@@ -1,9 +1,9 @@
 ---
-import { getWordPressPosts, getWordPressPostsByCategorySlug } from '../lib/wordpress';
+import { getPosts, getPostsByCategorySlug } from '../lib/cms';
 
-let breakingPosts = await getWordPressPostsByCategorySlug("ब्रेकिङ", 5);
+let breakingPosts = await getPostsByCategorySlug("ब्रेकिङ", 5);
 if (breakingPosts.length === 0) {
-  breakingPosts = await getWordPressPosts(5);
+  breakingPosts = await getPosts(5);
 }
 ---
 

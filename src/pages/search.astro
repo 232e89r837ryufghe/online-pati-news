@@ -4,11 +4,10 @@ import TopBar from '../components/TopBar.astro';
 import Navbar from '../components/Navbar.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
-import { searchWordPressPosts } from '../lib/wordpress';
+import { searchPosts } from "../lib/cms";
 
-const url = new URL(Astro.request.url);
-const query = url.searchParams.get('q') || '';
-const results = query ? await searchWordPressPosts(query) : [];
+const query = Astro.url.searchParams.get("q") || "";
+const results = query ? await searchPosts(query) : [];
 ---
 
 <Layout title={`खोज नतिजा: ${query} - Online Pati News`}>

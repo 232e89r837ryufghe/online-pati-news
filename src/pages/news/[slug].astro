@@ -4,10 +4,10 @@ import TopBar from '../../components/TopBar.astro';
 import Navbar from '../../components/Navbar.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import Footer from '../../components/Footer.astro';
-import { getWordPressPosts, getWordPressPostBySlug } from '../../lib/wordpress';
+import { getPosts, getPostBySlug } from '../../lib/cms';
 
 export async function getStaticPaths() {
-  const posts = await getWordPressPosts(100);
+  const posts = await getPosts(100);
   return posts.map((post) => ({
     params: { slug: post.slug || post.id.toString() },
     props: { post },
@@ -18,7 +18,7 @@ const { slug } = Astro.params;
 const { post } = Astro.props;
 
 // Secondary fetch if props aren't available (e.g. dynamic routes or server output)
-const item = post || await getWordPressPostBySlug(slug as string);
+const item = post || await getPostBySlug(slug as string);
 
 if (!item) {
   return Astro.redirect('/404');
@@ -105,10 +105,12 @@ const jsonLd = {
             </div>
           </header>
 
-          <div class="article-featured-image">
-            <img src={item.image} alt={item.title} />
-            {item.caption && <div class="image-caption">{item.caption}</div>}
-          </div>
+          {item.image && (
+            <div class="article-featured-image">
+              <img src={item.image} alt={item.title} />
+              {item.caption && <div class="image-caption">{item.caption}</div>}
+            </div>
+          )}
 
           <div class="article-content-premium" set:html={item.content}>
           </div>

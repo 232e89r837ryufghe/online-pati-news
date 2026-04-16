@@ -1,9 +1,13 @@
----
-import { getWordPressPosts } from '../lib/wordpress';
+import { getPosts } from '../lib/cms';
+import { getAdsByPosition } from '../lib/ads';
 
-const posts = await getWordPressPosts(4);
+const posts = await getPosts(4);
 const mainPost = posts[0];
 const sidePosts = posts.slice(1, 3);
+
+// FETCH ADS
+const mmSideAds = await getAdsByPosition("multimedia_side");
+const mmSideAd = mmSideAds[0];
 ---
 
 <section class="multimedia-section">
@@ -15,7 +19,7 @@ const sidePosts = posts.slice(1, 3);
     <div class="multimedia-grid">
       {mainPost && (
         <a href={`/news/${mainPost.slug || mainPost.id}`} class="mm-main">
-          <img src={mainPost.image} alt={mainPost.title} />
+          {mainPost.image && <img src={mainPost.image} alt={mainPost.title} />}
           <i class="fas fa-play-circle mm-icon"></i>
           <div class="mm-overlay">
             <h3>{mainPost.title}</h3>
@@ -25,17 +29,19 @@ const sidePosts = posts.slice(1, 3);
       <div class="mm-side-list">
         {sidePosts.map((news) => (
           <a href={`/news/${news.slug || news.id}`} class="mm-side-card">
-            <div class="img-wrap">
-              <img src={news.image} alt={news.title} />
-              <i class="fas fa-camera small-icon"></i>
-            </div>
+            {news.image && (
+              <div class="img-wrap">
+                <img src={news.image} alt={news.title} />
+                <i class="fas fa-camera small-icon"></i>
+              </div>
+            )}
             <h4>{news.title}</h4>
           </a>
         ))}
         <div class="ad-container" style="margin-top:15px; padding:0;">
           <span class="ad-label" style="color:#888;">Advertisement</span>
-          <a href="/advertise" class="ad-slot ad-300x250" style="border:none;">
-            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=300&h=250" alt="Ad" />
+          <a href={mmSideAd?.link_url || "/advertise"} class="ad-slot ad-300x250" style="border:none;">
+            <img src={mmSideAd?.image_url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='250' viewBox='0 0 300 250'%3E%3Crect width='300' height='250' fill='%23334155'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%2394a3b8' text-anchor='middle' alignment-baseline='middle'%3EAdvertisement Slot%3C/text%3E%3C/svg%3E"} alt={mmSideAd?.title || "Ad"} />
           </a>
         </div>
       </div>

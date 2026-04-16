@@ -1,7 +1,7 @@
 ---
-import { getWordPressPosts } from '../lib/wordpress';
+import { getPosts } from '../lib/cms';
 
-const allPosts = await getWordPressPosts(7);
+const allPosts = await getPosts(7);
 const leadNews = allPosts[0];
 const textListNews = allPosts.slice(1, 4);
 const subGridNews = allPosts.slice(4, 6);
@@ -18,11 +18,13 @@ const subGridNews = allPosts.slice(4, 6);
       <span><i class="far fa-user"></i> {leadNews.author}</span>
       <span><i class="far fa-clock"></i> {leadNews.date}</span>
     </div>
-    <a href={`/news/${leadNews.slug || leadNews.id}`}>
-      <div class="ok-lead-image">
-        <img src={leadNews.image} alt={leadNews.title} />
-      </div>
-    </a>
+    {leadNews.image && (
+      <a href={`/news/${leadNews.slug || leadNews.id}`}>
+        <div class="ok-lead-image">
+          <img src={leadNews.image} alt={leadNews.title} />
+        </div>
+      </a>
+    )}
     <p class="ok-lead-excerpt">{leadNews.excerpt}</p>
   </div>
 
@@ -44,9 +46,11 @@ const subGridNews = allPosts.slice(4, 6);
       {subGridNews.map((news) => (
         <article class="news-card-standard">
           <a href={`/news/${news.slug || news.id}`}>
-            <div class="img-wrap">
-              <img src={news.image} alt={news.title} />
-            </div>
+            {news.image && (
+              <div class="img-wrap">
+                <img src={news.image} alt={news.title} />
+              </div>
+            )}
             <h3>{news.title}</h3>
             <p>{news.excerpt}</p>
           </a>

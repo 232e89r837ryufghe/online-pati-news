@@ -28,9 +28,11 @@ const { title, link, news, layout = 'grid' } = Astro.props;
     <div class={`news-content ${layout}`}>
       {news.map((item, index) => (
         <a href={`/news/${item.slug || item.id}`} class="news-card">
-          <div class="image-wrapper">
-            <img src={item.image} alt={item.title} />
-          </div>
+          {item.image && (
+            <div class="image-wrapper">
+              <img src={item.image} alt={item.title} />
+            </div>
+          )}
           <div class="content">
             <h3 set:html={item.title}></h3>
             {layout === 'featured' && index === 0 && <p>{item.excerpt}</p>}

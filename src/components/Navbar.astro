@@ -1,6 +1,6 @@
 ---
-import { getWordPressCategories } from '../lib/wordpress';
-const categories = await getWordPressCategories();
+import { getCategories } from '../lib/cms';
+const categories = await getCategories();
 const navCategories = categories
   .filter((c: any) => c.count > 0 && c.slug !== 'uncategorized')
   .map((c: any) => ({

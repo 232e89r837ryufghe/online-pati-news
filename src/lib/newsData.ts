@@ -9,7 +9,9 @@ export interface NewsItem {
   author: string;
   excerpt: string;
   content: string;
+  dateIso?: string;
+  caption?: string;
 }
 
-// Static data removed as the site now uses Headless WordPress via src/lib/wordpress.ts
+// Static data removed as the site now uses the Native Headless CMS via src/lib/cms.ts
 export const newsData: NewsItem[] = [];
