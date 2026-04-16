@@ -107,6 +107,7 @@ function mapCMSPostToNewsItem(post: any): NewsItem {
     excerpt: stripHtml(post.excerpt || ''),
     content: content,
     dateIso: post.date,
+    show_image: post.show_image === false || post.show_image === 0 ? false : true,
     caption: post.excerpt?.substring(0, 100)
   };
 }

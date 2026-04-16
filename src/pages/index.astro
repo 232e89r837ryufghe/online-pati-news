@@ -91,7 +91,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                         <i class="far fa-clock" /> {post.date}
                                     </span>
                                 </div>
-                                {post.image && (
+                                {post.image && post.show_image === true && (
                                     <a href={`/news/${post.slug || post.id}`}>
                                         <div class="opn-lead-image">
                                             <img
