@@ -105,7 +105,7 @@ const jsonLd = {
             </div>
           </header>
 
-          {item.image && (
+          {item.image && item.show_image === true && (
             <div class="article-featured-image">
               <img src={item.image} alt={item.title} />
               {item.caption && <div class="image-caption">{item.caption}</div>}
