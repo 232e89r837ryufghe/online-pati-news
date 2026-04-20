@@ -110,3 +110,31 @@ img { max-width: 100%; height: auto; display: block; }
   
   .opn-layout { grid-template-columns: 1fr !important; gap: 30px !important; }
 }
+
+/* CARD METADATA GLOBAL */
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.mini-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--border-color);
+}
+

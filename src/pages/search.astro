@@ -50,8 +50,8 @@ import { getRelativeTimeNepali } from '../utils/date';
                       <p class="search-card-excerpt-p" set:html={item.excerpt}></p>
                       <div class="search-card-footer-p">
                         <span class="search-meta-p">
-                          <img src="/logo.png" alt="Logo" class="mini-logo" style="width:16px; height:16px; border-radius:50%; margin-right:5px; vertical-align:middle;" /> 
-                          {item.author}
+                          <img src="/logo.png" alt="Logo" class="mini-logo" /> 
+                          {item.author || 'Online Pati News'}
                         </span>
                         <span class="search-meta-p"><i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}</span>
                       </div>

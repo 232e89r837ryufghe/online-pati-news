@@ -12,17 +12,24 @@ const navCategories = categories
 <nav class="navbar"> 
     <div class="container navbar-inner"> 
         <div class="nav-left-brand">
-            <a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="/logo.png" alt="Logo" style="height: 38px; width: auto; object-fit: contain;" />
-                <span class="nav-brand-text" style="color: #fff; font-weight: 700; font-size: 1.35rem; font-family: var(--font-headline);">Online Pati News</span>
+            <a href="/" class="brand-link">
+                <img src="/logo.png" alt="Logo" class="main-logo-img" />
+                <span class="nav-brand-text">Online Pati News</span>
             </a>
         </div>
 
+        <div class="nav-center-search">
+            <form action="/search" method="GET" class="expanding-search-form" id="desktopSearchForm">
+                <input type="text" name="q" id="desktopSearchInput" placeholder="समाचार खोज्नुहोस्..." required />
+                <button type="submit" aria-label="Submit Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+
         <ul class="nav-menu" id="navMenu"> 
-            <li><a href="/समाचार"><i class="bi bi-newspaper" style="margin-right: 5px;"></i> समाचार</a></li>
+            <li><a href="/समाचार"><i class="bi bi-newspaper"></i> समाचार</a></li>
             <li><a href="/राजनीति">राजनीति</a></li>
             <li>
-                <a href="/प्रदेश">प्रदेश <i class="bi bi-chevron-down" style="font-size: 0.8rem; margin-left:3px;"></i></a>
+                <a href="/प्रदेश">प्रदेश <i class="bi bi-chevron-down"></i></a>
                 <ul class="dropdown">
                     <li><a href="#">कोशी प्रदेश</a></li>
                     <li><a href="#">मधेश प्रदेश</a></li>
@@ -35,58 +42,147 @@ const navCategories = categories
             </li>
             <li><a href="/अर्थतन्त्र">अर्थतन्त्र</a></li>
             <li><a href="/कर्पोरेट">कर्पोरेट</a></li>
-            <li><a href="/सूचना-प्रविधि">सूचना-प्रविधि</a></li>
-            <li><a href="/स्वास्थ्य">स्वास्थ्य</a></li>
             <li><a href="/खेलकुद">खेलकुद</a></li>
-            <li><a href="/मनोरञ्जन">मनोरञ्जन</a></li>
         </ul> 
 
-        <div class="nav-right"> 
-            <button class="mobile-search-toggle" id="mobileSearchToggle" aria-label="Toggle Search"><i class="bi bi-search"></i></button>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="bi bi-list"></i></button> 
+        <div class="nav-actions"> 
+            <button class="search-toggle-btn" id="desktopSearchToggle" aria-label="Search">
+                <i class="bi bi-search"></i>
+                <i class="bi bi-x-lg close-icon"></i>
+            </button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                <i class="bi bi-list"></i>
+            </button> 
         </div> 
     </div> 
-    
-    <div class="mobile-search-overlay" id="mobileSearchOverlay">
-        <div class="container">
-            <form action="/search" method="GET" class="nav-search-form" id="navSearchForm"> 
-                <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
-                <button type="submit" aria-label="Search"><i class="bi bi-search"></i></button> 
-            </form>
-        </div>
-    </div>
     
     <div class="nav-overlay" id="navOverlay"></div>
 </nav> 
 
 <style is:global>
     .navbar { background-color: var(--primary-color); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); transition: transform 0.3s; }
-    .navbar-inner { display: flex; justify-content: space-between; align-items: center; min-height: 60px; }
     
-    .nav-left-brand a { transition: opacity 0.2s; }
-    .nav-left-brand a:hover { opacity: 0.9; }
+    .navbar-inner { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        min-height: 65px; 
+    }
+    
+    .brand-link { 
+        display: flex; 
+        align-items: center; 
+        gap: 12px; 
+        text-decoration: none; 
+        flex-shrink: 0;
+    }
+    .main-logo-img { 
+        height: 42px; 
+        width: auto; 
+        object-fit: contain; 
+    }
+    .nav-brand-text { 
+        color: #fff; 
+        font-weight: 700; 
+        font-size: 1.4rem; 
+        font-family: var(--font-headline); 
+        white-space: nowrap;
+    }
 
-    .nav-menu { display: flex; align-items: center; margin: 0; padding: 0; list-style: none; }
-    .nav-menu li { position: relative; }
-    .nav-menu li a { color: #fff; padding: 18px 14px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); transition: 0.2s; }
-    .nav-menu li:hover > a { background-color: var(--primary-dark); color: var(--highlight-color); }
+    /* Expanding Search Container */
+    .nav-center-search {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        padding: 0 20px;
+        max-width: 0;
+        overflow: hidden;
+        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+        opacity: 0;
+    }
+    .navbar.search-active .nav-center-search {
+        max-width: 600px;
+        opacity: 1;
+    }
+    .expanding-search-form {
+        width: 100%;
+        display: flex;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        padding: 4px 15px;
+        transition: 0.3s;
+    }
+    .expanding-search-form:focus-within {
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .expanding-search-form input {
+        background: transparent;
+        border: none;
+        color: #fff;
+        width: 100%;
+        padding: 8px 10px;
+        outline: none;
+        font-size: 1rem;
+    }
+    .expanding-search-form:focus-within input { color: var(--text-dark); }
+    .expanding-search-form button {
+        background: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 0 5px;
+    }
+    .expanding-search-form:focus-within button { color: var(--primary-color); }
+
+    .nav-menu { 
+        display: flex; 
+        align-items: center; 
+        margin: 0; 
+        padding: 0; 
+        list-style: none; 
+        transition: opacity 0.3s;
+    }
+    .navbar.search-active .nav-menu { opacity: 0; pointer-events: none; }
     
+    .nav-menu li { position: relative; }
+    .nav-menu li a { color: #fff; padding: 18px 12px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); transition: 0.2s; }
+    .nav-menu li:hover > a { color: var(--highlight-color); }
+    
+    /* Actions Area (Search Toggle + Hamburger) */
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-shrink: 0;
+    }
+
+    .search-toggle-btn, .mobile-toggle {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 1.6rem;
+        cursor: pointer;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+    .search-toggle-btn:hover, .mobile-toggle:hover { background: rgba(255,255,255,0.1); }
+    .search-toggle-btn .close-icon { display: none; font-size: 1.3rem; }
+    .navbar.search-active .search-toggle-btn .bi-search { display: none; }
+    .navbar.search-active .search-toggle-btn .close-icon { display: block; }
+
     /* Dropdown */
     .dropdown { position: absolute; top: 100%; left: 0; background: #fff; min-width: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: none; border-top: 3px solid var(--highlight-color); border-radius: 0 0 4px 4px; overflow: hidden; z-index: 1001; }
     .nav-menu li:hover .dropdown { display: block; }
     .dropdown li a { color: var(--text-dark) !important; padding: 12px 20px !important; font-size: 1.05rem !important; border-bottom: 1px solid var(--border-color); font-family: var(--font-body) !important; font-weight: 500 !important; }
-    .dropdown li a:hover { background: var(--bg-gray) !important; color: var(--primary-color) !important; padding-left: 25px !important; }
     
-    .mobile-search-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary-dark); padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 1001; }
-    .mobile-search-overlay.active { display: block; }
-    .nav-search-form { display: flex; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 15px; }
-    .nav-search-form input { background: transparent; border: none; color: #fff; outline: none; font-family: var(--font-body); width: 100%; font-size: 0.95rem; }
-    .nav-search-form input::placeholder { color: rgba(255,255,255,0.7); }
-    .nav-search-form button { background: transparent; border: none; color: #fff; cursor: pointer; padding-left: 5px; }
-
-    .mobile-toggle, .mobile-search-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 10px; border-radius: 50%; transition: background 0.2s; }
-    .mobile-toggle:hover, .mobile-search-toggle:hover { background: rgba(255,255,255,0.1); }
-
     .nav-overlay { 
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
         background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; 
@@ -94,11 +190,17 @@ const navCategories = categories
     }
     .nav-overlay.active { visibility: visible; opacity: 1; }
 
-    @media (max-width: 1024px) {
-        .nav-menu li a { padding: 18px 10px; font-size: 1.05rem; }
+    @media (max-width: 1200px) {
+        .nav-brand-text { display: none; }
     }
 
     @media (max-width: 991px) {
+        .navbar.search-active .nav-menu { opacity: 1; pointer-events: auto; }
+        .nav-center-search { display: none; }
+        
+        /* Mobile Search behaves like an overlay */
+        .navbar.search-active .nav-actions .mobile-search-mock { display: block; }
+
         .nav-menu { 
             position: fixed; top: 0; right: -100%; width: 300px; height: 100vh; 
             background: var(--primary-color); flex-direction: column; align-items: stretch;
@@ -107,25 +209,21 @@ const navCategories = categories
         }
         .nav-menu.active { right: 0; }
         .nav-menu li a { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1.2rem; }
-        .dropdown { position: static; box-shadow: none; border: none; background: rgba(0,0,0,0.1); width: 100%; }
-        .nav-menu li:hover .dropdown { display: none; }
-        .nav-menu li.open .dropdown { display: block; }
-
-        .mobile-toggle, .mobile-search-toggle { display: block; }
     }
 </style>
 
 <script>
+    const navbar = document.querySelector('.navbar');
     const mobileToggle = document.getElementById('mobileToggle');
-    const mobileSearchToggle = document.getElementById('mobileSearchToggle');
+    const desktopSearchToggle = document.getElementById('desktopSearchToggle');
+    const desktopSearchInput = document.getElementById('desktopSearchInput') as HTMLInputElement;
     const navMenu = document.getElementById('navMenu');
-    const mobileSearchOverlay = document.getElementById('mobileSearchOverlay');
     const navOverlay = document.getElementById('navOverlay');
 
     function toggleMenu() {
         navMenu?.classList.toggle('active');
         navOverlay?.classList.toggle('active');
-        mobileSearchOverlay?.classList.remove('active');
+        navbar?.classList.remove('search-active');
         
         const icon = mobileToggle?.querySelector('i');
         if (icon) {
@@ -140,14 +238,27 @@ const navCategories = categories
         }
     }
 
-    mobileToggle?.addEventListener('click', toggleMenu);
-    navOverlay?.addEventListener('click', toggleMenu);
-
-    mobileSearchToggle?.addEventListener('click', () => {
-        mobileSearchOverlay?.classList.toggle('active');
-        if (navMenu?.classList.contains('active')) {
-            toggleMenu();
+    // Desktop/Universal Search Toggle
+    desktopSearchToggle?.addEventListener('click', () => {
+        navbar?.classList.toggle('search-active');
+        if (navbar?.classList.contains('search-active')) {
+            setTimeout(() => desktopSearchInput?.focus(), 100);
+            navMenu?.classList.remove('active');
+            navOverlay?.classList.remove('active');
         }
+    });
+
+    // Close Search on ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navbar?.classList.contains('search-active')) {
+            navbar?.classList.remove('search-active');
+        }
+    });
+
+    mobileToggle?.addEventListener('click', toggleMenu);
+    navOverlay?.addEventListener('click', () => {
+        if (navMenu?.classList.contains('active')) toggleMenu();
+        navbar?.classList.remove('search-active');
     });
 
     // Handle mobile submenus

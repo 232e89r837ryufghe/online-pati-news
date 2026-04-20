@@ -5,6 +5,10 @@ const latestPosts = await getPosts(5);
 const popularPosts = await getPosts(5); // In a real app, this might be filtered by 'popular' tag
 import { getAdsByPosition } from "../lib/ads";
 import { getRelativeTimeNepali } from '../utils/date';
+import { getMarketData } from '../lib/market';
+
+// FETCH MARKET DATA
+const marketData = await getMarketData();
 
 // FETCH ADS
 const sidebarAds = await getAdsByPosition("sidebar_top");
@@ -21,9 +25,18 @@ const sidebarAd = sidebarAds[0];
 
     <div class="market-widget sidebar-widget">
         <h3><i class="bi bi-bar-chart-fill"></i> बजार अपडेट</h3>
-        <div class="market-item"><span>नेप्से (NEPSE)</span> <span class="val up">२०९५.२३ ▲</span></div>
-        <div class="market-item"><span>सुन (छापावाल)</span> <span class="val up">१,५०,००० ▲</span></div>
-        <div class="market-item"><span>अमेरिकी डलर</span> <span class="val down">१३३.४५ ▼</span></div>
+        <div class="market-item">
+            <span>नेप्से (NEPSE)</span> 
+            <span class={`val ${marketData.nepse.trend}`}>{marketData.nepse.value} {marketData.nepse.change}</span>
+        </div>
+        <div class="market-item">
+            <span>सुन ({marketData.gold.type})</span> 
+            <span class={`val ${marketData.gold.trend}`}>{marketData.gold.value} ▲</span>
+        </div>
+        <div class="market-item">
+            <span>अमेरिकी डलर</span> 
+            <span class="val down">{marketData.forex.value} {marketData.forex.symbol}</span>
+        </div>
     </div>
 
     <div class="tab-widget sidebar-widget">
@@ -39,6 +52,9 @@ const sidebarAd = sidebarAds[0];
                         <div style="flex:1;">
                             <h4 set:html={post.title}></h4>
                             <div class="card-meta" style="margin-top: 5px;">
+                                <span class="meta-item">
+                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> Online Pati News
+                                </span>
                                 <span class="meta-item">
                                     {getRelativeTimeNepali(post.dateIso || '')}
                                 </span>

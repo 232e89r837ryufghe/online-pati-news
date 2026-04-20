@@ -102,7 +102,7 @@ function mapCMSPostToNewsItem(post: any): NewsItem {
     image: image,
     category: categoryInfo.name,
     categorySlug: categoryInfo.slug,
-    author: post.author || 'अनलाइनपाटी न्युज',
+    author: normalizeAuthor(post.author),
     date: formatDate(post.date),
     excerpt: stripHtml(post.excerpt || ''),
     content: content,
@@ -110,6 +110,17 @@ function mapCMSPostToNewsItem(post: any): NewsItem {
     show_image: post.show_image === false || post.show_image === 0 ? false : true,
     caption: post.excerpt?.substring(0, 100)
   };
+}
+
+function normalizeAuthor(author: string): string {
+  const defaultAuthor = 'Online Pati News';
+  if (!author) return defaultAuthor;
+  
+  const internalNames = ['Onlinepati', 'अनलाइनपाटी', 'admin', 'अनलाइनपाटी न्युज'];
+  if (internalNames.includes(author)) {
+    return defaultAuthor;
+  }
+  return author;
 }
 
 function formatDate(dateStr: string): string {
