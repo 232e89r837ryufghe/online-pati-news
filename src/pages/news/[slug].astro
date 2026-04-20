@@ -55,10 +55,10 @@ const jsonLd = {
   <main class="article-page-wrapper">
     <div class="container article-container">
       <div class="breadcrumbs">
-        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
-        <i class="fas fa-chevron-right sep"></i> 
+        <a href="/"><i class="bi bi-house"></i> गृहपृष्ठ</a> 
+        <i class="bi bi-chevron-right sep"></i> 
         <a href={`/${item.categorySlug}`} class="cat-link">{item.category}</a> 
-        <i class="fas fa-chevron-right sep"></i>
+        <i class="bi bi-chevron-right sep"></i>
         <span class="curr" set:html={item.title}></span>
       </div>
 
@@ -71,37 +71,38 @@ const jsonLd = {
             <div class="article-meta-p">
               <div class="author-block">
                 <div class="author-img">
-                  <i class="fas fa-user-circle"></i>
+                  <i class="bi bi-person-circle"></i>
                 </div>
                 <div class="author-details">
                   <span class="author-name">{item.author}</span>
-                  <span class="post-date"><i class="far fa-clock"></i> {item.date}</span>
+                  <span class="post-date"><i class="bi bi-clock"></i> {item.date}</span>
                 </div>
               </div>
               
               <div class="article-actions">
-                <button class="action-btn audio-trigger" id="audioNewsBtn" title="समाचार सुन्नुहोस्"><i class="fas fa-volume-up"></i></button>
-                <button class="action-btn" onclick="window.print()" title="प्रिन्ट गर्नुहोस्"><i class="fas fa-print"></i></button>
-                <button class="action-btn share-trigger" title="सेयर गर्नुहोस्"><i class="fas fa-share-alt"></i></button>
+                <button class="action-btn audio-trigger" id="audioNewsBtn" title="समाचार सुन्नुहोस्"><i class="bi bi-volume-up"></i></button>
+                <button class="action-btn" onclick="window.print()" title="प्रिन्ट गर्नुहोस्"><i class="bi bi-printer"></i></button>
+                <button class="action-btn share-trigger" title="सेयर गर्नुहोस्"><i class="bi bi-share"></i></button>
               </div>
             </div>
 
             <div id="audioPlayerContainer" class="audio-player-mini">
                <div class="audio-status">
-                  <i class="fas fa-waveform"></i>
+                  <i class="bi bi-soundwave"></i>
                   <span id="audioStatusText">समाचार पढिँदैछ...</span>
                </div>
                <div class="audio-controls">
-                  <button id="pauseAudio"><i class="fas fa-pause"></i></button>
-                  <button id="stopAudio"><i class="fas fa-stop"></i></button>
+                  <button id="pauseAudio"><i class="bi bi-pause"></i></button>
+                  <button id="stopAudio"><i class="bi bi-stop"></i></button>
                </div>
             </div>
 
             <div class="premium-social-share">
-              <a href="#" class="p-share-btn fb"><i class="fab fa-facebook-f"></i> फेसबुक</a>
-              <a href="#" class="p-share-btn tw"><i class="fab fa-twitter"></i> ट्विटर</a>
-              <a href="#" class="p-share-btn wa"><i class="fab fa-whatsapp"></i> ह्वाट्सएप</a>
-              <a href="#" class="p-share-btn ms"><i class="fab fa-facebook-messenger"></i> म्यासेन्जर</a>
+              <a href="#" class="p-share-btn fb"><i class="bi bi-facebook"></i> फेसबुक</a>
+              <a href="#" class="p-share-btn tw"><i class="bi bi-twitter-x"></i> ट्विटर</a>
+              <a href="#" class="p-share-btn wa"><i class="bi bi-whatsapp"></i> ह्वाट्सएप</a>
+              <a href="#" class="p-share-btn ms"><i class="bi bi-messenger"></i> म्यासेन्जर</a>
+              <a href="#" class="p-share-btn vb"><i class="bi bi-chat-dots-fill"></i> भाइबर</a>
             </div>
           </header>
 
@@ -116,7 +117,9 @@ const jsonLd = {
           </div>
 
           <div class="article-footer-tags">
-            <div class="tags-label">सम्बन्धित ट्यागहरू:</div>
+            <div class="sec-header">
+              <h2 class="sec-title"><i class="bi bi-journal-text"></i> सम्बन्धित ट्यागहरू:</h2>
+            </div>
             <div class="tags-list">
               <span class="p-tag">#नेपाल</span>
               <span class="p-tag">#समाचार</span>
@@ -126,13 +129,14 @@ const jsonLd = {
           </div>
           
           <div class="social-share-bottom">
-            <h4>यो समाचार सेयर गर्नुहोस्:</h4>
+            <h4><i class="bi bi-share-fill"></i> यो समाचार सेयर गर्नुहोस्:</h4>
             <div class="premium-social-share">
-              <a href="#" class="p-share-btn fb"><i class="fab fa-facebook-f"></i></a>
-              <a href="#" class="p-share-btn tw"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="p-share-btn wa"><i class="fab fa-whatsapp"></i></a>
-              <a href="#" class="p-share-btn ms"><i class="fab fa-facebook-messenger"></i></a>
-              <a href="#" class="p-share-btn copy"><i class="fas fa-link"></i></a>
+              <a href="#" class="p-share-btn fb"><i class="bi bi-facebook"></i> फेसबुक</a>
+              <a href="#" class="p-share-btn tw"><i class="bi bi-twitter-x"></i> ट्विटर</a>
+              <a href="#" class="p-share-btn wa"><i class="bi bi-whatsapp"></i> ह्वाट्सएप</a>
+              <a href="#" class="p-share-btn ms"><i class="bi bi-messenger"></i> म्यासेन्जर</a>
+              <a href="#" class="p-share-btn vb"><i class="bi bi-chat-dots-fill"></i> भाइबर</a>
+              <a href="#" class="p-share-btn copy"><i class="bi bi-link-45deg"></i> लिंक कपी</a>
             </div>
           </div>
         </article>

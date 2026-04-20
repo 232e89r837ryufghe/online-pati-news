@@ -6,9 +6,9 @@ import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
 
 const contactInfo = [
-  { icon: 'fas fa-map-marker-alt', title: 'ठेगाना', content: 'पुतलीसडक, काठमाडौँ, नेपाल' },
-  { icon: 'fas fa-phone-alt', title: 'फोन नम्बर', content: '+९७७-०१-४२०००००, ९८६०८६०८३७' },
-  { icon: 'fas fa-envelope', title: 'इमेल', content: 'info@onlinepatinews.com' },
+  { icon: 'bi bi-geo-alt', title: 'ठेगाना', content: 'पुतलीसडक, काठमाडौँ, नेपाल' },
+  { icon: 'bi bi-telephone', title: 'फोन नम्बर', content: '+९७७-०१-४२०००००, ९८६०८६०८३७' },
+  { icon: 'bi bi-envelope', title: 'इमेल', content: 'info@onlinepatinews.com' },
 ];
 ---
 
@@ -19,8 +19,8 @@ const contactInfo = [
   <main class="page-wrapper-premium">
     <div class="container main-container-p">
       <div class="breadcrumbs-p">
-        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
-        <i class="fas fa-chevron-right sep"></i> 
+        <a href="/"><i class="bi bi-house"></i> गृहपृष्ठ</a> 
+        <i class="bi bi-chevron-right sep"></i> 
         <span class="curr">सम्पर्क</span>
       </div>
 
@@ -50,37 +50,37 @@ const contactInfo = [
                 <form class="premium-contact-form">
                   <div class="p-form-row">
                     <div class="p-form-group">
-                      <label><i class="far fa-user"></i> पूरा नाम</label>
+                      <label><i class="bi bi-person"></i> पूरा नाम</label>
                       <input type="text" placeholder="जस्तै: राम बहादुर" required />
                     </div>
                     <div class="p-form-group">
-                      <label><i class="far fa-envelope"></i> इमेल</label>
+                      <label><i class="bi bi-envelope"></i> इमेल</label>
                       <input type="email" placeholder="email@example.com" required />
                     </div>
                   </div>
                   
                   <div class="p-form-group">
-                    <label><i class="far fa-bookmark"></i> विषय</label>
+                    <label><i class="bi bi-bookmark"></i> विषय</label>
                     <input type="text" placeholder="सम्पर्कको उद्देश्य" required />
                   </div>
                   
                   <div class="p-form-group">
-                    <label><i class="far fa-comment-dots"></i> सन्देश</label>
+                    <label><i class="bi bi-chat-dots"></i> सन्देश</label>
                     <textarea rows="6" placeholder="तपाईंको सन्देश यहाँ लेख्नुहोस्..." required></textarea>
                   </div>
                   
                   <button type="submit" class="p-submit-btn">
                     <span>सन्देश पठाउनुहोस्</span>
-                    <i class="fas fa-paper-plane"></i>
+                    <i class="bi bi-send"></i>
                   </button>
                 </form>
               </div>
             </div>
 
-            <div class="premium-map-p">
-              <div class="map-placeholder-p">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>गुगल म्याप</h3>
+              <div class="premium-map-p">
+                <div class="map-placeholder-p">
+                  <i class="bi bi-map"></i>
+                  <h3>गुगल म्याप</h3>
                 <p>यहाँ कार्यालयको लोकेसन लोड हुनेछ</p>
               </div>
             </div>
@@ -89,7 +89,7 @@ const contactInfo = [
 
         <aside class="sidebar-p">
           <div class="p-sidebar-widget">
-            <h3 class="w-title"><i class="far fa-clock"></i> कार्यालय समय</h3>
+            <h3 class="w-title"><i class="bi bi-clock"></i> कार्यालय समय</h3>
             <div class="w-content">
               <div class="time-row"><span>आइतबार - शुक्रबार:</span> <strong>१०:०० - ५:००</strong></div>
               <div class="time-row"><span>शनिबार:</span> <strong>बन्द</strong></div>
@@ -97,7 +97,7 @@ const contactInfo = [
           </div>
           
           <div class="p-sidebar-widget ad-widget">
-            <h3 class="w-title"><i class="fas fa-ad"></i> विज्ञापनको लागि</h3>
+            <h3 class="w-title"><i class="bi bi-megaphone"></i> विज्ञापनको लागि</h3>
             <div class="w-content">
               <p>हाम्रो पोर्टलमा विज्ञापन संबन्धी जानकारीको लागि तलको नम्बरमा कल गर्नुहोस्:</p>
               <div class="ad-phone">९८६०८६०८३७</div>

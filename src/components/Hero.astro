@@ -15,8 +15,8 @@ const subGridNews = allPosts.slice(4, 6);
       <h1 class="ok-lead-title">{leadNews.title}</h1>
     </a>
     <div class="ok-meta">
-      <span><i class="far fa-user"></i> {leadNews.author}</span>
-      <span><i class="far fa-clock"></i> {leadNews.date}</span>
+      <span><i class="bi bi-person"></i> {leadNews.author}</span>
+      <span><i class="bi bi-clock"></i> {leadNews.date}</span>
     </div>
     {leadNews.image && (
       <a href={`/news/${leadNews.slug || leadNews.id}`}>
@@ -33,7 +33,7 @@ const subGridNews = allPosts.slice(4, 6);
     <ul class="ok-text-list">
       {textListNews.map((news) => (
         <li>
-          <i class="fas fa-square"></i>
+          <i class="bi bi-square-fill"></i>
           <a href={`/news/${news.slug || news.id}`} set:html={news.title}></a>
         </li>
       ))}

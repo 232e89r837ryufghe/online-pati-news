@@ -25,8 +25,8 @@ const results = await getPostsByCategorySlug(slug, 20);
   <main class="category-page-wrapper">
     <div class="container cat-container">
       <div class="breadcrumbs">
-        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
-        <i class="fas fa-chevron-right sep"></i> 
+        <a href="/"><i class="bi bi-house"></i> गृहपृष्ठ</a> 
+        <i class="bi bi-chevron-right sep"></i> 
         <span class="curr">{categoryName}</span>
       </div>
 
@@ -47,7 +47,7 @@ const results = await getPostsByCategorySlug(slug, 20);
                       <div class="cat-card-image-p">
                         <img src={item.image} alt={item.title} />
                         <div class="cat-overlay-p">
-                          <span class="time-p"><i class="far fa-clock"></i> {item.date}</span>
+                          <span class="time-p"><i class="bi bi-clock"></i> {item.date}</span>
                         </div>
                       </div>
                     )}
@@ -55,8 +55,8 @@ const results = await getPostsByCategorySlug(slug, 20);
                       <h2 class="cat-card-title-p" set:html={item.title}></h2>
                       <p class="cat-card-excerpt-p" set:html={item.excerpt}></p>
                       <div class="cat-card-footer-p">
-                        <span class="cat-author-p"><i class="far fa-user"></i> {item.author}</span>
-                        <span class="read-more-p">थप पढ्नुहोस् <i class="fas fa-arrow-right"></i></span>
+                        <span class="cat-author-p"><i class="bi bi-person"></i> {item.author}</span>
+                        <span class="read-more-p">थप पढ्नुहोस् <i class="bi bi-arrow-right"></i></span>
                       </div>
                     </div>
                   </a>
@@ -65,7 +65,7 @@ const results = await getPostsByCategorySlug(slug, 20);
             </div>
           ) : (
             <div class="p-no-results">
-              <div class="no-res-icon"><i class="fas fa-newspaper"></i></div>
+              <div class="no-res-icon"><i class="bi bi-newspaper"></i></div>
               <h3>समाचार फेला परेन</h3>
               <p>माफ गर्नुहोस्, यस विधामा अहिले कुनै समाचार उपलब्ध छैन। हाम्रा अन्य विधाहरू हेर्नुहोस्।</p>
               <a href="/" class="p-btn-back">मुख्य पृष्ठमा फर्कनुहोस्</a>
@@ -85,7 +85,7 @@ const results = await getPostsByCategorySlug(slug, 20);
   .category-page-wrapper { background-color: var(--bg-white); padding: 20px 0 60px; }
   
   .category-hero-p { background: var(--bg-gray); padding: 50px 40px; border-radius: var(--radius); border-left: 6px solid var(--primary-color); margin-bottom: 40px; position: relative; overflow: hidden; }
-  .category-hero-p::after { content: '\f1ea'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -20px; font-size: 10rem; color: rgba(0,0,0,0.03); transform: rotate(-15deg); }
+  .category-hero-p::after { content: '\F4A8'; font-family: 'bootstrap-icons'; position: absolute; right: -20px; bottom: -20px; font-size: 10rem; color: rgba(0,0,0,0.03); transform: rotate(-15deg); }
   
   .cat-label { font-size: 1rem; color: var(--highlight-color); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
   .category-title-p { font-family: var(--font-headline); font-size: 3.5rem; line-height: 1; color: var(--text-dark); margin-bottom: 10px; }

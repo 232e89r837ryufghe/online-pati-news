@@ -17,8 +17,8 @@ const results = query ? await searchPosts(query) : [];
   <main class="search-page-wrapper">
     <div class="container search-container-p">
       <div class="breadcrumbs">
-        <a href="/"><i class="fas fa-home"></i> गृहपृष्ठ</a> 
-        <i class="fas fa-chevron-right sep"></i> 
+        <a href="/"><i class="bi bi-house"></i> गृहपृष्ठ</a> 
+        <i class="bi bi-chevron-right sep"></i> 
         <span class="curr">खोज नतिजा</span>
       </div>
 
@@ -27,7 +27,7 @@ const results = query ? await searchPosts(query) : [];
         <div class="search-form-p">
           <form action="/search" method="GET" class="premium-search-bar">
             <input type="text" name="q" value={query} placeholder="समाचार खोज्नुहोस्..." required />
-            <button type="submit"><i class="fas fa-search"></i></button>
+            <button type="submit"><i class="bi bi-search"></i></button>
           </form>
         </div>
         <p class="search-stats-p">तपाईंको खोजीका लागि <strong>{results.length}</strong> समाचार सामग्री फेला परेका छन्।</p>
@@ -48,8 +48,8 @@ const results = query ? await searchPosts(query) : [];
                       <h2 class="search-card-title-p" set:html={item.title}></h2>
                       <p class="search-card-excerpt-p" set:html={item.excerpt}></p>
                       <div class="search-card-footer-p">
-                        <span class="search-meta-p"><i class="far fa-user"></i> {item.author}</span>
-                        <span class="search-meta-p"><i class="far fa-clock"></i> {item.date}</span>
+                        <span class="search-meta-p"><i class="bi bi-person"></i> {item.author}</span>
+                        <span class="search-meta-p"><i class="bi bi-clock"></i> {item.date}</span>
                       </div>
                     </div>
                   </a>
@@ -58,7 +58,7 @@ const results = query ? await searchPosts(query) : [];
             </div>
           ) : (
             <div class="p-no-results">
-              <div class="no-res-icon"><i class="fas fa-search-plus"></i></div>
+              <div class="no-res-icon"><i class="bi bi-search"></i></div>
               <h3>केही फेला परेन</h3>
               <p>माफ गर्नुहोस्, तपाईंको खोजी शब्द "{query}" सँग मिल्दोजुल्दो कुनै सामग्री फेला परेन। कृपया अर्को शब्द प्रयोग गर्नुहोस्।</p>
               <a href="/" class="p-btn-back">मुख्य पृष्ठमा जानुहोस्</a>

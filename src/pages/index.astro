@@ -85,10 +85,10 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </a>
                                 <div class="opn-meta">
                                     <span>
-                                        <i class="far fa-user" /> {post.author}
+                                        <i class="bi bi-person"></i> {post.author}
                                     </span>
                                     <span>
-                                        <i class="far fa-clock" /> {post.date}
+                                        <i class="bi bi-clock"></i> {post.date}
                                     </span>
                                 </div>
                                 {post.image && post.show_image === true && (
@@ -121,10 +121,10 @@ const coverStory = coverStories[0] || allPosts[5];
                         class="sec-title"
                         style="color: var(--highlight-color); border-bottom-color: var(--highlight-color);"
                     >
-                        <i class="fas fa-fire"></i> ट्रेन्डिङ
+                        <i class="bi bi-fire"></i> ट्रेन्डिङ
                     </h2>
                     <a href="/trending" class="sec-link"
-                        >सबै ट्रेन्डिङ <i class="fas fa-arrow-right"></i></a
+                        >सबै ट्रेन्डिङ <i class="bi bi-arrow-right"></i></a
                     >
                 </div>
                 <div class="trending-grid">
@@ -155,7 +155,7 @@ const coverStory = coverStories[0] || allPosts[5];
                         {
                             textListNews.map((post) => (
                                 <li>
-                                    <i class="fas fa-square" />
+                                    <i class="bi bi-square-fill" />
                                     <a
                                         href={`/news/${post.slug || post.id}`}
                                         set:html={post.title}
@@ -220,7 +220,7 @@ const coverStory = coverStories[0] || allPosts[5];
                             />
                             <div class="cover-story-overlay">
                                 <span class="cover-badge">
-                                    <i class="fas fa-star" /> कभर स्टोरी
+                                    <i class="bi bi-star-fill" /> कभर स्टोरी
                                 </span>
                                 <h2
                                     class="cover-title"
@@ -243,7 +243,7 @@ const coverStory = coverStories[0] || allPosts[5];
                 <div class="sec-header">
                     <h2 class="sec-title">प्रदेश समाचार</h2>
                     <a href="/प्रदेश" class="sec-link"
-                        >सबै प्रदेश <i class="fas fa-arrow-right"></i></a
+                        >सबै प्रदेश <i class="bi bi-arrow-right"></i></a
                     >
                 </div>
 
@@ -296,7 +296,7 @@ const coverStory = coverStories[0] || allPosts[5];
             <div class="sec-header">
                 <h2 class="sec-title">अर्थतन्त्र (Economy)</h2>
                 <a href="/अर्थतन्त्र" class="sec-link"
-                    >सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a
+                    >सबै हेर्नुहोस् <i class="bi bi-arrow-right"></i></a
                 >
             </div>
             <div class="grid-4-col">
@@ -355,7 +355,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="list-item"
                             >
                                 <i
-                                    class="fas fa-building"
+                                    class="bi bi-building"
                                     style="color:#0f766e;"
                                 />
                                 <h4 set:html={post.title} />
@@ -401,7 +401,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="list-item"
                             >
                                 <i
-                                    class="fas fa-briefcase"
+                                    class="bi bi-briefcase"
                                     style="color:#b45309;"
                                 />
                                 <h4 set:html={post.title} />
@@ -450,7 +450,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="list-item"
                             >
                                 <i
-                                    class="fas fa-heartbeat"
+                                    class="bi bi-heart-pulse"
                                     style="color:#16a34a;"
                                 />
                                 <h4 set:html={post.title} />
@@ -496,7 +496,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="list-item"
                             >
                                 <i
-                                    class="fas fa-laptop-code"
+                                    class="bi bi-laptop"
                                     style="color:#6366f1;"
                                 />
                                 <h4 set:html={post.title} />
@@ -518,7 +518,7 @@ const coverStory = coverStories[0] || allPosts[5];
                         विचार / ब्लग
                     </h2>
                     <a href="/विचार" class="sec-link"
-                        >थप लेखहरू <i class="fas fa-arrow-right"></i></a
+                        >थप लेखहरू <i class="bi bi-arrow-right"></i></a
                     >
                 </div>
                 <div class="opinion-grid">
@@ -528,7 +528,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 href={`/news/${post.slug || post.id}`}
                                 class="opinion-card"
                             >
-                                <i class="fas fa-quote-left" />
+                                <i class="bi bi-quote" />
                                 {post.image && (
                                     <div class="opinion-img">
                                         <img src={post.image} alt={post.author} />
@@ -581,7 +581,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 class="list-item"
                             >
                                 <i
-                                    class="fas fa-futbol"
+                                    class="bi bi-trophy"
                                     style="color:var(--highlight-color);"
                                 />
                                 <h4 set:html={post.title} />
@@ -626,7 +626,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 href={`/news/${post.slug || post.id}`}
                                 class="list-item"
                             >
-                                <i class="fas fa-film" style="color:#e91e63;" />
+                                <i class="bi bi-film" style="color:#e91e63;" />
                                 <h4 set:html={post.title} />
                             </a>
                         ))
@@ -641,7 +641,7 @@ const coverStory = coverStories[0] || allPosts[5];
                 <div class="sec-header">
                     <h2 class="sec-title">फोटो फिचर / भिडियो</h2>
                     <a href="/multimedia" class="sec-link" style="color:#fff;"
-                        >सबै हेर्नुहोस् <i class="fas fa-arrow-right"></i></a
+                        >सबै हेर्नुहोस् <i class="bi bi-arrow-right"></i></a
                     >
                 </div>
                 <div class="multimedia-grid">
@@ -650,7 +650,7 @@ const coverStory = coverStories[0] || allPosts[5];
                         class="mm-main"
                     >
                         {mmMain.image && <img src={mmMain.image} alt={mmMain.title} />}
-                        <i class="fas fa-play-circle mm-icon"></i>
+                        <i class="bi bi-play-circle mm-icon"></i>
                         <div class="mm-overlay">
                             <h3 set:html={mmMain.title} />
                         </div>
@@ -668,7 +668,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                                 src={news.image}
                                                 alt={news.title}
                                             />
-                                            <i class="fas fa-camera small-icon" />
+                                            <i class="bi bi-camera small-icon" />
                                         </div>
                                     )}
                                     <h4 set:html={news.title} />
@@ -1170,7 +1170,7 @@ const coverStory = coverStories[0] || allPosts[5];
         transform: translateY(-5px);
         box-shadow: var(--shadow-md);
     }
-    .opinion-card i.fa-quote-left {
+    .opinion-card i.bi-quote {
         position: absolute;
         top: 15px;
         left: 15px;

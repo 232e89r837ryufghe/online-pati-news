@@ -19,7 +19,7 @@ const sidebarAd = sidebarAds[0];
     </div>
 
     <div class="market-widget sidebar-widget">
-        <h3><i class="fas fa-chart-bar"></i> बजार अपडेट</h3>
+        <h3><i class="bi bi-bar-chart-fill"></i> बजार अपडेट</h3>
         <div class="market-item"><span>नेप्से (NEPSE)</span> <span class="val up">२०९५.२३ ▲</span></div>
         <div class="market-item"><span>सुन (छापावाल)</span> <span class="val up">१,५०,००० ▲</span></div>
         <div class="market-item"><span>अमेरिकी डलर</span> <span class="val down">१३३.४५ ▼</span></div>
@@ -34,7 +34,7 @@ const sidebarAd = sidebarAds[0];
             <div id="latest" class="tab-pane active">
                 {latestPosts.map((post) => (
                     <a href={`/news/${post.slug || post.id}`} class="tab-item">
-                        <span class="num"><i class="far fa-clock" style="font-size:1rem;"></i></span>
+                        <span class="num"><i class="bi bi-clock" style="font-size:1rem;"></i></span>
                         <h4 set:html={post.title}></h4>
                     </a>
                 ))}
@@ -52,7 +52,7 @@ const sidebarAd = sidebarAds[0];
 
     <div class="sticky-sidebar">
         <div class="sidebar-widget">
-            <h2 class="widget-title" style="background: #1877f2; border-radius:4px; padding: 10px; color: #fff; font-family: var(--font-headline); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><i class="fab fa-facebook-f"></i> फेसबुक पेज</h2>
+            <h2 class="widget-title" style="background: #1877f2; border-radius:4px; padding: 10px; color: #fff; font-family: var(--font-headline); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"><i class="bi bi-facebook"></i> फेसबुक पेज</h2>
             <div class="fb-widget-container">
                 <div class="fb-page" 
                      data-href="https://www.facebook.com/Onlinepatinews" 
