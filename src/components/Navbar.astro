@@ -233,6 +233,19 @@ const navCategories = categories
         }
         .nav-menu.active { right: 0; }
         .nav-menu li a { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1.2rem; }
+        
+        /* Dropdown Mobile Overrides */
+        .dropdown { 
+            position: static; 
+            box-shadow: none; 
+            border: none; 
+            background: rgba(0,0,0,0.1); 
+            width: 100%; 
+            display: none !important; 
+        }
+        .nav-menu li:hover .dropdown { display: none !important; }
+        .nav-menu li.open .dropdown { display: block !important; }
+        .dropdown li a { color: #fff !important; padding: 15px 25px 15px 45px !important; font-size: 1.1rem !important; border-bottom: 1px solid rgba(255,255,255,0.05) !important; font-family: var(--font-body) !important; font-weight: 500 !important; }
     }
 </style>
 
