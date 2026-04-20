@@ -26,18 +26,11 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
         </div> 
         
         <div class="top-bar-right">
-            <div class="theme-toggle-wrapper">
-                <button id="themeToggle" aria-label="Toggle Dark Mode" class="theme-toggle-btn">
-                    <i class="fas fa-moon moon-icon"></i>
-                    <i class="fas fa-sun sun-icon"></i>
-                </button>
-            </div>
-            
             <div class="social-links"> 
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> 
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a> 
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a> 
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a> 
+                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a> 
+                <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a> 
+                <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a> 
+                <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a> 
             </div> 
         </div>
     </div> 
@@ -53,28 +46,6 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    // Theme Toggle Feature
-    const themeBtn = document.getElementById('themeToggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    
-    // Set initial theme
-    if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const theme = document.documentElement.getAttribute('data-theme');
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    }
 </script>
 
 <style is:global>
@@ -86,31 +57,10 @@ const englishDate = today.toLocaleDateString('en-US', { weekday: 'long', year: '
     
     .top-bar-right { display: flex; align-items: center; gap: 20px; }
     
-    .social-links a { color: #cbd5e1; margin-left: 15px; font-size: 0.95rem; transition: 0.3s; }
+    .social-links a { color: #cbd5e1; margin-left: 15px; font-size: 1rem; transition: 0.3s; }
     .social-links a:hover { color: var(--highlight-color); }
     
     .live-clock { font-weight: 600; min-width: 85px; }
-
-    /* Theme Toggle Styles */
-    .theme-toggle-btn {
-        background: rgba(255,255,255,0.1);
-        border: none;
-        color: #fff;
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.3s;
-    }
-    .theme-toggle-btn:hover { background: var(--highlight-color); }
-    
-    .sun-icon { display: none; }
-    
-    [data-theme="dark"] .moon-icon { display: none; }
-    [data-theme="dark"] .sun-icon { display: block; color: #fbbf24; }
 
     @media (max-width: 992px) {
         .english-hide { display: none; }
