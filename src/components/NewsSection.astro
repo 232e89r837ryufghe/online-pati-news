@@ -6,6 +6,8 @@ interface NewsItem {
   image: string;
   excerpt?: string;
   date?: string;
+  dateIso?: string;
+  author?: string;
 }
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const { title, link, news, layout = 'grid' } = Astro.props;
+import { getRelativeTimeNepali } from '../utils/date';
 ---
 
 <section class="news-category">
@@ -36,7 +39,16 @@ const { title, link, news, layout = 'grid' } = Astro.props;
           <div class="content">
             <h3 set:html={item.title}></h3>
             {layout === 'featured' && index === 0 && <p>{item.excerpt}</p>}
-            <span class="date">{item.date}</span>
+            <div class="card-meta">
+              <span class="meta-item">
+                <i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}
+              </span>
+              {(layout === 'featured' || layout === 'grid') && (
+                <span class="meta-item">
+                  <img src="/logo.png" alt="Logo" class="mini-logo" /> {item.author || 'अनलाइनपाटी न्युज'}
+                </span>
+              )}
+            </div>
           </div>
         </a>
       ))}

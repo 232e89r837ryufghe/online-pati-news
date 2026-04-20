@@ -4,6 +4,7 @@ import { getPosts } from '../lib/cms';
 const latestPosts = await getPosts(5);
 const popularPosts = await getPosts(5); // In a real app, this might be filtered by 'popular' tag
 import { getAdsByPosition } from "../lib/ads";
+import { getRelativeTimeNepali } from '../utils/date';
 
 // FETCH ADS
 const sidebarAds = await getAdsByPosition("sidebar_top");
@@ -35,7 +36,14 @@ const sidebarAd = sidebarAds[0];
                 {latestPosts.map((post) => (
                     <a href={`/news/${post.slug || post.id}`} class="tab-item">
                         <span class="num"><i class="bi bi-clock" style="font-size:1rem;"></i></span>
-                        <h4 set:html={post.title}></h4>
+                        <div style="flex:1;">
+                            <h4 set:html={post.title}></h4>
+                            <div class="card-meta" style="margin-top: 5px;">
+                                <span class="meta-item">
+                                    {getRelativeTimeNepali(post.dateIso || '')}
+                                </span>
+                            </div>
+                        </div>
                     </a>
                 ))}
             </div>

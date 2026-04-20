@@ -102,7 +102,7 @@ function mapCMSPostToNewsItem(post: any): NewsItem {
     image: image,
     category: categoryInfo.name,
     categorySlug: categoryInfo.slug,
-    author: post.author || 'अनलाइन पाटी',
+    author: post.author || 'अनलाइनपाटी न्युज',
     date: formatDate(post.date),
     excerpt: stripHtml(post.excerpt || ''),
     content: content,

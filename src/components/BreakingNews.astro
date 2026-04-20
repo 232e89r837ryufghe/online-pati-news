@@ -25,30 +25,48 @@ if (breakingPosts.length === 0) {
         <div class="quick-links">
             <a href="#"><i class="bi bi-graph-up-arrow"></i> शेयर बजार</a>
             <a href="#"><i class="bi bi-currency-exchange"></i> सुनचाँदी</a>
-            <a href="#"><i class="bi bi-star-fill"></i> राशिफल</a>
-            <a href="#"><i class="bi bi-cloud-sun"></i> मौसम</a>
+        </div>
+        <div class="ticker-search">
+            <form action="/search" method="GET" class="ticker-search-form">
+                <input type="text" name="q" placeholder="खोज्नुहोस्..." required />
+                <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
         </div>
     </div> 
 </div> 
 
 <style is:global>
-    .breaking-news { background: var(--bg-white); border-bottom: 1px solid var(--border-color); padding: 10px 0; margin-bottom: 10px; }
-    .breaking-news-inner { display: flex; align-items: center; gap: 15px; }
-    .breaking-label { background: var(--highlight-color); color: #fff; padding: 4px 15px; font-weight: 600; font-family: var(--font-headline); font-size: 1.2rem; border-radius: 3px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-    .breaking-logo-img { height: 18px; width: auto; background: #fff; padding: 2px; border-radius: 2px; }
+    .breaking-news { background: var(--bg-white); border-bottom: 1px solid var(--border-color); padding: 8px 0; margin-bottom: 10px; }
+    .breaking-news-inner { display: flex; align-items: center; gap: 20px; }
+    .breaking-label { background: var(--highlight-color); color: #fff; padding: 4px 15px; font-weight: 600; font-family: var(--font-headline); font-size: 1.1rem; border-radius: 3px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .breaking-logo-img { height: 16px; width: auto; background: #fff; padding: 2px; border-radius: 2px; }
     .flash { animation: flash 1.5s infinite; color: #fff;}
     @keyframes flash { 50% { opacity: 0; } }
-    .ticker-wrapper { overflow: hidden; flex-grow: 1; border-right: 1px solid var(--border-color); padding-right: 15px; }
-    .ticker { display: flex; gap: 40px; animation: ticker 25s linear infinite; white-space: nowrap; }
+    .ticker-wrapper { overflow: hidden; flex-grow: 1; position: relative; }
+    .ticker { display: flex; gap: 50px; animation: ticker 30s linear infinite; white-space: nowrap; }
     .ticker-item a { font-weight: 500; color: var(--text-dark); font-size: 1.05rem; }
     .ticker-item a:hover { color: var(--primary-color); }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-    .quick-links { display: flex; gap: 15px; white-space: nowrap; padding-left: 5px; }
-    .quick-links a { font-size: 0.95rem; font-weight: 600; color: var(--primary-color); display: flex; align-items: center; gap: 5px; background: var(--bg-gray); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border-color); }
-    .quick-links a:hover { color: #fff; background: var(--primary-color); border-color: var(--primary-color); }
+    
+    .quick-links { display: flex; gap: 10px; border-left: 1px solid var(--border-color); padding-left: 20px; }
+    .quick-links a { font-size: 0.9rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 5px; background: var(--bg-gray); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-color); transition: 0.3s; }
+    .quick-links a:hover { color: var(--primary-color); border-color: var(--primary-color); background: #fff; }
+
+    .ticker-search { margin-left: 10px; }
+    .ticker-search-form { display: flex; background: var(--bg-gray); border: 1px solid var(--border-color); border-radius: 30px; padding: 2px 15px; width: 220px; transition: 0.3s; }
+    .ticker-search-form:focus-within { border-color: var(--primary-color); background: #fff; box-shadow: 0 0 0 3px rgba(64, 119, 202, 0.1); }
+    .ticker-search-form input { flex: 1; border: none; background: transparent; font-size: 0.95rem; padding: 6px 0; outline: none; }
+    .ticker-search-form button { background: none; border: none; color: var(--text-light); cursor: pointer; padding-left: 8px; font-size: 1rem; }
+    .ticker-search-form button:hover { color: var(--primary-color); }
+
+    @media (max-width: 1200px) {
+        .ticker-search-form { width: 180px; }
+        .quick-links { display: none; }
+    }
 
     @media (max-width: 768px) {
-        .quick-links { display: none; }
-        .ticker-wrapper { border-right: none; padding-right: 0; }
+        .breaking-news-inner { gap: 10px; }
+        .ticker-search { display: none; }
+        .breaking-label { font-size: 0.9rem; padding: 3px 10px; }
     }
 </style>

@@ -16,6 +16,7 @@ export async function getStaticPaths() {
 
 const { categoryName, slug } = Astro.props;
 const results = await getPostsByCategorySlug(slug, 20);
+import { getRelativeTimeNepali } from '../utils/date';
 ---
 
 <Layout title={`${categoryName} - Online Pati News`}>
@@ -47,7 +48,7 @@ const results = await getPostsByCategorySlug(slug, 20);
                       <div class="cat-card-image-p">
                         <img src={item.image} alt={item.title} />
                         <div class="cat-overlay-p">
-                          <span class="time-p"><i class="bi bi-clock"></i> {item.date}</span>
+                          <span class="time-p"><i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}</span>
                         </div>
                       </div>
                     )}
@@ -55,7 +56,10 @@ const results = await getPostsByCategorySlug(slug, 20);
                       <h2 class="cat-card-title-p" set:html={item.title}></h2>
                       <p class="cat-card-excerpt-p" set:html={item.excerpt}></p>
                       <div class="cat-card-footer-p">
-                        <span class="cat-author-p"><i class="bi bi-person"></i> {item.author}</span>
+                        <span class="cat-author-p">
+                          <img src="/logo.png" alt="Logo" class="mini-logo" style="width:16px; height:16px; border-radius:50%; margin-right:5px; vertical-align:middle;" /> 
+                          {item.author}
+                        </span>
                         <span class="read-more-p">थप पढ्नुहोस् <i class="bi bi-arrow-right"></i></span>
                       </div>
                     </div>

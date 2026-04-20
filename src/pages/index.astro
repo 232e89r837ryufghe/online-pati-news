@@ -10,6 +10,7 @@ import {
     getPostsByCategorySlug,
 } from "../lib/cms";
 import { getAdsByPosition } from "../lib/ads";
+import { getRelativeTimeNepali } from "../utils/date";
 
 // FETCH ADS
 const homeTopAds = await getAdsByPosition("home_top");
@@ -84,11 +85,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     />
                                 </a>
                                 <div class="opn-meta">
-                                    <span>
-                                        <i class="bi bi-person"></i> {post.author}
+                                    <span class="meta-author">
+                                        <img src="/logo.png" alt="Author Logo" class="author-logo-small" /> {post.author}
                                     </span>
                                     <span>
-                                        <i class="bi bi-clock"></i> {post.date}
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
                                     </span>
                                 </div>
                                 {post.image && post.show_image === true && (
@@ -141,6 +142,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     {post.image && <img src={post.image} alt={post.title} />}
                                 </div>
                                 <h3 set:html={post.title} />
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                    </span>
+                                </div>
                             </a>
                         ))
                     }
@@ -180,6 +186,14 @@ const coverStory = coverStories[0] || allPosts[5];
                                         </div>
                                     )}
                                         <h3 set:html={post.title} />
+                                        <div class="card-meta">
+                                            <span class="meta-item">
+                                                <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                            </span>
+                                            <span class="meta-item">
+                                                <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author}
+                                            </span>
+                                        </div>
                                         <p set:html={post.excerpt} />
                                     </a>
                                 </article>
@@ -284,6 +298,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     </div>
                                 )}
                                 <h4 set:html={post.title} />
+                                <div class="card-meta">
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                    </span>
+                                </div>
                             </a>
                         ))
                     }
@@ -312,6 +331,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={post.title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     ))
                 }
@@ -344,6 +368,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={corporatePosts[0].title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(corporatePosts[0].dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     )
                 }
@@ -359,6 +388,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     style="color:#0f766e;"
                                 />
                                 <h4 set:html={post.title} />
+                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                    </span>
+                                </div>
                             </a>
                         ))
                     }
@@ -390,6 +424,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={businessPosts[0].title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(businessPosts[0].dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     )
                 }
@@ -405,6 +444,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     style="color:#b45309;"
                                 />
                                 <h4 set:html={post.title} />
+                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                    </span>
+                                </div>
                             </a>
                         ))
                     }
@@ -439,6 +483,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={healthPosts[0].title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(healthPosts[0].dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     )
                 }
@@ -485,6 +534,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={itPosts[0].title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(itPosts[0].dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     )
                 }
@@ -541,6 +595,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                     class="opinion-title"
                                     set:html={post.title}
                                 />
+                                <div class="card-meta" style="margin-top: 10px;">
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                    </span>
+                                </div>
                             </a>
                         ))
                     }
@@ -570,6 +629,11 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={sportsPosts[0].title} />
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(sportsPosts[0].dateIso || '')}
+                                </span>
+                            </div>
                         </a>
                     )
                 }
@@ -881,6 +945,21 @@ const coverStory = coverStories[0] || allPosts[5];
         color: var(--primary-color);
         font-size: 0.8rem;
         margin-top: 10px;
+    }
+    
+    .author-logo-small {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+        vertical-align: middle;
+        margin-right: 5px;
+        border-radius: 50%;
+        background: #fff;
+    }
+    
+    .meta-author {
+        display: flex;
+        align-items: center;
     }
     .opn-text-list li a {
         font-family: var(--font-headline);
