@@ -86,6 +86,9 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </a>
                                 <div class="opn-meta">
                                     <span class="meta-item">
+                                        <img src="/logo.png" alt="Author Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
+                                    </span>
+                                    <span class="meta-item">
                                         <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
                                     </span>
                                 </div>
@@ -139,14 +142,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     {post.image && <img src={post.image} alt={post.title} />}
                                 </div>
                                 <h3 set:html={post.title} />
-                                <div class="card-meta">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -186,14 +182,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                         </div>
                                     )}
                                         <h3 set:html={post.title} />
-                                        <div class="card-meta">
-                                            <span class="meta-item">
-                                                <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
-                                            </span>
-                                            <span class="meta-item">
-                                                <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                            </span>
-                                        </div>
+                                        
                                         <p set:html={post.excerpt} />
                                     </a>
                                 </article>
@@ -298,14 +287,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     </div>
                                 )}
                                 <h4 set:html={post.title} />
-                                <div class="card-meta">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -334,14 +316,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={post.title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     ))
                 }
@@ -374,14 +349,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={corporatePosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {corporatePosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(corporatePosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -397,14 +365,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     style="color:#0f766e;"
                                 />
                                 <h4 set:html={post.title} />
-                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> Online Pati News
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -436,14 +397,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={businessPosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {businessPosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(businessPosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -459,11 +413,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     style="color:#b45309;"
                                 />
                                 <h4 set:html={post.title} />
-                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -498,14 +448,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={healthPosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {healthPosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(healthPosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -552,14 +495,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={itPosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {itPosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(itPosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -616,14 +552,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     class="opinion-title"
                                     set:html={post.title}
                                 />
-                                <div class="card-meta" style="margin-top: 10px;">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -653,14 +582,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={sportsPosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {sportsPosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(sportsPosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -676,14 +598,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                     style="color:var(--highlight-color);"
                                 />
                                 <h4 set:html={post.title} />
-                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> Online Pati News
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -715,14 +630,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                 </div>
                             )}
                             <h3 set:html={entertainmentPosts[0].title} />
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> {entertainmentPosts[0].author || 'Online Pati News'}
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(entertainmentPosts[0].dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </a>
                     )
                 }
@@ -735,14 +643,7 @@ const coverStory = coverStories[0] || allPosts[5];
                             >
                                 <i class="bi bi-film" style="color:#e91e63;" />
                                 <h4 set:html={post.title} />
-                                <div class="card-meta" style="margin-left: 25px; margin-top: -5px;">
-                                    <span class="meta-item">
-                                        <img src="/logo.png" alt="Logo" class="mini-logo" /> Online Pati News
-                                    </span>
-                                    <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
-                                    </span>
-                                </div>
+                                
                             </a>
                         ))
                     }
@@ -768,14 +669,7 @@ const coverStory = coverStories[0] || allPosts[5];
                         <i class="bi bi-play-circle mm-icon"></i>
                         <div class="mm-overlay">
                             <h3 set:html={mmMain.title} />
-                            <div class="card-meta" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 5px;">
-                                <span class="meta-item">
-                                    <img src="/logo.png" alt="Logo" class="mini-logo" /> Online Pati News
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-clock"></i> {getRelativeTimeNepali(mmMain.dateIso || '')}
-                                </span>
-                            </div>
+                            
                         </div>
                     </a>
                     <div class="mm-side-list">
