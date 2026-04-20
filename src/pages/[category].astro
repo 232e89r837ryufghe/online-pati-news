@@ -47,19 +47,12 @@ import { getRelativeTimeNepali } from '../utils/date';
                     {item.image && (
                       <div class="cat-card-image-p">
                         <img src={item.image} alt={item.title} />
-                        <div class="cat-overlay-p">
-                          <span class="time-p"><i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}</span>
-                        </div>
                       </div>
                     )}
                     <div class="cat-card-content-p">
                       <h2 class="cat-card-title-p" set:html={item.title}></h2>
                       <p class="cat-card-excerpt-p" set:html={item.excerpt}></p>
                       <div class="cat-card-footer-p">
-                        <span class="cat-author-p">
-                          <img src="/logo.png" alt="Logo" class="mini-logo" /> 
-                          {item.author || 'Online Pati News'}
-                        </span>
                         <span class="read-more-p">थप पढ्नुहोस् <i class="bi bi-arrow-right"></i></span>
                       </div>
                     </div>

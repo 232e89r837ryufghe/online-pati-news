@@ -39,14 +39,7 @@ import { getRelativeTimeNepali } from '../utils/date';
           <div class="content">
             <h3 set:html={item.title}></h3>
             {layout === 'featured' && index === 0 && <p>{item.excerpt}</p>}
-              <div class="card-meta">
-                <span class="meta-item">
-                  <img src="/logo.png" alt="Logo" class="mini-logo" /> {item.author || 'Online Pati News'}
-                </span>
-                <span class="meta-item">
-                  <i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}
-                </span>
-              </div>
+
           </div>
         </a>
       ))}

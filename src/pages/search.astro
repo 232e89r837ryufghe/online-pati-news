@@ -48,14 +48,7 @@ import { getRelativeTimeNepali } from '../utils/date';
                     <div class="search-card-content-p">
                       <h2 class="search-card-title-p" set:html={item.title}></h2>
                       <p class="search-card-excerpt-p" set:html={item.excerpt}></p>
-                      <div class="search-card-footer-p">
-                        <span class="search-meta-p">
-                          <img src="/logo.png" alt="Logo" class="mini-logo" /> 
-                          {item.author || 'Online Pati News'}
-                        </span>
-                        <span class="search-meta-p"><i class="bi bi-clock"></i> {getRelativeTimeNepali(item.dateIso || '')}</span>
                       </div>
-                    </div>
                   </a>
                 </article>
               ))}
