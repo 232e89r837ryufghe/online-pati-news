@@ -9,120 +9,194 @@ const navCategories = categories
   }));
 ---
 
-<nav class="navbar"> 
-    <div class="container navbar-inner"> 
-        <div class="brand-container" style="display: flex; align-items: center; gap: 10px;">
-            <a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+<nav class="navbar">
+    <div class="container navbar-inner">
+
+        <!-- LEFT: Logo & Brand -->
+        <div class="brand-container">
+            <a href="/" class="brand-link">
                 <img src="/logo.png" alt="Logo" class="main-logo-img" />
                 <span class="nav-brand-text">Online Pati News</span>
             </a>
         </div>
 
-        <div class="nav-center-search">
-            <form action="/search" method="GET" class="expanding-search-form" id="desktopSearchForm">
-                <input type="text" name="q" id="desktopSearchInput" placeholder="समाचार खोज्नुहोस्..." required />
-                <button type="submit" aria-label="Submit Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div>
+        <!-- RIGHT: Nav items + Search icon (desktop) + Hamburger (mobile) -->
+        <div class="nav-right">
 
-        <ul class="nav-menu" id="navMenu"> 
-            <li><a href="/समाचार"><i class="bi bi-newspaper"></i> समाचार</a></li>
-            <li><a href="/राजनीति">राजनीति</a></li>
-            <li>
-                <a href="/प्रदेश">प्रदेश <i class="bi bi-chevron-down"></i></a>
-                <ul class="dropdown">
-                    <li><a href="#">कोशी प्रदेश</a></li>
-                    <li><a href="#">मधेश प्रदेश</a></li>
-                    <li><a href="#">बागमती प्रदेश</a></li>
-                    <li><a href="#">गण्डकी प्रदेश</a></li>
-                    <li><a href="#">लुम्बिनी प्रदेश</a></li>
-                    <li><a href="#">कर्णाली प्रदेश</a></li>
-                    <li><a href="#">सुदूरपश्चिम प्रदेश</a></li>
-                </ul>
-            </li>
-            <li><a href="/अर्थतन्त्र">अर्थतन्त्र</a></li>
-            <li><a href="/कर्पोरेट">कर्पोरेट</a></li>
-            <li><a href="/खेलकुद">खेलकुद</a></li>
-        </ul> 
+            <!-- Desktop nav menu -->
+            <ul class="nav-menu" id="navMenu">
+                <!-- Mobile menu header with close button -->
+                <li class="mobile-menu-header">
+                    <span class="mobile-menu-title">मेनु</span>
+                    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close Menu">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </li>
 
-        <div class="nav-actions"> 
-            <button class="search-toggle-btn" id="desktopSearchToggle" aria-label="Search">
-                <i class="bi bi-search"></i>
-                <i class="bi bi-x-lg close-icon"></i>
-            </button>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
-                <i class="bi bi-list"></i>
-            </button> 
-        </div> 
-    </div> 
-    
+                <li><a href="/समाचार"><i class="bi bi-newspaper"></i> समाचार</a></li>
+                <li><a href="/राजनीति">राजनीति</a></li>
+                <li>
+                    <a href="/प्रदेश">प्रदेश <i class="bi bi-chevron-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#">कोशी प्रदेश</a></li>
+                        <li><a href="#">मधेश प्रदेश</a></li>
+                        <li><a href="#">बागमती प्रदेश</a></li>
+                        <li><a href="#">गण्डकी प्रदेश</a></li>
+                        <li><a href="#">लुम्बिनी प्रदेश</a></li>
+                        <li><a href="#">कर्णाली प्रदेश</a></li>
+                        <li><a href="#">सुदूरपश्चिम प्रदेश</a></li>
+                    </ul>
+                </li>
+                <li><a href="/अर्थतन्त्र">अर्थतन्त्र</a></li>
+                <li><a href="/कर्पोरेट">कर्पोरेट</a></li>
+                <li><a href="/खेलकुद">खेलकुद</a></li>
+
+                <!-- Mobile inline search -->
+                <li class="mobile-search-item">
+                    <form action="/search" method="GET" class="mobile-search-form" id="mobileSearchForm">
+                        <input type="text" name="q" id="mobileSearchInput" placeholder="समाचार खोज्नुहोस्..." required />
+                        <button type="submit" aria-label="Search">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+
+            <!-- Desktop expanding search -->
+            <div class="nav-center-search" id="desktopSearchContainer">
+                <form action="/search" method="GET" class="expanding-search-form" id="desktopSearchForm">
+                    <input type="text" name="q" id="desktopSearchInput" placeholder="समाचार खोज्नुहोस्..." required />
+                    <button type="submit" aria-label="Submit Search"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+
+            <!-- Search toggle & hamburger -->
+            <div class="nav-actions">
+                <button class="search-toggle-btn" id="desktopSearchToggle" aria-label="Search">
+                    <i class="bi bi-search search-icon"></i>
+                    <i class="bi bi-x-lg close-icon"></i>
+                </button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+
+        </div><!-- /nav-right -->
+    </div>
+
     <div class="nav-overlay" id="navOverlay"></div>
-</nav> 
+</nav>
 
 <style is:global>
-    .navbar { background-color: var(--primary-color); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md); transition: transform 0.3s; }
-    
-    .navbar-inner { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        min-height: 65px; 
-        flex-wrap: nowrap;
+    /* ── Base navbar ── */
+    .navbar {
+        background-color: var(--primary-color);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-md);
     }
-    
+
+    .navbar-inner {
+        display: flex;
+        align-items: center;
+        min-height: 65px;
+        gap: 0;
+    }
+
+    /* ── Brand / Logo (left) ── */
     .brand-container {
         flex-shrink: 0;
     }
-
-    .main-logo-img { 
-        height: 42px; 
-        width: auto; 
-        object-fit: contain; 
+    .brand-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
     }
-    .nav-brand-text { 
-        color: #fff; 
-        font-weight: 700; 
-        font-size: 1.4rem; 
-        font-family: var(--font-headline); 
+    .main-logo-img {
+        height: 42px;
+        width: auto;
+        object-fit: contain;
+    }
+    .nav-brand-text {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.25rem;
+        font-family: var(--font-headline);
         white-space: nowrap;
     }
 
-    /* Expanding Search Container */
-    .nav-center-search {
-        flex-grow: 1;
+    /* ── Right block: nav + search + actions ── */
+    .nav-right {
+        flex: 1;
         display: flex;
-        justify-content: center;
-        padding: 0 20px;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 0;
+    }
+
+    /* ── Desktop nav menu ── */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-shrink: 0;
+    }
+    .nav-menu li { position: relative; }
+    .nav-menu li a {
+        color: #fff;
+        padding: 20px 11px;
+        display: block;
+        font-size: 1.05rem;
+        font-weight: 600;
+        font-family: var(--font-headline);
+        white-space: nowrap;
+        transition: color 0.2s;
+    }
+    .nav-menu li:hover > a { color: var(--highlight-color); }
+
+    /* Mobile-only items — hidden on desktop */
+    .mobile-menu-header,
+    .mobile-search-item { display: none; }
+
+    /* ── Desktop expanding search ── */
+    .nav-center-search {
         max-width: 0;
         overflow: hidden;
-        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
         opacity: 0;
+        transition: max-width 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, padding 0.3s;
+        padding: 0;
     }
     .navbar.search-active .nav-center-search {
-        max-width: 600px;
+        max-width: 380px;
         opacity: 1;
+        padding: 0 12px;
     }
     .expanding-search-form {
-        width: 100%;
         display: flex;
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        align-items: center;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
         border-radius: 30px;
-        padding: 4px 15px;
+        padding: 4px 14px;
         transition: 0.3s;
+        width: 340px;
     }
     .expanding-search-form:focus-within {
         background: #fff;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        box-shadow: 0 0 15px rgba(0,0,0,0.15);
     }
     .expanding-search-form input {
         background: transparent;
         border: none;
         color: #fff;
         width: 100%;
-        padding: 8px 10px;
+        padding: 7px 10px;
         outline: none;
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
     .expanding-search-form:focus-within input { color: var(--text-dark); }
     .expanding-search-form button {
@@ -130,175 +204,279 @@ const navCategories = categories
         border: none;
         color: #fff;
         cursor: pointer;
-        font-size: 1.1rem;
-        padding: 0 5px;
+        font-size: 1rem;
+        padding: 0 4px;
+        flex-shrink: 0;
     }
     .expanding-search-form:focus-within button { color: var(--primary-color); }
 
-    .nav-menu { 
-        display: flex; 
-        align-items: center; 
-        margin: 0; 
-        padding: 0; 
-        list-style: none; 
-        transition: opacity 0.3s;
+    /* Fade nav menu when search is open (desktop only) */
+    @media (min-width: 992px) {
+        .navbar.search-active .nav-menu {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
     }
-    .navbar.search-active .nav-menu { opacity: 0; pointer-events: none; }
-    
-    .nav-menu li { position: relative; }
-    .nav-menu li a { color: #fff; padding: 18px 12px; display: block; font-size: 1.15rem; font-weight: 600; font-family: var(--font-headline); transition: 0.2s; }
-    .nav-menu li:hover > a { color: var(--highlight-color); }
-    
-    /* Actions Area (Search Toggle + Hamburger) */
+
+    /* ── Nav actions ── */
     .nav-actions {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 4px;
         flex-shrink: 0;
+        margin-left: 4px;
     }
-
-    .search-toggle-btn {
+    .search-toggle-btn,
+    .mobile-toggle {
         background: transparent;
         border: none;
         color: #fff;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         cursor: pointer;
-        width: 45px;
-        height: 45px;
+        width: 42px;
+        height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        transition: 0.3s;
+        transition: background 0.2s;
     }
-    .mobile-toggle {
-        display: none; /* Hidden on desktop */
-        background: transparent;
-        border: none;
-        color: #fff;
-        font-size: 1.6rem;
-        cursor: pointer;
-        width: 45px;
-        height: 45px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: 0.3s;
-    }
-    .search-toggle-btn:hover, .mobile-toggle:hover { background: rgba(255,255,255,0.1); }
-    .search-toggle-btn .close-icon { display: none; font-size: 1.3rem; }
-    .navbar.search-active .search-toggle-btn .bi-search { display: none; }
+    .search-toggle-btn:hover,
+    .mobile-toggle:hover { background: rgba(255,255,255,0.12); }
+
+    .search-toggle-btn .close-icon { display: none; font-size: 1.2rem; }
+    .navbar.search-active .search-toggle-btn .search-icon { display: none; }
     .navbar.search-active .search-toggle-btn .close-icon { display: block; }
 
-    /* Dropdown */
-    .dropdown { position: absolute; top: 100%; left: 0; background: #fff; min-width: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: none; border-top: 3px solid var(--highlight-color); border-radius: 0 0 4px 4px; overflow: hidden; z-index: 1001; }
+    /* Hamburger hidden on desktop */
+    .mobile-toggle { display: none; }
+
+    /* ── Dropdown ── */
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #fff;
+        min-width: 200px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        display: none;
+        border-top: 3px solid var(--highlight-color);
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+        z-index: 1001;
+    }
     .nav-menu li:hover .dropdown { display: block; }
-    .dropdown li a { color: var(--text-dark) !important; padding: 12px 20px !important; font-size: 1.05rem !important; border-bottom: 1px solid var(--border-color); font-family: var(--font-body) !important; font-weight: 500 !important; }
-    
-    .nav-overlay { 
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-        background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0; 
-        transition: 0.3s; z-index: 999; 
+    .dropdown li a {
+        color: var(--text-dark) !important;
+        padding: 12px 20px !important;
+        font-size: 1rem !important;
+        border-bottom: 1px solid var(--border-color);
+        font-family: var(--font-body) !important;
+        font-weight: 500 !important;
+    }
+
+    /* ── Overlay ── */
+    .nav-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.3s;
+        z-index: 999;
     }
     .nav-overlay.active { visibility: visible; opacity: 1; }
 
-    @media (max-width: 1200px) {
-        /* Removed display: none to show text on tablet/mobile */
-        .nav-brand-text { 
-            display: inline-block; 
-            font-size: 1.2rem;
-            white-space: nowrap;
-        }
-    }
-
+    /* ────────────────────────────────────────
+       TABLET / MOBILE  (≤ 991px)
+    ──────────────────────────────────────── */
     @media (max-width: 991px) {
-        .mobile-toggle {
-            display: flex; /* Show hamburger on mobile */
-        }
-        .nav-brand-text {
-            font-size: 1.1rem; /* Prevent overflow on mobile */
-        }
-        
-        .navbar.search-active .nav-menu { opacity: 1; pointer-events: auto; }
-        .nav-center-search { display: none; }
-        
-        /* Mobile Search behaves like an overlay */
-        .navbar.search-active .nav-actions .mobile-search-mock { display: block; }
 
-        .nav-menu { 
-            position: fixed; top: 0; right: -100%; width: 300px; height: 100vh; 
-            background: var(--primary-color); flex-direction: column; align-items: stretch;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.3);
-            overflow-y: auto; padding-top: 60px; z-index: 1000;
+        .nav-brand-text { font-size: 1.1rem; }
+
+        /* Show hamburger */
+        .mobile-toggle { display: flex; }
+
+        /* Hide desktop search toggle on mobile */
+        .search-toggle-btn { display: none; }
+
+        /* Slide-out panel */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--primary-color);
+            flex-direction: column;
+            align-items: stretch;
+            transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.35);
+            overflow-y: auto;
+            padding-top: 0;
+            z-index: 1000;
+            list-style: none;
         }
         .nav-menu.active { right: 0; }
-        .nav-menu li a { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1.2rem; }
-        
-        /* Dropdown Mobile Overrides */
-        .dropdown { 
-            position: static; 
-            box-shadow: none; 
-            border: none; 
-            background: rgba(0,0,0,0.1); 
-            width: 100%; 
-            display: none !important; 
+
+        /* Mobile menu header: title + close btn */
+        .mobile-menu-header {
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            min-height: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            flex-shrink: 0;
+        }
+        .mobile-menu-title {
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: var(--font-headline);
+        }
+        .mobile-menu-close {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .mobile-menu-close:hover { background: rgba(255,255,255,0.15); }
+
+        /* Nav links */
+        .nav-menu > li > a {
+            padding: 14px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1.1rem;
+        }
+
+        /* Mobile inline search box */
+        .mobile-search-item {
+            display: block !important;
+            padding: 16px 16px 8px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            margin-top: auto;
+        }
+        .mobile-search-form {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 30px;
+            padding: 6px 16px;
+        }
+        .mobile-search-form input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            width: 100%;
+            padding: 6px 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .mobile-search-form input::placeholder { color: rgba(255,255,255,0.6); }
+        .mobile-search-form button {
+            background: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* Desktop search never shown on mobile */
+        .nav-center-search { display: none !important; }
+
+        /* Dropdown overrides for mobile */
+        .dropdown {
+            position: static !important;
+            box-shadow: none !important;
+            border: none !important;
+            background: rgba(0,0,0,0.12);
+            width: 100%;
+            display: none !important;
         }
         .nav-menu li:hover .dropdown { display: none !important; }
         .nav-menu li.open .dropdown { display: block !important; }
-        .dropdown li a { color: #fff !important; padding: 15px 25px 15px 45px !important; font-size: 1.1rem !important; border-bottom: 1px solid rgba(255,255,255,0.05) !important; font-family: var(--font-body) !important; font-weight: 500 !important; }
+        .dropdown li a {
+            color: rgba(255,255,255,0.85) !important;
+            padding: 12px 22px 12px 40px !important;
+            font-size: 1rem !important;
+            border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+        }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+        .nav-brand-text { font-size: 1rem; }
+        .main-logo-img { height: 36px; }
     }
 </style>
 
 <script>
-    const navbar = document.querySelector('.navbar');
-    const mobileToggle = document.getElementById('mobileToggle');
+    const navbar   = document.querySelector('.navbar');
+    const mobileToggle    = document.getElementById('mobileToggle');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
     const desktopSearchToggle = document.getElementById('desktopSearchToggle');
-    const desktopSearchInput = document.getElementById('desktopSearchInput') as HTMLInputElement;
-    const navMenu = document.getElementById('navMenu');
+    const desktopSearchInput  = document.getElementById('desktopSearchInput') as HTMLInputElement;
+    const navMenu    = document.getElementById('navMenu');
     const navOverlay = document.getElementById('navOverlay');
 
+    function openMenu() {
+        navMenu?.classList.add('active');
+        navOverlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        navMenu?.classList.remove('active');
+        navOverlay?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
     function toggleMenu() {
-        navMenu?.classList.toggle('active');
-        navOverlay?.classList.toggle('active');
-        navbar?.classList.remove('search-active');
-        
-        const icon = mobileToggle?.querySelector('i');
-        if (icon) {
-            icon.classList.toggle('bi-list');
-            icon.classList.toggle('bi-x-lg');
-        }
-        
         if (navMenu?.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
+            closeMenu();
         } else {
-            document.body.style.overflow = '';
+            openMenu();
         }
     }
 
-    // Desktop/Universal Search Toggle
+    mobileToggle?.addEventListener('click', toggleMenu);
+    mobileMenuClose?.addEventListener('click', closeMenu);
+    navOverlay?.addEventListener('click', () => {
+        closeMenu();
+        navbar?.classList.remove('search-active');
+    });
+
+    // Desktop Search Toggle
     desktopSearchToggle?.addEventListener('click', () => {
         navbar?.classList.toggle('search-active');
         if (navbar?.classList.contains('search-active')) {
             setTimeout(() => desktopSearchInput?.focus(), 100);
-            navMenu?.classList.remove('active');
-            navOverlay?.classList.remove('active');
+            closeMenu();
         }
     });
 
-    // Close Search on ESC
+    // Close search on ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navbar?.classList.contains('search-active')) {
+        if (e.key === 'Escape') {
             navbar?.classList.remove('search-active');
         }
     });
 
-    mobileToggle?.addEventListener('click', toggleMenu);
-    navOverlay?.addEventListener('click', () => {
-        if (navMenu?.classList.contains('active')) toggleMenu();
-        navbar?.classList.remove('search-active');
-    });
-
-    // Handle mobile submenus
+    // Mobile sub-menus (tap to expand)
     const menuItems = document.querySelectorAll('.nav-menu > li');
     menuItems.forEach(item => {
         const link = item.querySelector('a');
