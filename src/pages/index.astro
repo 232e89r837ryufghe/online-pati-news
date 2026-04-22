@@ -10,7 +10,7 @@ import {
     getPostsByCategorySlug,
 } from "../lib/cms";
 import { getAdsByPosition } from "../lib/ads";
-import { getRelativeTimeNepali } from "../utils/date";
+import RelativeTime from "../components/RelativeTime.astro";
 
 // FETCH ADS
 const homeTopAds = await getAdsByPosition("home_top");
@@ -89,7 +89,7 @@ const coverStory = coverStories[0] || allPosts[5];
                                         <img src="/logo.png" alt="Author Logo" class="mini-logo" /> {post.author || 'Online Pati News'}
                                     </span>
                                     <span class="meta-item">
-                                        <i class="bi bi-clock"></i> {getRelativeTimeNepali(post.dateIso || '')}
+                                        <i class="bi bi-clock"></i> <RelativeTime date={post.dateIso || ''} />
                                     </span>
                                 </div>
                                 {post.image && post.show_image === true && (

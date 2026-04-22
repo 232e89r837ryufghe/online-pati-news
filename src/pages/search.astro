@@ -8,7 +8,7 @@ import { searchPosts } from "../lib/cms";
 
 const query = Astro.url.searchParams.get("q") || "";
 const results = query ? await searchPosts(query) : [];
-import { getRelativeTimeNepali } from '../utils/date';
+import RelativeTime from '../components/RelativeTime.astro';
 ---
 
 <Layout title={`खोज नतिजा: ${query} - Online Pati News`}>

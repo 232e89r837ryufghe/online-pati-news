@@ -1,0 +1,34 @@
+---
+import { getRelativeTimeNepali } from "../utils/date";
+
+interface Props {
+  date: string;
+  class?: string;
+}
+
+const { date, class: className } = Astro.props;
+const initialTime = getRelativeTimeNepali(date);
+---
+
+<span class={`relative-time ${className || ''}`} data-nepali-time={date}>
+  {initialTime}
+</span>
+
+<script>
+  import { getRelativeTimeNepali } from "../utils/date";
+
+  function updateAllTimes() {
+    document.querySelectorAll('[data-nepali-time]').forEach((el) => {
+      const dateStr = el.getAttribute('data-nepali-time');
+      if (dateStr) {
+        el.textContent = getRelativeTimeNepali(dateStr);
+      }
+    });
+  }
+
+  // Update every minute
+  setInterval(updateAllTimes, 60000);
+  
+  // Initial update check in case build time was long ago
+  updateAllTimes();
+</script>

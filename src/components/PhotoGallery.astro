@@ -5,7 +5,7 @@ import { getAdsByPosition } from '../lib/ads';
 const posts = await getPosts(4);
 const mainPost = posts[0];
 const sidePosts = posts.slice(1, 3);
-import { getRelativeTimeNepali } from '../utils/date';
+import RelativeTime from '../components/RelativeTime.astro';
 // FETCH ADS
 const mmSideAds = await getAdsByPosition("multimedia_side");
 const mmSideAd = mmSideAds[0];

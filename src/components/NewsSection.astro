@@ -18,7 +18,7 @@ interface Props {
 }
 
 const { title, link, news, layout = 'grid' } = Astro.props;
-import { getRelativeTimeNepali } from '../utils/date';
+import RelativeTime from '../components/RelativeTime.astro';
 ---
 
 <section class="news-category">

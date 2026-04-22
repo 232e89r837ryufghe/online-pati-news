@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 
 const { categoryName, slug } = Astro.props;
 const results = await getPostsByCategorySlug(slug, 20);
-import { getRelativeTimeNepali } from '../utils/date';
+import RelativeTime from '../components/RelativeTime.astro';
 ---
 
 <Layout title={`${categoryName} - Online Pati News`}>
