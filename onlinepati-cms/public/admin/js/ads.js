@@ -84,7 +84,7 @@ function renderAdsGrid(adsList) {
     }
 
     return `
-      <div class="ad-card">
+      <div class="ad-card premium-card">
         <div class="ad-card-badge">
           <span class="badge badge-${statusClass}">${statusLabel}</span>
         </div>

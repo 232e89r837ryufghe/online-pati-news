@@ -1,0 +1,58 @@
+/* Premium Admin UI – Glassmorphism & Dark Mode */
+
+/* Variables – ensure these match or extend existing var definitions */
+:root {
+  --bg-glass: rgba(255, 255, 255, 0.25);
+  --bg-glass-hover: rgba(255, 255, 255, 0.35);
+  --glass-blur: blur(12px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+  --radius: 12px;
+  --radius-sm: 6px;
+  --transition: all 0.3s ease;
+}
+
+/* Premium Card (Glass) */
+.premium-card {
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+.premium-card:hover {
+  background: var(--bg-glass-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Dark‑mode toggle button */
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.dark-mode-toggle:hover {
+  background: var(--bg-card-hover);
+}
+
+/* Dark theme overrides – applied when <html data-theme="dark"> */
+html[data-theme="dark"] {
+  --bg-dark: #0a0c12;
+  --bg-card: #11131c;
+  --bg-input: #1a1e2b;
+  --bg-glass: rgba(26, 29, 39, 0.85);
+  --bg-glass-hover: rgba(34, 37, 58, 0.95);
+  --text-primary: #e2e8f0;
+  --text-secondary: #a1a1aa;
+  --text-muted: #6b7280;
+  --border: #2d3148;
+}

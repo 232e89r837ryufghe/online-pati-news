@@ -16,6 +16,7 @@ import searchRoutes from './routes/search';
 import mediaRoutes from './routes/media';
 import settingsRoutes from './routes/settings';
 import adsRoutes from './routes/ads';
+import proxyRoutes from './routes/proxy';
 
 export interface Env {
   DB: D1Database;
@@ -81,6 +82,7 @@ api.route('/search', searchRoutes);
 api.route('/media', mediaRoutes);
 api.route('/admin/settings', settingsRoutes);
 api.route('/ads', adsRoutes);
+api.route('/indices', proxyRoutes);
 
 // Mount API on both root and /admin for flexibility
 app.route('/api', api);

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Advertisements — Online Pati CMS</title>
   <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin-premium.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -106,7 +107,7 @@
 
         <div class="category-grid">
           <!-- Ad Form -->
-          <div class="category-form-panel">
+          <div class="category-form-panel premium-card">
             <div class="editor-panel">
               <div class="panel-header">
                 <i class="fas fa-plus-circle"></i>
@@ -211,7 +212,7 @@
               <i class="fas fa-sync-alt"></i> Refresh
             </button>
             <div class="upload-btn-wrapper">
-              <button class="btn btn-primary btn-sm">Upload New</button>
+              <button class="btn btn-primary btn-sm" onclick="document.getElementById('mediaPickerUpload').click()">Upload New</button>
               <input type="file" id="mediaPickerUpload" accept="image/*" style="opacity:0; position:absolute; left:0; top:0; width:100px; cursor:pointer;" onchange="uploadFromPicker(event)">
             </div>
           </div>
