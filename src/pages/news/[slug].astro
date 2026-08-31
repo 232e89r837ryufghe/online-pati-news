@@ -42,6 +42,27 @@ const jsonLd = {
 
 const articleBottomAds = await getAdsByPosition("article_bottom");
 const articleBottomAd = articleBottomAds[0];
+
+const articleTopAds = await getAdsByPosition("article_top");
+const articleTopAd = articleTopAds[0];
+
+const articleMidAds = await getAdsByPosition("article_mid");
+const articleMidAd = articleMidAds[0];
+
+// Dynamic Paragraph Ad Injection
+const splitContent = item.content.split('</p>');
+let inlineContent = item.content;
+if (splitContent.length > 2 && articleMidAd) {
+  const adHtml = `
+    <div class="ad-container ad-inline-mid" style="margin: 25px auto; text-align: center; display: block;">
+      <span class="ad-label" style="display: block; font-size: 0.7rem; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+      <a href="${articleMidAd.link_url || '#'}" style="display: inline-block;">
+        <img src="${articleMidAd.image_url}" alt="Ad" style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+      </a>
+    </div>`;
+  splitContent.splice(2, 0, adHtml);
+  inlineContent = splitContent.join('</p>');
+}
 ---
 
 <Layout 
@@ -65,6 +86,15 @@ const articleBottomAd = articleBottomAds[0];
         <i class="bi bi-chevron-right sep"></i>
         <span class="curr" set:html={item.title}></span>
       </div>
+
+      {articleTopAd && (
+        <div class="ad-container" style="margin-bottom: 30px; text-align: center;">
+          <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+          <a href={articleTopAd.link_url || "/advertise"} class="ad-slot ad-970x90" style="display: inline-block;">
+            <img src={articleTopAd.image_url} alt={articleTopAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+          </a>
+        </div>
+      )}
 
       <div class="opn-layout">
         <article class="main-content-article">
@@ -117,7 +147,7 @@ const articleBottomAd = articleBottomAds[0];
             </div>
           )}
 
-          <div class="article-content-premium" set:html={item.content}>
+          <div class="article-content-premium" set:html={inlineContent}>
           </div>
 
           {articleBottomAd && (

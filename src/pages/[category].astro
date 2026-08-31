@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
 import { getCategories, getPostsByCategorySlug } from '../lib/cms';
+import { getAdsByPosition } from '../lib/ads';
 
 export async function getStaticPaths() {
   const categories = await getCategories();
@@ -17,6 +18,11 @@ export async function getStaticPaths() {
 const { categoryName, slug } = Astro.props;
 const results = await getPostsByCategorySlug(slug, 20);
 import RelativeTime from '../components/RelativeTime.astro';
+
+const categoryTopAds = await getAdsByPosition("category_top");
+const categoryTopAd = categoryTopAds[0];
+const categoryBottomAds = await getAdsByPosition("category_bottom");
+const categoryBottomAd = categoryBottomAds[0];
 ---
 
 <Layout title={`${categoryName} - Online Pati News`}>
@@ -30,6 +36,15 @@ import RelativeTime from '../components/RelativeTime.astro';
         <i class="bi bi-chevron-right sep"></i> 
         <span class="curr">{categoryName}</span>
       </div>
+
+      {categoryTopAd && (
+        <div class="ad-container" style="margin-bottom: 30px; text-align: center;">
+          <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+          <a href={categoryTopAd.link_url || "/advertise"} class="ad-slot ad-970x90" style="display: inline-block;">
+            <img src={categoryTopAd.image_url} alt={categoryTopAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+          </a>
+        </div>
+      )}
 
       <header class="category-hero-p">
         <div class="cat-label">विधा:</div>
@@ -66,6 +81,15 @@ import RelativeTime from '../components/RelativeTime.astro';
               <h3>समाचार फेला परेन</h3>
               <p>माफ गर्नुहोस्, यस विधामा अहिले कुनै समाचार उपलब्ध छैन। हाम्रा अन्य विधाहरू हेर्नुहोस्।</p>
               <a href="/" class="p-btn-back">मुख्य पृष्ठमा फर्कनुहोस्</a>
+            </div>
+          )}
+
+          {categoryBottomAd && (
+            <div class="ad-container" style="margin-top: 30px; text-align: center;">
+              <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+              <a href={categoryBottomAd.link_url || "/advertise"} class="ad-slot ad-728x90" style="display: inline-block;">
+                <img src={categoryBottomAd.image_url} alt={categoryBottomAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+              </a>
             </div>
           )}
         </div>

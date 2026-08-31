@@ -5,10 +5,16 @@ import Navbar from '../components/Navbar.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
 import { searchPosts } from "../lib/cms";
+import { getAdsByPosition } from '../lib/ads';
 
 const query = Astro.url.searchParams.get("q") || "";
 const results = query ? await searchPosts(query) : [];
 import RelativeTime from '../components/RelativeTime.astro';
+
+const searchTopAds = await getAdsByPosition("search_top");
+const searchTopAd = searchTopAds[0];
+const searchBottomAds = await getAdsByPosition("search_bottom");
+const searchBottomAd = searchBottomAds[0];
 ---
 
 <Layout title={`खोज नतिजा: ${query} - Online Pati News`}>
@@ -22,6 +28,15 @@ import RelativeTime from '../components/RelativeTime.astro';
         <i class="bi bi-chevron-right sep"></i> 
         <span class="curr">खोज नतिजा</span>
       </div>
+
+      {searchTopAd && (
+        <div class="ad-container" style="margin-bottom: 30px; text-align: center;">
+          <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+          <a href={searchTopAd.link_url || "/advertise"} class="ad-slot ad-970x90" style="display: inline-block;">
+            <img src={searchTopAd.image_url} alt={searchTopAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+          </a>
+        </div>
+      )}
 
       <header class="search-hero-p">
         <h1 class="search-title-p">खोज नतिजा: "{query}"</h1>
@@ -59,6 +74,15 @@ import RelativeTime from '../components/RelativeTime.astro';
               <h3>केही फेला परेन</h3>
               <p>माफ गर्नुहोस्, तपाईंको खोजी शब्द "{query}" सँग मिल्दोजुल्दो कुनै सामग्री फेला परेन। कृपया अर्को शब्द प्रयोग गर्नुहोस्।</p>
               <a href="/" class="p-btn-back">मुख्य पृष्ठमा जानुहोस्</a>
+            </div>
+          )}
+
+          {searchBottomAd && (
+            <div class="ad-container" style="margin-top: 30px; text-align: center;">
+              <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+              <a href={searchBottomAd.link_url || "/advertise"} class="ad-slot ad-728x90" style="display: inline-block;">
+                <img src={searchBottomAd.image_url} alt={searchBottomAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+              </a>
             </div>
           )}
         </div>
