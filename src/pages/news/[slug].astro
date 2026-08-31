@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import Footer from '../../components/Footer.astro';
 import { getPosts, getPostBySlug } from '../../lib/cms';
+import { getAdsByPosition } from '../../lib/ads';
 
 export async function getStaticPaths() {
   const posts = await getPosts(100);
@@ -38,6 +39,9 @@ const jsonLd = {
     "url": "https://onlinepatinews.com"
   }]
 };
+
+const articleBottomAds = await getAdsByPosition("article_bottom");
+const articleBottomAd = articleBottomAds[0];
 ---
 
 <Layout 
@@ -116,6 +120,15 @@ const jsonLd = {
           <div class="article-content-premium" set:html={item.content}>
           </div>
 
+          {articleBottomAd && (
+            <div class="ad-container" style="margin: 30px auto; max-width: 728px; display: block; text-align: center;">
+              <span class="ad-label" style="display: block; font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Advertisement</span>
+              <a href={articleBottomAd.link_url || "/advertise"} class="ad-slot ad-728x90" style="display: inline-block;">
+                <img src={articleBottomAd.image_url} alt={articleBottomAd.title} style="max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border-color);" />
+              </a>
+            </div>
+          )}
+
           <div class="article-footer-tags">
             <div class="sec-header">
               <h2 class="sec-title"><i class="bi bi-journal-text"></i> सम्बन्धित ट्यागहरू:</h2>
@@ -141,7 +154,7 @@ const jsonLd = {
           </div>
         </article>
 
-        <Sidebar />
+        <Sidebar position="article_side" />
       </div>
     </div>
   </main>

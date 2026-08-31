@@ -130,6 +130,7 @@ img { max-width: 100%; display: block; }
   font-weight: 800;
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 6px;
 }
@@ -626,6 +627,7 @@ select.form-control {
   font-size: 1.8rem;
   background: linear-gradient(135deg, var(--accent), #a855f7);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -972,6 +974,7 @@ tr:last-child td {
   font-size: 3.5rem;
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
   opacity: 0.9;
@@ -1089,12 +1092,55 @@ tr:last-child td {
 }
 
 .media-picker-item:hover {
-  border-color: var(--primary-light);
+  border-color: var(--accent-hover);
 }
 
 .media-picker-item.selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
+}
+
+/* Specific overrides for the media picker modal size & padding */
+#mediaPickerModal .modal {
+  max-width: 800px;
+  width: 90%;
+  padding: 24px;
+}
+
+#mediaPickerModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+#mediaPickerModal .modal-header h3 {
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+
+#mediaPickerModal .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 1;
+}
+
+#mediaPickerModal .modal-close:hover {
+  color: var(--danger);
+}
+
+#mediaPickerModal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  margin-top: 16px;
 }
 
 .media-picker-item img {

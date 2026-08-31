@@ -10,8 +10,10 @@ import { getMarketData } from '../lib/market';
 // FETCH MARKET DATA
 const marketData = await getMarketData();
 
+const { position = "sidebar_top" } = Astro.props;
+
 // FETCH ADS
-const sidebarAds = await getAdsByPosition("sidebar_top");
+const sidebarAds = await getAdsByPosition(position);
 const sidebarAd = sidebarAds[0];
 ---
 

@@ -86,28 +86,64 @@ api.route('/ads', adsRoutes);
 app.route('/api', api);
 app.route('/admin/api', api);
 
-// ─── CDN Proxy to Serve Images from R2 ─────────────────────────
+// ─── CDN Proxy to Serve Images from R2 (with Production Fallback) ─────────────────────────
 app.get('/cdn/*', async (c) => {
   const key = c.req.path.replace('/cdn/', '').replace('/admin/cdn/', '');
   const object = await c.env.MEDIA.get(key);
 
-  if (!object) return c.notFound();
+  if (!object) {
+    try {
+      const prodUrl = `https://onlinepatinews.com/cdn/${key}`;
+      const response = await fetch(prodUrl);
+      if (response.ok) {
+        const newHeaders = new Headers(response.headers);
+        newHeaders.set('Access-Control-Allow-Origin', '*');
+        return new Response(response.body, {
+          status: response.status,
+          headers: newHeaders
+        });
+      }
+    } catch (e) {
+      console.error('Failed to fallback fetch from production CDN:', e);
+    }
+    return c.notFound();
+  }
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
   headers.set('etag', object.httpEtag);
   headers.set('Cache-Control', 'public, max-age=31536000'); // 1 year cache
+  headers.set('Access-Control-Allow-Origin', '*');
 
   return new Response(object.body, { headers });
 });
 
 app.get('/admin/cdn/*', async (c) => {
-  const key = c.req.path.replace('/admin/cdn/', '');
+  const key = c.req.path.replace('/admin/cdn/', '').replace('/cdn/', '');
   const object = await c.env.MEDIA.get(key);
-  if (!object) return c.notFound();
+
+  if (!object) {
+    try {
+      const prodUrl = `https://onlinepatinews.com/cdn/${key}`;
+      const response = await fetch(prodUrl);
+      if (response.ok) {
+        const newHeaders = new Headers(response.headers);
+        newHeaders.set('Access-Control-Allow-Origin', '*');
+        return new Response(response.body, {
+          status: response.status,
+          headers: newHeaders
+        });
+      }
+    } catch (e) {
+      console.error('Failed to fallback fetch from production CDN:', e);
+    }
+    return c.notFound();
+  }
+
   const headers = new Headers();
   object.writeHttpMetadata(headers);
   headers.set('Cache-Control', 'public, max-age=31536000');
+  headers.set('Access-Control-Allow-Origin', '*');
   return new Response(object.body, { headers });
 });
 

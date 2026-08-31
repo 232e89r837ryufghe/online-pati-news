@@ -72,6 +72,38 @@
       </header>
 
       <div class="page-content">
+        <!-- Ads Stats Grid -->
+        <div class="stats-grid" id="adsStatsGrid" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-ad"></i></div>
+            <div class="stat-info">
+              <h3 id="statTotalAds">-</h3>
+              <p>Total Ads</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="fas fa-toggle-on"></i></div>
+            <div class="stat-info">
+              <h3 id="statActiveAds">-</h3>
+              <p>Active Ads</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow"><i class="fas fa-hourglass-half"></i></div>
+            <div class="stat-info">
+              <h3 id="statExpiringAds">-</h3>
+              <p>Expiring</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="stat-info">
+              <h3 id="statPlacements">-</h3>
+              <p>Placements</p>
+            </div>
+          </div>
+        </div>
+
         <div class="category-grid">
           <!-- Ad Form -->
           <div class="category-form-panel">
@@ -97,6 +129,7 @@
                       <option value="sidebar_top">Sidebar Top (300x250)</option>
                       <option value="multimedia_side">Multimedia Side (300x250)</option>
                       <option value="article_side">Article Sidebar (300x250)</option>
+                      <option value="article_bottom">Article Bottom (728x90)</option>
                     </select>
                   </div>
                   <div class="form-group">
@@ -144,8 +177,12 @@
           <div>
             <div class="page-header" style="margin-bottom:16px;">
               <h2>All Advertisements</h2>
+              <div class="table-search" style="max-width: 250px; margin-bottom: 0;">
+                <i class="fas fa-search"></i>
+                <input type="text" id="adsSearchInput" placeholder="Search ads..." onkeyup="filterAds()">
+              </div>
             </div>
-            <div id="adList" class="ad-list">
+            <div id="adGrid" class="ad-grid">
               <div class="loading-spinner"></div>
             </div>
           </div>
@@ -185,65 +222,120 @@
   </div>
 
   <style>
-    .ad-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .ad-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
     }
     .ad-card {
-      background: var(--bg-lighter);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 15px;
+      background: var(--bg-glass);
+      border: var(--glass-border);
+      border-radius: var(--radius);
+      overflow: hidden;
       display: flex;
-      gap: 15px;
-      align-items: center;
-      transition: all 0.2s;
+      flex-direction: column;
+      position: relative;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
     }
     .ad-card:hover {
       border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
     }
-    .ad-card-preview {
-      width: 120px;
-      height: 80px;
-      border-radius: var(--radius-sm);
+    .ad-card-banner {
+      height: 130px;
+      position: relative;
+      background: #090a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      background: var(--bg-dark);
-      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
     }
-    .ad-card-preview img {
+    .ad-card-banner img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      transition: transform 0.5s var(--transition);
+      padding: 10px;
     }
-    .ad-card-info {
+    .ad-card:hover .ad-card-banner img {
+      transform: scale(1.05);
+    }
+    .ad-card-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+    .ad-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       flex: 1;
     }
     .ad-card-title {
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ad-card-meta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+    .ad-card-meta-item {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .ad-card-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .ad-card-meta-item i {
+      color: var(--accent);
+      width: 16px;
+      text-align: center;
+    }
+    .badge-position {
+      background: var(--bg-active);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
     .ad-card-actions {
       display: flex;
-      gap: 5px;
+      justify-content: flex-end;
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 4px;
     }
-    .badge-position {
-      background: var(--bg-dark);
-      color: var(--accent);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
+    /* Pulse effect on active ads badge */
+    .badge-active {
+      background: var(--success-bg);
+      color: var(--success);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+    }
+    .badge-inactive {
+      background: rgba(107, 114, 128, 0.15);
+      color: #9ca3af;
+    }
+    .badge-expired {
+      background: var(--danger-bg);
+      color: var(--danger);
     }
   </style>
 

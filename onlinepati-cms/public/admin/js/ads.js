@@ -4,58 +4,146 @@
  */
 
 let editingAdId = null;
+let allAds = [];
 
 // ─── Load Ads ───────────────────────────────────────────────
 
 async function loadAds() {
-  const adListContainer = document.getElementById('adList');
-  if (!adListContainer) return;
+  const adGridContainer = document.getElementById('adGrid');
+  if (!adGridContainer) return;
 
-  adListContainer.innerHTML = '<div class="loading-spinner"></div>';
+  adGridContainer.innerHTML = '<div class="loading-spinner"></div>';
 
   try {
     const data = await apiGet('/ads/manage?per_page=100');
+    allAds = data?.ads || [];
     
-    if (!data || !data.ads.length) {
-      adListContainer.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-ad"></i>
-          <h3>No advertisements found</h3>
-          <p>Create your first advertisement banner using the form.</p>
-        </div>`;
-      return;
-    }
-
-    adListContainer.innerHTML = data.ads.map(ad => `
-      <div class="ad-card">
-        <div class="ad-card-preview">
-          <img src="${escapeHtml(ad.image_url)}" alt="${escapeHtml(ad.title)}">
-        </div>
-        <div class="ad-card-info">
-          <div class="ad-card-title">
-            ${escapeHtml(ad.title)}
-            <span class="badge badge-${ad.status}">${ad.status}</span>
-          </div>
-          <div class="ad-card-meta">
-             <span class="badge-position">${escapeHtml(ad.position.replace('_', ' '))}</span>
-             ${ad.expiry_date ? `<span style="margin-left:10px; font-size:0.75rem; color:var(--text-muted)"><i class="fas fa-clock"></i> Expires: ${formatDate(ad.expiry_date)}</span>` : ''}
-             ${ad.link_url ? `<br><a href="${escapeHtml(ad.link_url)}" target="_blank" style="font-size:0.75rem;"><i class="fas fa-link"></i> ${escapeHtml(ad.link_url)}</a>` : ''}
-          </div>
-        </div>
-        <div class="ad-card-actions">
-          <button class="btn btn-ghost btn-icon btn-sm" onclick='editAd(${JSON.stringify(ad)})' title="Edit">
-            <i class="fas fa-pen"></i>
-          </button>
-          <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger);" onclick="deleteAd(${ad.id}, '${escapeHtml(ad.title)}')" title="Delete">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-    `).join('');
-
+    updateAdsStats();
+    filterAds();
   } catch (err) {
     showToast('Failed to load advertisements: ' + err.message, 'error');
   }
+}
+
+function updateAdsStats() {
+  const totalEl = document.getElementById('statTotalAds');
+  const activeEl = document.getElementById('statActiveAds');
+  const expiringEl = document.getElementById('statExpiringAds');
+  const placementsEl = document.getElementById('statPlacements');
+
+  if (!totalEl) return;
+
+  const total = allAds.length;
+  const active = allAds.filter(ad => ad.status === 'active').length;
+  
+  // Expiring count: check if expiry_date is set and within next 7 days, or already expired
+  const now = new Date();
+  const expiring = allAds.filter(ad => {
+    if (!ad.expiry_date) return false;
+    const expiry = new Date(ad.expiry_date);
+    const diffTime = expiry - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= 7; // expired (<=0) or expiring within 7 days
+  }).length;
+
+  const placements = new Set(allAds.map(ad => ad.position)).size;
+
+  totalEl.textContent = total;
+  activeEl.textContent = active;
+  expiringEl.textContent = expiring;
+  placementsEl.textContent = placements;
+}
+
+function renderAdsGrid(adsList) {
+  const adGridContainer = document.getElementById('adGrid');
+  if (!adGridContainer) return;
+
+  if (!adsList.length) {
+    adGridContainer.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+        <i class="fas fa-ad" style="font-size: 3rem; margin-bottom: 16px; color: var(--text-muted);"></i>
+        <h3>No advertisements found</h3>
+        <p>Try a different search or create a new banner using the form.</p>
+      </div>`;
+    return;
+  }
+
+  const now = new Date();
+
+  adGridContainer.innerHTML = adsList.map(ad => {
+    let statusClass = ad.status;
+    let statusLabel = ad.status;
+    
+    // Check if expired
+    if (ad.expiry_date) {
+      const expiry = new Date(ad.expiry_date);
+      if (expiry < now) {
+        statusClass = 'expired';
+        statusLabel = 'Expired';
+      }
+    }
+
+    return `
+      <div class="ad-card">
+        <div class="ad-card-badge">
+          <span class="badge badge-${statusClass}">${statusLabel}</span>
+        </div>
+        <div class="ad-card-banner">
+          <img src="${escapeHtml(ad.image_url)}" alt="${escapeHtml(ad.title)}">
+        </div>
+        <div class="ad-card-body">
+          <div class="ad-card-title" title="${escapeHtml(ad.title)}">
+            ${escapeHtml(ad.title)}
+          </div>
+          <div class="ad-card-meta-grid">
+            <div class="ad-card-meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span class="badge-position">${escapeHtml(ad.position.replace('_', ' '))}</span>
+            </div>
+            ${ad.expiry_date ? `
+              <div class="ad-card-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Expires: ${formatDate(ad.expiry_date)}</span>
+              </div>
+            ` : ''}
+            ${ad.link_url ? `
+              <div class="ad-card-meta-item">
+                <i class="fas fa-link"></i>
+                <a href="${escapeHtml(ad.link_url)}" target="_blank" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;">
+                  ${escapeHtml(ad.link_url)}
+                </a>
+              </div>
+            ` : ''}
+          </div>
+          <div class="ad-card-actions">
+            <button class="btn btn-ghost btn-icon btn-sm" onclick='editAd(${JSON.stringify(ad)})' title="Edit">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button class="btn btn-ghost btn-icon btn-sm" style="color:var(--danger);" onclick="deleteAd(${ad.id}, '${escapeHtml(ad.title)}')" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterAds() {
+  const query = (document.getElementById('adsSearchInput')?.value || '').toLowerCase().trim();
+  
+  if (!query) {
+    renderAdsGrid(allAds);
+    return;
+  }
+
+  const filtered = allAds.filter(ad => {
+    const titleMatch = ad.title.toLowerCase().includes(query);
+    const positionMatch = ad.position.toLowerCase().includes(query);
+    return titleMatch || positionMatch;
+  });
+
+  renderAdsGrid(filtered);
 }
 
 // ─── Save Ad ────────────────────────────────────────────────
