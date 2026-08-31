@@ -6,7 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently -n \"web,cms\" -c \"blue,magenta\" \"astro dev\" \"npm run dev --prefix onlinepati-cms\"",
+    "dev:web": "astro dev",
+    "dev:cms": "npm run dev --prefix onlinepati-cms",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -17,5 +19,8 @@
     "astro": "^6.1.3",
     "cheerio": "^1.2.0",
     "nepali-date-converter": "^3.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Online Pati CMS</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">OP</div>
+        <div>
+          <h2>Online Pati</h2>
+          <small>Content Management</small>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="index.html" class="nav-item" data-page="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="posts.html" class="nav-item" data-page="posts">
+          <i class="fas fa-newspaper"></i> Posts
+        </a>
+        <a href="posts.html?new=1" class="nav-item" data-page="new-post">
+          <i class="fas fa-pen-fancy"></i> New Post
+        </a>
+        <a href="media.html" class="nav-item" data-page="media">
+          <i class="fas fa-images"></i> Media
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="categories.html" class="nav-item" data-page="categories">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="settings.html" class="nav-item active" data-page="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="ads.html" class="nav-item" data-page="ads">
+          <i class="fas fa-ad"></i> Advertisements
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="https://onlinepatinews.com/" class="nav-item" target="_blank" style="color: var(--success);">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="nav-item" onclick="logout()"
+          style="width:100%; text-align:left; background:none; color:var(--danger);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <h1>Settings</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-success btn-sm" onclick="triggerDeploy(this)" style="margin-right: 15px;">
+            <i class="fas fa-rocket"></i> Go Live
+          </button>
+          <div class="header-user">
+            <div class="header-user-avatar">A</div>
+            <span id="headerUsername">Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="settings-grid">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fab fa-github"></i> GitHub Integration</h2>
+              <p>Set GitHub PAT and repository for live site deployment.</p>
+            </div>
+            <div class="card-body">
+              <form id="githubSettingsForm">
+                <div class="form-group">
+                  <label for="githubPat">GitHub Personal Access Token (PAT)</label>
+                  <input type="password" id="githubPat" class="form-control" placeholder="ghp_xxxxxxxxxxxx">
+                  <small style="color:var(--text-muted)">Token must have 'Actions' write access.</small>
+                </div>
+                <div class="form-group">
+                  <label for="githubRepo">GitHub Repository (Owner/Repo)</label>
+                  <input type="text" id="githubRepo" class="form-control" placeholder="Sundar.Bimali/OnlinePatiNews">
+                </div>
+                <div style="margin-top: 20px;">
+                  <button type="submit" class="btn btn-primary" id="saveGithubBtn">
+                    <i class="fas fa-save"></i> Save Settings
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fas fa-shield-halved"></i> Security</h2>
+              <p>Password management and Two-Factor Authentication.</p>
+            </div>
+            <div class="card-body">
+              <h3>Change Password</h3>
+              <form id="passwordResetForm" style="margin-bottom: 30px;">
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" id="newPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">
+                  <i class="fas fa-key"></i> Update Password
+                </button>
+              </form>
+
+              <hr style="border:0; border-top:1px solid var(--border-color); margin:20px 0">
+
+              <h3>Mobile Authenticator (2FA)</h3>
+              <div id="twoFactorStatus" style="margin-bottom: 15px;">
+                <p style="font-size: 0.9rem; color: var(--text-muted);">2FA is currently <span id="twoFactorBadge" class="badge">Checking...</span></p>
+              </div>
+              <div id="twoFactorSetup" style="display: none;">
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.):</p>
+                <div id="qrcode" style="background: white; padding: 10px; width: fit-content; margin-bottom: 15px; border-radius: 8px;">
+                  <!-- QR Code will be injected here -->
+                </div>
+                <div class="form-group">
+                  <label for="twoFactorCode">Enter 6-digit code to verify</label>
+                  <input type="text" id="twoFactorCode" class="form-control" placeholder="123456" maxlength="6">
+                </div>
+                <button class="btn btn-primary" onclick="enable2FA()">
+                  <i class="fas fa-check"></i> Enable 2FA
+                </button>
+              </div>
+              <button id="btnInit2FA" class="btn btn-ghost btn-sm" onclick="init2FASetup()">
+                <i class="fas fa-qrcode"></i> Setup Authenticator
+              </button>
+              <button id="btnDisable2FA" class="btn btn-danger btn-sm" onclick="disable2FA()" style="display: none;">
+                <i class="fas fa-times"></i> Disable 2FA
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fas fa-rocket"></i> Quick Action</h2>
+            </div>
+            <div class="card-body">
+              <p>Push all your changes to the live site.</p>
+              <button id="sidebarDeployBtn" class="btn btn-success btn-lg" onclick="triggerDeploy(this)"
+                style="width:100%; margin-top:10px;">
+                <i class="fas fa-rocket"></i> Go Live
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 30px;
+    }
+
+    @media (max-width: 992px) {
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-lighter);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-header h2 {
+      font-size: 1.25rem;
+      margin-bottom: 5px;
+    }
+
+    .card-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+
+</html>

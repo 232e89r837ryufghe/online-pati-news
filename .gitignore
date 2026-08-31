@@ -22,3 +22,10 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+
+# CMS specific
+onlinepati-cms/node_modules/
+onlinepati-cms/dist/
+onlinepati-cms/.wrangler/
+onlinepati-cms/.dev.vars
+

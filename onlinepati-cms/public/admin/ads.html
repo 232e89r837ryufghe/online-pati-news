@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advertisements — Online Pati CMS</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">OP</div>
+        <div>
+          <h2>Online Pati</h2>
+          <small>Content Management</small>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="index.html" class="nav-item" data-page="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="posts.html" class="nav-item" data-page="posts">
+          <i class="fas fa-newspaper"></i> Posts
+        </a>
+        <a href="posts.html?new=1" class="nav-item" data-page="new-post">
+          <i class="fas fa-pen-fancy"></i> New Post
+        </a>
+        <a href="media.html" class="nav-item" data-page="media">
+          <i class="fas fa-images"></i> Media
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="categories.html" class="nav-item" data-page="categories">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="settings.html" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="ads.html" class="nav-item active" data-page="ads">
+          <i class="fas fa-ad"></i> Advertisements
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="https://onlinepatinews.com/" class="nav-item" target="_blank" style="color: var(--success);">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="nav-item" onclick="logout()" style="width:100%; text-align:left; background:none; color:var(--danger);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <h1>Advertisements</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-success btn-sm" onclick="triggerDeploy(this)" style="margin-right: 15px;">
+            <i class="fas fa-rocket"></i> Go Live
+          </button>
+          <div class="header-user">
+            <div class="header-user-avatar">A</div>
+            <span id="headerUsername">Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="category-grid">
+          <!-- Ad Form -->
+          <div class="category-form-panel">
+            <div class="editor-panel">
+              <div class="panel-header">
+                <i class="fas fa-plus-circle"></i>
+                <span id="adFormTitle">New Advertisement</span>
+              </div>
+              <div class="panel-body">
+                <form id="adForm" onsubmit="saveAd(event)">
+                  <input type="hidden" id="adId">
+                  <div class="form-group">
+                    <label>Internal Title *</label>
+                    <input type="text" id="adTitle" class="form-control" placeholder="e.g. Summer Sale Top Banner" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Position *</label>
+                    <select id="adPosition" class="form-control" required>
+                      <option value="">Select a position...</option>
+                      <option value="home_top">Home Top (970x90)</option>
+                      <option value="home_mid">Home Mid (970x250)</option>
+                      <option value="home_bottom">Home Bottom (728x90)</option>
+                      <option value="sidebar_top">Sidebar Top (300x250)</option>
+                      <option value="multimedia_side">Multimedia Side (300x250)</option>
+                      <option value="article_side">Article Sidebar (300x250)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Banner Image URL *</label>
+                    <div style="display: flex; gap: 5px;">
+                      <input type="text" id="adImageUrl" class="form-control" placeholder="https://..." required>
+                      <button type="button" class="btn btn-ghost btn-icon" onclick="openMediaPicker('ad')" title="Browse Media">
+                        <i class="fas fa-folder-open"></i>
+                      </button>
+                    </div>
+                    <div id="adImagePreview" class="image-preview-wrapper mt-2" style="height: 120px; display: none;">
+                      <img src="" id="prevImg" style="width:100%; height:100%; object-fit:contain;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Target Link (URL)</label>
+                    <input type="text" id="adLinkUrl" class="form-control" placeholder="https://example.com">
+                  </div>
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select id="adStatus" class="form-control">
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Expiry Date (Optional)</label>
+                    <input type="date" id="adExpiryDate" class="form-control">
+                    <small style="color: var(--text-muted); font-size: 0.75rem;">Ad will automatically stop showing after this date.</small>
+                  </div>
+                  <div style="display:flex; gap:10px;">
+                    <button type="submit" class="btn btn-primary" id="adSubmitBtn" style="flex:1;">
+                      <i class="fas fa-save"></i> Save Advertisement
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="adCancelBtn" onclick="resetAdForm()" style="display:none;">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ad List -->
+          <div>
+            <div class="page-header" style="margin-bottom:16px;">
+              <h2>All Advertisements</h2>
+            </div>
+            <div id="adList" class="ad-list">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Picker Modal (Shared from posts.html logic) -->
+  <div class="modal-overlay" id="mediaPickerModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+          <h3>Select Banner Media</h3>
+          <button class="modal-close" onclick="closeMediaPicker()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="media-toolbar">
+            <button class="btn btn-ghost btn-sm" onclick="refreshMediaPicker()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <div class="upload-btn-wrapper">
+              <button class="btn btn-primary btn-sm">Upload New</button>
+              <input type="file" id="mediaPickerUpload" accept="image/*" style="opacity:0; position:absolute; left:0; top:0; width:100px; cursor:pointer;" onchange="uploadFromPicker(event)">
+            </div>
+          </div>
+          <div class="media-picker-grid" id="mediaPickerGrid">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeMediaPicker()">Cancel</button>
+          <button class="btn btn-primary" id="confirmMediaSelect" disabled onclick="confirmMediaSelection()">Select</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .ad-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .ad-card {
+      background: var(--bg-lighter);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      transition: all 0.2s;
+    }
+    .ad-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .ad-card-preview {
+      width: 120px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-dark);
+      flex-shrink: 0;
+    }
+    .ad-card-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .ad-card-info {
+      flex: 1;
+    }
+    .ad-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ad-card-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .ad-card-actions {
+      display: flex;
+      gap: 5px;
+    }
+    .badge-position {
+      background: var(--bg-dark);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  </style>
+
+  <script src="js/app.js"></script>
+  <script src="js/ads.js"></script>
+  <script>
+    (async () => {
+      const isAuth = await checkAuth();
+      if (!isAuth) { window.location.href = 'login.html'; return; }
+      initMobileToggle();
+      loadAds();
+    })();
+  </script>
+</body>
+</html>

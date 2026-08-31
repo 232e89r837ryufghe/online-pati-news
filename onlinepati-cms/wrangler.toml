@@ -1,0 +1,45 @@
+name = "onlinepati-cms"
+main = "src/index.ts"
+workers_dev = true
+preview_urls = true
+
+compatibility_date = "2025-04-01"
+compatibility_flags = ["global_fetch_strictly_public"]
+
+[[routes]]
+pattern = "onlinepatinews.com/admin/*"
+zone_name = "onlinepatinews.com"
+
+[[routes]]
+pattern = "onlinepatinews.com/cdn/*"
+zone_name = "onlinepatinews.com"
+
+[[routes]]
+pattern = "onlinepatinews.com/api/*"
+zone_name = "onlinepatinews.com"
+
+
+# Environment variables (set via wrangler secret or dashboard)
+# ADMIN_USERNAME and ADMIN_PASSWORD should be set as secrets
+# wrangler secret put ADMIN_USERNAME
+# wrangler secret put ADMIN_PASSWORD
+# wrangler secret put SESSION_SECRET
+
+[vars]
+CORS_ORIGIN = "*"
+MEDIA_BASE_URL = "/cdn"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "onlinepati-db"
+database_id = "96e81835-001f-4617-8bcd-0410426b4b20"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "mediaonlinepatinews"
+
+# Serve admin static files using Assets
+[assets]
+directory = "./public"
+binding = "ASSETS"

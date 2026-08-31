@@ -5,5 +5,23 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://onlinepatinews.com',
-  output: 'static'
+  output: 'static',
+  vite: {
+    server: {
+      proxy: {
+        '/admin': {
+          target: 'http://localhost:8787',
+          changeOrigin: true
+        },
+        '/api': {
+          target: 'http://localhost:8787',
+          changeOrigin: true
+        },
+        '/cdn': {
+          target: 'http://localhost:8787',
+          changeOrigin: true
+        }
+      }
+    }
+  }
 });

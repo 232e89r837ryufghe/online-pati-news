@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories — Online Pati CMS</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">OP</div>
+        <div>
+          <h2>Online Pati</h2>
+          <small>Content Management</small>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="index.html" class="nav-item" data-page="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="posts.html" class="nav-item" data-page="posts">
+          <i class="fas fa-newspaper"></i> Posts
+        </a>
+        <a href="posts.html?new=1" class="nav-item" data-page="new-post">
+          <i class="fas fa-pen-fancy"></i> New Post
+        </a>
+        <a href="media.html" class="nav-item" data-page="media">
+          <i class="fas fa-images"></i> Media
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="categories.html" class="nav-item active" data-page="categories">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="settings.html" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="ads.html" class="nav-item" data-page="ads">
+          <i class="fas fa-ad"></i> Advertisements
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="https://onlinepatinews.com/" class="nav-item" target="_blank" style="color: var(--success);">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="nav-item" onclick="logout()" style="width:100%; text-align:left; background:none; color:var(--danger);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <h1>Categories</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-success btn-sm" onclick="triggerDeploy(this)" style="margin-right: 15px;">
+            <i class="fas fa-rocket"></i> Go Live
+          </button>
+          <div class="header-user">
+            <div class="header-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="category-grid">
+          <!-- Category Form -->
+          <div class="category-form-panel">
+            <div class="editor-panel">
+              <div class="panel-header">
+                <i class="fas fa-plus-circle"></i>
+                <span id="catFormTitle">New Category</span>
+              </div>
+              <div class="panel-body">
+                <form onsubmit="saveCategory(event)">
+                  <div class="form-group">
+                    <label>Category Name *</label>
+                    <input type="text" id="catName" class="form-control" placeholder="e.g. Politics" required
+                           oninput="if(!editingCategoryId) document.getElementById('catSlug').value = generateSlug(this.value)">
+                  </div>
+                  <div class="form-group">
+                    <label>Slug</label>
+                    <input type="text" id="catSlug" class="form-control" placeholder="auto-generated">
+                    <small style="color:var(--text-muted); font-size:0.75rem; margin-top:4px; display:block;">
+                      Used in URLs. Will be auto-generated if left empty.
+                    </small>
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="catDescription" class="form-control" rows="3" placeholder="Category description..."></textarea>
+                  </div>
+                  <div style="display:flex; gap:10px;">
+                    <button type="submit" class="btn btn-primary" id="catSubmitBtn" style="flex:1;">
+                      <i class="fas fa-plus"></i> Save Category
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="catCancelBtn" onclick="resetCategoryForm()" style="display:none;">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category List -->
+          <div>
+            <div class="page-header" style="margin-bottom:16px;">
+              <h2>All Categories</h2>
+            </div>
+            <div id="categoryList">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/categories.js"></script>
+  <script>
+    (async () => {
+      const isAuth = await checkAuth();
+      if (!isAuth) { window.location.href = 'login.html'; return; }
+
+      initMobileToggle();
+      loadCategories();
+    })();
+  </script>
+</body>
+</html>

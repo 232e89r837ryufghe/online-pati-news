@@ -1,0 +1,24 @@
+{
+  "name": "onlinepati-cms",
+  "version": "1.0.0",
+  "description": "Headless CMS backend for Online Pati News — Cloudflare Workers + D1",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create onlinepati-db",
+    "db:migrate": "wrangler d1 execute onlinepati-db --local --file=./src/db/schema.sql",
+    "db:seed": "wrangler d1 execute onlinepati-db --local --file=./src/db/seed.sql",
+    "db:migrate:remote": "wrangler d1 execute onlinepati-db --remote --file=./src/db/schema.sql",
+    "db:seed:remote": "wrangler d1 execute onlinepati-db --remote --file=./src/db/seed.sql"
+  },
+  "dependencies": {
+    "hono": "^4.7.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250327.0",
+    "typescript": "^5.8.0",
+    "wrangler": "^4.10.0"
+  }
+}

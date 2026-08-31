@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Library — Online Pati CMS</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">OP</div>
+        <div>
+          <h2>Online Pati</h2>
+          <small>Content Management</small>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="index.html" class="nav-item" data-page="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="posts.html" class="nav-item" data-page="posts">
+          <i class="fas fa-newspaper"></i> Posts
+        </a>
+        <a href="posts.html?new=1" class="nav-item" data-page="new-post">
+          <i class="fas fa-pen-fancy"></i> New Post
+        </a>
+        <a href="media.html" class="nav-item active" data-page="media">
+          <i class="fas fa-images"></i> Media
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="categories.html" class="nav-item" data-page="categories">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="settings.html" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="ads.html" class="nav-item" data-page="ads">
+          <i class="fas fa-ad"></i> Advertisements
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="https://onlinepatinews.com/" class="nav-item" target="_blank" style="color: var(--success);">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="nav-item" onclick="logout()" style="width:100%; text-align:left; background:none; color:var(--danger);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <h1>Media Library</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-success btn-sm" onclick="triggerDeploy(this)" style="margin-right: 15px;">
+            <i class="fas fa-rocket"></i> Go Live
+          </button>
+          <div class="header-user">
+            <div class="header-user-avatar">A</div>
+            <span id="headerUsername">Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="media-container">
+          <!-- Upload Area -->
+          <div class="upload-area" id="dropZone">
+            <input type="file" id="fileInput" hidden multiple accept="image/*">
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <h3>Drag images here</h3>
+            <p>or select from computer</p>
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+              Select Files
+            </button>
+          </div>
+
+          <!-- Media Toolbar -->
+          <div class="media-toolbar">
+            <div class="media-toolbar-left">
+              <span id="mediaCount">0 files</span>
+            </div>
+            <div class="media-toolbar-right">
+              <button class="btn btn-ghost btn-sm" onclick="loadMedia()">
+                <i class="fas fa-sync-alt"></i> Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Media Grid -->
+          <div class="media-grid" id="mediaGrid">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Detail Modal -->
+  <div class="modal-overlay" id="mediaModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Image Details</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="media-detail-layout">
+            <div class="media-detail-preview">
+              <img id="detailImage" src="" alt="">
+            </div>
+            <div class="media-detail-info">
+              <div class="form-group">
+                <label>Filename</label>
+                <input type="text" id="detailFilename" class="form-control" readonly style="background:var(--bg-lighter)">
+              </div>
+              <div class="form-group">
+                <label>File URL</label>
+                <div class="input-with-action">
+                  <input type="text" id="detailUrl" class="form-control" readonly>
+                  <button class="btn btn-primary btn-sm" onclick="copyUrl()">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Size</label>
+                <p id="detailSize" style="color:var(--text-muted); font-size:0.9rem"></p>
+              </div>
+              <div class="form-group">
+                <label>Upload Date</label>
+                <p id="detailDate" style="color:var(--text-muted); font-size:0.9rem"></p>
+              </div>
+              <hr style="border:0; border-top:1px solid var(--border-color); margin:20px 0">
+              <button class="btn btn-danger btn-sm" onclick="deleteMediaFromModal()">
+                <i class="fas fa-trash"></i> Delete Image
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .loading-spinner {
+      grid-column: 1 / -1;
+      margin: 40px auto;
+    }
+  </style>
+
+  <script src="js/app.js"></script>
+  <script src="js/media.js"></script>
+</body>
+</html>

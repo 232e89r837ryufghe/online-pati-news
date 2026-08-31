@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts — Online Pati CMS</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">OP</div>
+        <div>
+          <h2>Online Pati</h2>
+          <small>Content Management</small>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="index.html" class="nav-item" data-page="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="posts.html" class="nav-item active" data-page="posts">
+          <i class="fas fa-newspaper"></i> Posts
+        </a>
+        <a href="posts.html?new=1" class="nav-item" data-page="new-post">
+          <i class="fas fa-pen-fancy"></i> New Post
+        </a>
+        <a href="media.html" class="nav-item" data-page="media">
+          <i class="fas fa-images"></i> Media
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="categories.html" class="nav-item" data-page="categories">
+          <i class="fas fa-tags"></i> Categories
+        </a>
+        <a href="settings.html" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a href="ads.html" class="nav-item" data-page="ads">
+          <i class="fas fa-ad"></i> Advertisements
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="https://onlinepatinews.com/" class="nav-item" target="_blank" style="color: var(--success);">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="nav-item" onclick="logout()" style="width:100%; text-align:left; background:none; color:var(--danger);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+          <h1 id="pageTitle">Posts</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-success btn-sm" onclick="triggerDeploy(this)" style="margin-right: 15px;">
+            <i class="fas fa-rocket"></i> Go Live
+          </button>
+          <div class="header-user">
+            <div class="header-user-avatar">A</div>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Post List View -->
+      <div class="page-content" id="postListView">
+        <div class="page-header">
+          <h2>All Posts <span style="color:var(--text-muted); font-weight:400; font-size:1rem;">(<span id="postsTotalCount">0</span>)</span></h2>
+          <a href="posts.html?new=1" class="btn btn-primary">
+            <i class="fas fa-plus"></i> New Post
+          </a>
+        </div>
+
+        <div class="data-table-wrapper">
+          <div class="table-toolbar">
+            <div class="table-filters">
+              <button class="filter-btn active" data-status="">All</button>
+              <button class="filter-btn" data-status="published">Published</button>
+              <button class="filter-btn" data-status="draft">Draft</button>
+              <button class="filter-btn" data-status="archived">Archived</button>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Categories</th>
+                <th>Status</th>
+                <th>Author</th>
+                <th>Last Update</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="postsTableBody">
+              <tr><td colspan="6"><div class="loading-spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Post Editor View -->
+      <div class="page-content" id="postEditorView" style="display:none;">
+        <input type="hidden" id="postId" value="">
+        
+        <div class="page-header">
+          <div>
+            <a href="posts.html" style="color:var(--text-muted); font-size:0.85rem;">
+              <i class="fas fa-arrow-left"></i> Back to Post List
+            </a>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="deletePostFromEditor()" id="btnDeletePostEditor" style="display:none;">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+            <button class="btn btn-ghost" onclick="savePost()">
+              <i class="fas fa-save"></i> Save Draft
+            </button>
+            <button class="btn btn-success" onclick="setPostStatus('published'); savePost();">
+              <i class="fas fa-paper-plane"></i> Publish
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-layout">
+          <!-- Editor Main Column -->
+          <div class="editor-main">
+            <!-- Headline -->
+            <div class="form-group mb-4">
+              <label class="premium-label">Headline</label>
+              <input type="text" id="postTitle" class="title-input" placeholder="Enter post headline..." autofocus>
+            </div>
+            
+
+
+            <!-- Slug Preview -->
+            <div class="slug-preview mb-4">
+              <span><i class="fas fa-link"></i> URL Slug:</span>
+              <input type="text" id="postSlug" placeholder="Enter custom slug..." style="border: 1px solid var(--border-color); border-radius: 4px; padding: 5px 10px; font-size: 0.9rem; flex: 1;">
+            </div>
+
+            <!-- WYSIWYG Editor (Detail News) -->
+            <div class="form-group mb-2">
+              <label class="premium-label">Detail News Content</label>
+            </div>
+            <div class="editor-panel">
+              <div class="editor-toolbar">
+                <button class="toolbar-btn" id="btnBold" title="Bold"><i class="fas fa-bold"></i></button>
+                <button class="toolbar-btn" id="btnItalic" title="Italic"><i class="fas fa-italic"></i></button>
+                <button class="toolbar-btn" id="btnUnderline" title="Underline"><i class="fas fa-underline"></i></button>
+                <button class="toolbar-btn" id="btnStrike" title="Strikethrough"><i class="fas fa-strikethrough"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnH2" title="Heading 2">H2</button>
+                <button class="toolbar-btn" id="btnH3" title="Heading 3">H3</button>
+                <button class="toolbar-btn" id="btnH4" title="Heading 4">H4</button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnBulletList" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                <button class="toolbar-btn" id="btnOrderedList" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                <button class="toolbar-btn" id="btnBlockquote" title="Blockquote"><i class="fas fa-quote-left"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnAlignLeft" title="Align Left"><i class="fas fa-align-left"></i></button>
+                <button class="toolbar-btn" id="btnAlignCenter" title="Align Center"><i class="fas fa-align-center"></i></button>
+                <button class="toolbar-btn" id="btnAlignRight" title="Align Right"><i class="fas fa-align-right"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnLink" title="Insert Link"><i class="fas fa-link"></i></button>
+                <button class="toolbar-btn" id="btnUnlink" title="Remove Link"><i class="fas fa-unlink"></i></button>
+                <button class="toolbar-btn" id="btnImage" title="Insert Image"><i class="fas fa-image"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnCode" title="Inline Code"><i class="fas fa-code"></i></button>
+                <button class="toolbar-btn" id="btnCodeBlock" title="Code Block"><i class="fas fa-file-code"></i></button>
+                <button class="toolbar-btn" id="btnHR" title="Horizontal Rule"><i class="fas fa-minus"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnUndo" title="Undo"><i class="fas fa-undo"></i></button>
+                <button class="toolbar-btn" id="btnRedo" title="Redo"><i class="fas fa-redo"></i></button>
+                <button class="toolbar-btn" id="btnClearFormat" title="Clear Formatting"><i class="fas fa-eraser"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn" id="btnSource" title="HTML Source"><i class="fas fa-file-code"></i></button>
+              </div>
+              <div id="editorContent"></div>
+            </div>
+          </div>
+
+          <!-- Editor Sidebar -->
+          <div class="editor-sidebar">
+            <!-- Publish Panel -->
+            <div class="editor-panel">
+              <div class="panel-header"><i class="fas fa-paper-plane"></i> Publishing</div>
+              <div class="panel-body">
+                <div class="publish-actions">
+                  <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px; display:block;">Status</label>
+                  <div class="status-selector">
+                    <button class="status-option active" data-status="draft" onclick="setPostStatus('draft')">
+                      <i class="fas fa-pen" style="margin-right:4px;"></i> Draft
+                    </button>
+                    <button class="status-option" data-status="published" onclick="setPostStatus('published')">
+                      <i class="fas fa-check" style="margin-right:4px;"></i> Published
+                    </button>
+                  </div>
+                  <button class="btn btn-primary btn-lg" onclick="savePost()" style="margin-top:12px;">
+                    <i class="fas fa-save"></i> Save Post
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Panel -->
+            <div class="editor-panel">
+              <div class="panel-header"><i class="fas fa-tag"></i> Categories</div>
+              <div class="panel-body">
+                <div id="categoryList" class="category-list">
+                  <div class="loading-spinner"></div>
+                </div>
+                <small style="color:var(--text-muted); display:block; margin-top:8px;">
+                  Select one or more categories for this post.
+                </small>
+              </div>
+            </div>
+
+            <!-- Featured Image Panel -->
+            <div class="editor-panel">
+              <div class="panel-header"><i class="fas fa-image"></i> Featured Image</div>
+              <div class="panel-body">
+                <div class="form-group" style="margin-bottom:12px; display: flex; gap: 5px;">
+                  <input type="text" id="postImage" class="form-control" placeholder="https://example.com/image.jpg" 
+                         oninput="updateImagePreview(this.value)">
+                  <button class="btn btn-ghost btn-icon" onclick="openMediaPicker('featured')" title="Browse Media">
+                    <i class="fas fa-folder-open"></i>
+                  </button>
+                </div>
+                <div id="imagePreview" class="image-preview-wrapper">
+                  <div class="image-placeholder">
+                    <i class="fas fa-image"></i>
+                    <span>Enter URL or Browse Media</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Display Image Toggle -->
+            <div class="editor-panel">
+              <div class="panel-header">
+                <i class="fas fa-eye"></i> Display Image
+              </div>
+              <div class="panel-body">
+                <div class="form-group" style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="postShowImage" checked />
+                  <label for="postShowImage" style="margin:0; font-size:0.9rem; color:var(--text-primary); cursor:pointer;">Show Featured Image</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Sharing Panel -->
+            <div class="editor-panel">
+              <div class="panel-header"><i class="fas fa-share-nodes"></i> Social Sharing</div>
+              <div class="panel-body">
+                <div class="form-group" style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="shareFacebook" checked style="width:16px; height:16px; accent-color: var(--accent);">
+                  <label for="shareFacebook" style="margin:0; font-size:0.9rem; color:var(--text-primary); cursor:pointer;">Post to Facebook</label>
+                </div>
+                <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="shareInstagram" checked style="width:16px; height:16px; accent-color: var(--accent);">
+                  <label for="shareInstagram" style="margin:0; font-size:0.9rem; color:var(--text-primary); cursor:pointer;">Post to Instagram</label>
+                </div>
+                <small style="display:block; margin-top:10px; color:var(--text-muted); font-size:0.75rem;">
+                  Title, image, and link will be automatically shared upon publication.
+                </small>
+              </div>
+            </div>
+            
+            <!-- Author & Excerpt -->
+            <div class="editor-panel">
+              <div class="panel-header"><i class="fas fa-user-pen"></i> Extras</div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label>Author</label>
+                  <input type="text" id="postAuthor" class="form-control" value="Online Pati" placeholder="Author name">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label>Excerpt</label>
+                  <textarea id="postExcerpt" class="form-control" rows="3" placeholder="Short summary... (auto-generated if empty)"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Picker Modal -->
+  <div class="modal-overlay" id="mediaPickerModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+          <h3>Select Media</h3>
+          <button class="modal-close" onclick="closeMediaPicker()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="media-toolbar">
+            <button class="btn btn-ghost btn-sm" onclick="refreshMediaPicker()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <div class="upload-btn-wrapper">
+              <button class="btn btn-primary btn-sm">Upload New</button>
+              <input type="file" id="mediaPickerUpload" accept="image/*" style="opacity:0; position:absolute; left:0; top:0; width:100px; cursor:pointer;" onchange="uploadFromPicker(event)">
+            </div>
+          </div>
+          <div class="media-picker-grid" id="mediaPickerGrid">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeMediaPicker()">Cancel</button>
+          <button class="btn btn-primary" id="confirmMediaSelect" disabled onclick="confirmMediaSelection()">Select</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/posts.js"></script>
+  <script type="module" src="js/editor.js"></script>
+  <script type="module">
+    import { initEditor } from './js/editor.js';
+
+    (async () => {
+      const isAuth = await checkAuth();
+      if (!isAuth) { window.location.href = 'login.html'; return; }
+
+      initMobileToggle();
+
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.has('edit') || params.has('new')) {
+        // Show editor view
+        document.getElementById('postListView').style.display = 'none';
+        document.getElementById('postEditorView').style.display = 'block';
+        document.getElementById('pageTitle').textContent = params.has('edit') ? 'Edit Post' : 'New Post';
+
+        // Initialize TipTap editor
+        await initEditor('editorContent');
+
+        // Load categories for dropdown
+        await loadCategoryOptions();
+
+        // Initialize Slug Automation
+        initSlugAutomation();
+
+        // Load existing post if editing
+        if (params.has('edit')) {
+          await loadPostForEdit(params.get('edit'));
+          slugManuallyEdited = true; // Don't override slug on edit
+        }
+
+        setActiveNav('new-post');
+      } else {
+        // Show list view
+        initPostFilters();
+        loadPosts();
+        setActiveNav('posts');
+      }
+    })();
+  </script>
+</body>
+</html>
